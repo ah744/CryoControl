@@ -1,0 +1,11 @@
+------- Cryogenic Control Module Statistics ----------
+Benchmark: BWT
+Size of Cache: 13800000
+Cache associativity: full
+Cache eviction policy: FIFO
+Number of modules run: 1200
+Number of module decompressions: 5
+Number of module recompressions: 0
+Number of cache hits: 1195
+Number of cache misses: 5
+Done.
