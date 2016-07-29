@@ -3,6 +3,7 @@
 #include <map>
 #include <string>
 #include <bitset>
+#include <vector>
 
 using namespace std;
 bool debugLinker = false;
@@ -49,9 +50,10 @@ void printQregs(map<string,bitset<16> > qRegs){
     }
 }
 
-void writeBinary(ofstream& BinaryOutput, map<string,bitset<8> > instOpcodes, map<string,bitset<16> > qRegs){
-    char x[8];
-    BinaryOutput.write(x, sizeof(x));
+void writeBinary(ofstream& BinaryOutput, string currentInstruction, map<string,bitset<8> > instOpcodes, map<string,bitset<16> > qRegs, vector<string> qregs){
+//    bitset<8> opcode = instOpcodes.find(currentInstruction)->second;
+//    BinaryOutput << opcode;
+
 }
 
 void readModule(const char* moduleName, map<string,bitset<8> >& instOpcodes, map<string,bitset<16> >& qRegs){ 
@@ -70,6 +72,7 @@ void readModule(const char* moduleName, map<string,bitset<8> >& instOpcodes, map
         int simdRegion;
         string instruction_or_schedts;
         string instruction;
+        vector<string> qregs;
         string qreg1;
         string qreg2;
         string qreg3;
@@ -92,22 +95,33 @@ void readModule(const char* moduleName, map<string,bitset<8> >& instOpcodes, map
             movInst = false;
             cnotInst = false;
             toffInst = false;
+            qregs.clear();
+
             if (instruction_or_schedts == "MOV"){
                 movInst = true;
                 instruction = instruction_or_schedts;
                 CallStackFile >> dest >> src ;
+
             }
             else CallStackFile >> instruction;
 
             if(instruction == "CNOT") {
                 CallStackFile >> qreg1 >> qreg2; 
                 cnotInst = true;
+                qregs.push_back(qreg1);
+                qregs.push_back(qreg2);
             }
             else if(instruction == "Toffoli") {
                 CallStackFile >> qreg1 >> qreg2 >> qreg3;
                 toffInst = true;
+                qregs.push_back(qreg1);
+                qregs.push_back(qreg2);
+                qregs.push_back(qreg3);
             }
-            else CallStackFile >> qreg1;
+            else {
+                CallStackFile >> qreg1;
+                qregs.push_back(qreg1);
+            }
 
             string fullInst = instruction;
             if(movInst) {
@@ -134,11 +148,21 @@ void readModule(const char* moduleName, map<string,bitset<8> >& instOpcodes, map
                 cout << "Now Adding:" << endl;
                 cout << fullInst << " With Code: " << newOp << endl;
             }
-            writeBinary(BinaryOutput, instOpcodes, qRegs);
+
+            unsigned long op = instOpcodes.find(fullInst)->second.to_ulong();
+            unsigned char opcode = static_cast<unsigned char>(op);
+            BinaryOutput.write((char*) &opcode, sizeof(opcode));
+            for(vector<string>::iterator vit = qregs.begin(); vit != qregs.end(); vit++){
+                unsigned short qregister = qRegs.find(*vit)->second.to_ulong();
+                BinaryOutput.write((char*) &qregister, sizeof(qregister));
+            }
         }
     }
     CallStackFile.close();
+    BinaryOutput.close();
+
 }
+
 
 int main( int argc, char* argv[] ){
     if (argc < 2){
