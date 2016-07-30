@@ -1,0 +1,55 @@
+------- Cryogenic Control Module Statistics ----------
+Benchmark: BWT
+Size of Cache: 1100000
+Cache associativity: full
+Cache eviction policy: FIFO
+Number of modules run: 1200
+Number of module decompressions: 5
+Number of module recompressions: 0
+Number of cache hits: 1195
+Number of cache misses: 5
+Done.
+------- Cryogenic Control Module Statistics ----------
+Benchmark: BWT
+Size of Cache: 1060000
+Cache associativity: full
+Cache eviction policy: FIFO
+Number of modules run: 1200
+Number of module decompressions: 500
+Number of module recompressions: 496
+Number of cache hits: 700
+Number of cache misses: 500
+Done.
+------- Cryogenic Control Module Statistics ----------
+Benchmark: BWT
+Size of Cache: 795000
+Cache associativity: full
+Cache eviction policy: FIFO
+Number of modules run: 1200
+Number of module decompressions: 534
+Number of module recompressions: 531
+Number of cache hits: 666
+Number of cache misses: 534
+Done.
+------- Cryogenic Control Module Statistics ----------
+Benchmark: BWT
+Size of Cache: 530000
+Cache associativity: full
+Cache eviction policy: FIFO
+Number of modules run: 1200
+Number of module decompressions: 600
+Number of module recompressions: 598
+Number of cache hits: 600
+Number of cache misses: 600
+Done.
+------- Cryogenic Control Module Statistics ----------
+Benchmark: BWT
+Size of Cache: 265000
+Cache associativity: full
+Cache eviction policy: FIFO
+Number of modules run: 1200
+Number of module decompressions: 1200
+Number of module recompressions: 1199
+Number of cache hits: 0
+Number of cache misses: 1200
+Done.

@@ -60,13 +60,18 @@ void readModule(const char* moduleName, map<string,bitset<8> >& instOpcodes, map
     string callStack(moduleName);
     string binaryOutput(callStack + ".bin");
     if (debugLinker) {
-        cout << "Debug Info: 1. module name: " << callStack << endl;
+        cout << "Debug Info: " << endl << "module/input file name " << callStack << endl;
     }
     string line;
    
     ifstream CallStackFile (callStack);
     ofstream BinaryOutput (binaryOutput, ios::out | ios::binary);
     if(CallStackFile.is_open() && BinaryOutput.is_open()){
+//        if(debugLinker){
+//            while(getline(CallStackFile,line)){
+//                cout << line << endl;
+//            }
+//        }
         int timeStep;
         char delim;
         int simdRegion;
@@ -91,16 +96,23 @@ void readModule(const char* moduleName, map<string,bitset<8> >& instOpcodes, map
         int schedTS;
         char delim2;
 
+        if(debugLinker) {
+            cout << "Begin Module Processing" << endl;
+        }
+
         while(CallStackFile >> timeStep >> delim >> simdRegion >> instruction_or_schedts ){
+            if(debugLinker) cout << "Processing Next Line: " << endl;
             movInst = false;
             cnotInst = false;
             toffInst = false;
             qregs.clear();
 
-            if (instruction_or_schedts == "MOV"){
+            if (instruction_or_schedts == "MOV" || instruction_or_schedts == "BMOV" 
+                || instruction_or_schedts == "TMOV"){
                 movInst = true;
                 instruction = instruction_or_schedts;
                 CallStackFile >> dest >> src ;
+                if(debugLinker) cout << "Found MOV Instruction" << endl;
 
             }
             else CallStackFile >> instruction;
@@ -110,6 +122,7 @@ void readModule(const char* moduleName, map<string,bitset<8> >& instOpcodes, map
                 cnotInst = true;
                 qregs.push_back(qreg1);
                 qregs.push_back(qreg2);
+                if(debugLinker) cout << "Found CNOT Instruction" << endl;
             }
             else if(instruction == "Toffoli") {
                 CallStackFile >> qreg1 >> qreg2 >> qreg3;
@@ -117,6 +130,7 @@ void readModule(const char* moduleName, map<string,bitset<8> >& instOpcodes, map
                 qregs.push_back(qreg1);
                 qregs.push_back(qreg2);
                 qregs.push_back(qreg3);
+                if(debugLinker) cout << "Found Toffoli Instruction" << endl;
             }
             else {
                 CallStackFile >> qreg1;
