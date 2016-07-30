@@ -1,6 +1,0 @@
-Sqr 165 
-EQxMark_IP0_IPx_IPx_IPx_DPx_DPx_DPx_DPx 2168
-diffuse 2202
-EQxMark_IP1_IPx_IPx_IPx_DPx_DPx_DPx_DPx 2160
-llvm.H 4
-llvm.MeasZ 4
