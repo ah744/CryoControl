@@ -1,0 +1,11 @@
+------- Cryogenic Control Module Statistics ----------
+Benchmark: GSE
+Size of Cache: 317366
+Cache associativity: full
+Cache eviction policy: FIFO
+Number of modules run: 1423
+Number of module decompressions: 9
+Number of module recompressions: 0
+Number of cache hits: 1414
+Number of cache misses: 9
+Done.

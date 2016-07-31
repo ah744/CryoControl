@@ -1,0 +1,6 @@
+ControlledPhase_IPx_IPx_IPx_IPx_DP375 618
+PauliH1 33675
+PauliH2 276323
+ControlledPhase_IPx_IPx_IPx_IPx_DP751 621
+ControlledPhase_IPx_IPx_IPx_IPx_DP1502 594
+InverseQFT 5535
