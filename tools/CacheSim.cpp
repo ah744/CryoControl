@@ -22,9 +22,9 @@ struct CryoCache {
     int numMisses;
     vector<string> vectCalls;
     deque<string> cacheContents;
-    map<string,int> modSizes; 
+    map<string,int> modSizes;
     CryoCache():capacity(1024),associativity("full"),eviction("LRU"),used_memory(0),numHits(0),numMisses(0),numDecompressions(0),numRecompressions(0) { }
-}; 
+};
 
 void initializeCache(CryoCache& cache, int input_cap, char* input_associativity, char* input_eviction){
     cache.capacity = input_cap;
@@ -38,8 +38,8 @@ void readBenchmark(CryoCache& cache, const char* benchName){
     string moduleSizes = bName + ".sizes.txt";
     string callStack = bName + ".calls.txt";
     if (debugCacheSim) {
-        cout << "Debug Info: 1. benchmark name: " << bName << " 2. module sizes file: " 
-             << moduleSizes << " 3. call stack file: " << callStack << endl; 
+        cout << "Debug Info: 1. benchmark name: " << bName << " 2. module sizes file: "
+             << moduleSizes << " 3. call stack file: " << callStack << endl;
     }
     string line;
     ifstream moduleSizeFile (moduleSizes);
@@ -51,7 +51,7 @@ void readBenchmark(CryoCache& cache, const char* benchName){
         }
     }
     moduleSizeFile.close();
-   
+
     ifstream CallStackFile (callStack);
     if(CallStackFile.is_open()){
         string callInstruction;
@@ -69,7 +69,7 @@ void readBenchmark(CryoCache& cache, const char* benchName){
         for(vector<string>::iterator it = cache.vectCalls.begin(); it != cache.vectCalls.end(); ++it)
             cout << *it << endl;
     }
- 
+
 }
 
 
@@ -94,20 +94,20 @@ bool fillCache(CryoCache& cache, int instSize, string curInst){
 
         if(debugCacheSim){
             cout << "Success" << endl;
-            cout << "New Free Memory: " << cache.capacity - cache.used_memory; 
+            cout << "New Free Memory: " << cache.capacity - cache.used_memory;
         }
         return true;
     }
     return false;
 }
 
-void runCache(CryoCache& cache){ 
+void runCache(CryoCache& cache){
     for(vector<string>::iterator inst = cache.vectCalls.begin(); inst != cache.vectCalls.end(); ++inst){
         string currentInstruction = *inst;
         int instructionSize = cache.modSizes.find(*inst)->second;
-        if ( find(cache.cacheContents.begin(), cache.cacheContents.end(), currentInstruction) 
-                == cache.cacheContents.end() ) { 
-            while( !fillCache(cache, instructionSize, currentInstruction) ){ 
+        if ( find(cache.cacheContents.begin(), cache.cacheContents.end(), currentInstruction)
+                == cache.cacheContents.end() ) {
+            while( !fillCache(cache, instructionSize, currentInstruction) ){
                 if (string(cache.eviction) == "FIFO") {
                     string victimInstruction = cache.cacheContents.front();
                     int victimSize = cache.modSizes.find(victimInstruction)->second;
@@ -140,9 +140,6 @@ void printStatistics(CryoCache cache, const char* benchName){
     cout << "Number of module recompressions: " << cache.numRecompressions << endl;
     cout << "Number of cache hits: " << cache.numHits << endl;
     cout << "Number of cache misses: " << cache.numMisses << endl;
-    //TODO: Print out the:
-    //      1. Number of decompressions performed
-    //      2. Number of recompressions performed
 }
 
 int main( int argc, char *argv[]){

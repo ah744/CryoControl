@@ -1,12 +1,20 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <map>
 #include <string>
 #include <bitset>
 #include <vector>
+#include <sys/stat.h>
+#include <unistd.h>
 
 using namespace std;
 bool debugLinker = false;
+
+inline bool file_exists (const string& name){
+    struct stat buffer;
+    return (stat (name.c_str(), &buffer) == 0);
+}
 
 bitset<8> incrementBitset8(bitset<8> code){
     unsigned long num = code.to_ulong();
@@ -20,6 +28,21 @@ bitset<16> incrementBitset16(bitset<16> code){
     num++;
     bitset<16> newOp(num);
     return newOp;
+}
+
+bitset<32> decrementBitset32(bitset<32> code){
+    unsigned long num = code.to_ulong();
+    num--;
+    bitset<32> newOp(num);
+    return newOp;
+}
+
+void addModule(map<string,bitset<32> >& moduleOpcodes, string newModule, bitset<32>& newModuleCode){
+    if(moduleOpcodes.size() == 0) moduleOpcodes.insert(make_pair(newModule, newModuleCode));
+    else if(moduleOpcodes.find(newModule) == moduleOpcodes.end()){
+        newModuleCode = decrementBitset32(newModuleCode);
+        moduleOpcodes.insert(make_pair(newModule,newModuleCode));
+    }
 }
 
 void addOp(map<string,bitset<8> >& instOpcodes, string newInstruction, bitset<8>& newOp){
@@ -50,13 +73,7 @@ void printQregs(map<string,bitset<16> > qRegs){
     }
 }
 
-void writeBinary(ofstream& BinaryOutput, string currentInstruction, map<string,bitset<8> > instOpcodes, map<string,bitset<16> > qRegs, vector<string> qregs){
-//    bitset<8> opcode = instOpcodes.find(currentInstruction)->second;
-//    BinaryOutput << opcode;
-
-}
-
-void readModule(const char* moduleName, map<string,bitset<8> >& instOpcodes, map<string,bitset<16> >& qRegs){ 
+void linkLeaf(string& moduleName, map<string,bitset<8> >& instOpcodes, map<string,bitset<16> >& qRegs){ 
     string callStack(moduleName);
     string binaryOutput(callStack + ".bin");
     if (debugLinker) {
@@ -64,14 +81,14 @@ void readModule(const char* moduleName, map<string,bitset<8> >& instOpcodes, map
     }
     string line;
    
-    ifstream CallStackFile (callStack);
-    ofstream BinaryOutput (binaryOutput, ios::out | ios::binary);
+    ifstream CallStackFile (callStack.c_str());
+    ofstream BinaryOutput (binaryOutput.c_str(), ios::out | ios::binary);
     if(CallStackFile.is_open() && BinaryOutput.is_open()){
-//        if(debugLinker){
-//            while(getline(CallStackFile,line)){
-//                cout << line << endl;
-//            }
-//        }
+        if(debugLinker){
+            while(getline(CallStackFile,line)){
+                cout << line << endl;
+            }
+        }
         int timeStep;
         char delim;
         int simdRegion;
@@ -174,21 +191,93 @@ void readModule(const char* moduleName, map<string,bitset<8> >& instOpcodes, map
     }
     CallStackFile.close();
     BinaryOutput.close();
+}
 
+
+void readMain(map<string,bitset<32> >& moduleOpcodes, map<string,bitset<8> >& instOpcodes, map<string,bitset<16> >& qRegs, vector<string>& moduleCalls, bitset<32>& newModuleCode){ 
+    string main = "main";
+    string main_bin = "main.bin";
+    ifstream mainFile (main.c_str());
+    ofstream mainOutput (main_bin.c_str(), ios::out | ios::binary);
+    if(mainFile.is_open() && mainOutput.is_open()){
+        string line;
+        if(debugLinker){
+            cout << "test: " << newModuleCode << endl;
+            for(int i = 0; i < 64; i++) {
+                newModuleCode = decrementBitset32(newModuleCode);
+                cout << "test2: " << newModuleCode << endl;
+            }
+        }
+        while(getline(mainFile,line)){
+            if(line.find("llvm") == std::string::npos){
+                istringstream ss(line);
+                string module;
+                ss >> module;
+                std::size_t found = module.find(".");
+                if(found != std::string::npos){
+                    cout << module;
+                    module = module.substr(0,found);
+                    cout << module << endl;
+                }
+                moduleCalls.push_back(module);
+                addModule(moduleOpcodes, module, newModuleCode);
+                mainOutput.write((char*) &newModuleCode, sizeof(newModuleCode));
+            }
+        }
+    }
+}
+
+void readModule(string& currModule, bitset<32>& newModuleCode, map<string,bitset<32> >& moduleCodes, map<string,bitset<8> >& instOpcodes, map<string,bitset<16> >& qRegs) {
+    ifstream moduleFile (currModule.c_str());
+    string outputFile = currModule + ".bin";
+    ofstream moduleOutputFile (outputFile.c_str(), ios::out | ios::binary);
+    if(moduleFile.is_open() && moduleOutputFile.is_open()){
+        string line;
+        while(getline(moduleFile,line)){
+            istringstream ss(line);
+            int timeStep;
+            string module;
+            if(ss >> timeStep) {
+                linkLeaf(currModule,instOpcodes,qRegs); 
+                break;
+            }
+            else {
+                istringstream s(line);
+                s >> module;
+                if(module.find("llvm") == std::string::npos){
+                    std::size_t found = module.find(".");
+                    if(found != std::string::npos){
+                        module = module.substr(0,found);
+                    }
+                    addModule(moduleCodes, module, newModuleCode);
+                    moduleOutputFile.write((char*) &newModuleCode, sizeof(newModuleCode));
+                    string filename = module + ".bin";
+                    if(!(file_exists(filename))){
+                        readModule(module,newModuleCode,moduleCodes,instOpcodes,qRegs);    
+                    }
+                }
+                else {} 
+            }
+        }
+    }
 }
 
 
 int main( int argc, char* argv[] ){
-    if (argc < 2){
-        cout << "Too few parameters specified" << endl;
-        cout << "Usage: [module name]" << endl;
-        exit(1);
-    }
 
+    map<string, bitset<32> > moduleCodes;
     map<string, bitset<8> > instOpcodes;
     map<string, bitset<16> > qRegs;
 
-    readModule(argv[1], instOpcodes, qRegs);
+    vector<string> moduleCalls;
+
+    bitset<32> newModuleCode = (4294967295ul);
+    readMain(moduleCodes, instOpcodes, qRegs, moduleCalls, newModuleCode);
+    
+    for(vector<string>::iterator it = moduleCalls.begin(); it != moduleCalls.end(); ++it){
+        readModule((*it), newModuleCode, moduleCodes, instOpcodes, qRegs);
+    }
+    
 
     if(debugLinker){
         printOpcodes(instOpcodes);

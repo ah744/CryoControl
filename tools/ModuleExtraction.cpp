@@ -46,10 +46,14 @@ void readModuleFile(ifstream& inputs, vector<string>& modules, bool isCG){
 }
 
 int main(int argc, char* argv[]){
+    if(argc < 2){
+        cout << "Too few parameters specified." << endl;
+        cout << "Usage: moduleextraction <benchmark>" << endl;
+        exit(1);
+    }
     string benchName (argv[1]); 
     string benchCGName = benchName + "rs.l1.lpfs.cg";
     string benchLPFSName = benchName + "leaves.rs.l1.lpfs";
-    cout << benchCGName << " " << benchLPFSName << endl;
     ifstream inputs_cg (benchCGName.c_str()); 
     vector<string> moduleList;
     readModuleFile(inputs_cg,moduleList,true);
