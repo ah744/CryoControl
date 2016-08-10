@@ -11,6 +11,8 @@
 using namespace std;
 bool debugLinker = false;
 
+vector<string> callStack;
+
 inline bool file_exists (const string& name){
     struct stat buffer;
     return (stat (name.c_str(), &buffer) == 0);
@@ -220,6 +222,7 @@ void readMain(map<string,bitset<32> >& moduleOpcodes, map<string,bitset<8> >& in
                     cout << module << endl;
                 }
                 moduleCalls.push_back(module);
+                callStack.push_back(module);
                 addModule(moduleOpcodes, module, newModuleCode);
                 mainOutput.write((char*) &newModuleCode, sizeof(newModuleCode));
             }
@@ -252,6 +255,7 @@ void readModule(string& currModule, bitset<32>& newModuleCode, map<string,bitset
                     addModule(moduleCodes, module, newModuleCode);
                     moduleOutputFile.write((char*) &newModuleCode, sizeof(newModuleCode));
                     string filename = module + ".bin";
+                    callStack.push_back(module);
                     if(!(file_exists(filename))){
                         readModule(module,newModuleCode,moduleCodes,instOpcodes,qRegs);    
                     }
@@ -278,6 +282,11 @@ int main( int argc, char* argv[] ){
         readModule((*it), newModuleCode, moduleCodes, instOpcodes, qRegs);
     }
     
+    ofstream callStackFile ("main.calls.txt");
+    for(vector<string>::iterator it = callStack.begin(); it != callStack.end(); ++it){
+        callStackFile << *it << endl;
+    }
+    callStackFile.close();
 
     if(debugLinker){
         printOpcodes(instOpcodes);

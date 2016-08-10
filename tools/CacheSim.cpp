@@ -1,5 +1,6 @@
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 #include <string>
 #include <map>
 #include <vector>
@@ -35,8 +36,8 @@ void initializeCache(CryoCache& cache, int input_cap, char* input_associativity,
 
 void readBenchmark(CryoCache& cache, const char* benchName){
     string bName(benchName);
-    string moduleSizes = bName + ".sizes.txt";
-    string callStack = bName + ".calls.txt";
+    string moduleSizes = bName + "sizes.txt";
+    string callStack = bName + "calls.txt";
     if (debugCacheSim) {
         cout << "Debug Info: 1. benchmark name: " << bName << " 2. module sizes file: "
              << moduleSizes << " 3. call stack file: " << callStack << endl;
@@ -105,8 +106,7 @@ void runCache(CryoCache& cache){
     for(vector<string>::iterator inst = cache.vectCalls.begin(); inst != cache.vectCalls.end(); ++inst){
         string currentInstruction = *inst;
         int instructionSize = cache.modSizes.find(*inst)->second;
-        if ( find(cache.cacheContents.begin(), cache.cacheContents.end(), currentInstruction)
-                == cache.cacheContents.end() ) {
+        if ( find(cache.cacheContents.begin(), cache.cacheContents.end(), currentInstruction) == cache.cacheContents.end() ) {
             while( !fillCache(cache, instructionSize, currentInstruction) ){
                 if (string(cache.eviction) == "FIFO") {
                     string victimInstruction = cache.cacheContents.front();
