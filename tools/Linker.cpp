@@ -233,34 +233,36 @@ void readMain(map<string,bitset<32> >& moduleOpcodes, map<string,bitset<8> >& in
 void readModule(string& currModule, bitset<32>& newModuleCode, map<string,bitset<32> >& moduleCodes, map<string,bitset<8> >& instOpcodes, map<string,bitset<16> >& qRegs) {
     ifstream moduleFile (currModule.c_str());
     string outputFile = currModule + ".bin";
-    ofstream moduleOutputFile (outputFile.c_str(), ios::out | ios::binary);
-    if(moduleFile.is_open() && moduleOutputFile.is_open()){
-        string line;
-        while(getline(moduleFile,line)){
-            istringstream ss(line);
-            int timeStep;
-            string module;
-            if(ss >> timeStep) {
-                linkLeaf(currModule,instOpcodes,qRegs); 
-                break;
-            }
-            else {
-                istringstream s(line);
-                s >> module;
-                if(module.find("llvm") == std::string::npos){
-                    std::size_t found = module.find(".");
-                    if(found != std::string::npos){
-                        module = module.substr(0,found);
-                    }
-                    addModule(moduleCodes, module, newModuleCode);
-                    moduleOutputFile.write((char*) &newModuleCode, sizeof(newModuleCode));
-                    string filename = module + ".bin";
-                    callStack.push_back(module);
-                    if(!(file_exists(filename))){
-                        readModule(module,newModuleCode,moduleCodes,instOpcodes,qRegs);    
-                    }
+    if(!(file_exists(outputFile))){
+        ofstream moduleOutputFile (outputFile.c_str(), ios::out | ios::binary);
+        if(moduleFile.is_open() && moduleOutputFile.is_open()){
+            string line;
+            while(getline(moduleFile,line)){
+                istringstream ss(line);
+                int timeStep;
+                string module;
+                if(ss >> timeStep) {
+                    linkLeaf(currModule,instOpcodes,qRegs); 
+                    break;
                 }
-                else {} 
+                else {
+                    istringstream s(line);
+                    s >> module;
+                    if(module.find("llvm") == std::string::npos){
+                        std::size_t found = module.find(".");
+                        if(found != std::string::npos){
+                            module = module.substr(0,found);
+                        }
+                        addModule(moduleCodes, module, newModuleCode);
+                        moduleOutputFile.write((char*) &newModuleCode, sizeof(newModuleCode));
+                        string filename = module + ".bin";
+                        callStack.push_back(module);
+                        if(!(file_exists(filename))){
+                            readModule(module,newModuleCode,moduleCodes,instOpcodes,qRegs);    
+                        }
+                    }
+                    else {} 
+                }
             }
         }
     }
