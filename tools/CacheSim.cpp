@@ -129,23 +129,28 @@ void runCache(CryoCache& cache){
     }
 }
 
-void printStatistics(CryoCache cache, const char* benchName){
-    cout << "------- Cryogenic Control Module Statistics ----------" << endl;
-    cout << "Benchmark: " << benchName << endl;
-    cout << "Size of Cache: " << cache.capacity << endl;
-    cout << "Cache associativity: " << cache.associativity << endl;
-    cout << "Cache eviction policy: " << cache.eviction << endl;
-    cout << "Number of modules run: " << cache.vectCalls.size() << endl;
-    cout << "Number of module decompressions: " << cache.numDecompressions << endl;
-    cout << "Number of module recompressions: " << cache.numRecompressions << endl;
-    cout << "Number of cache hits: " << cache.numHits << endl;
-    cout << "Number of cache misses: " << cache.numMisses << endl;
+void printStatistics(CryoCache cache, const char* benchName, bool workflowIntegrate){
+    if(!workflowIntegrate){
+        cout << "------- Cryogenic Control Module Statistics ----------" << endl;
+        cout << "Benchmark: " << benchName << endl;
+        cout << "Size of Cache: " << cache.capacity << endl;
+        cout << "Cache associativity: " << cache.associativity << endl;
+        cout << "Cache eviction policy: " << cache.eviction << endl;
+        cout << "Number of modules run: " << cache.vectCalls.size() << endl;
+        cout << "Number of module decompressions: " << cache.numDecompressions << endl;
+        cout << "Number of module recompressions: " << cache.numRecompressions << endl;
+        cout << "Number of cache hits: " << cache.numHits << endl;
+        cout << "Number of cache misses: " << cache.numMisses << endl;
+    }
+    else if(workflowIntegrate){
+        cout << cache.numDecompressions;
+    }
 }
 
 int main( int argc, char *argv[]){
-    if (argc < 5){
+    if (argc < 6){
         cout << "Error: Too Few Parameters Specified" << endl;
-        cout << "Usage: " << "[cache capacity] [cache associativity] [eviction policy] [benchmark name] " << endl;
+        cout << "Usage: " << "[cache capacity] [cache associativity] [eviction policy] [benchmark name] [workflow printing] " << endl;
         exit(1);
     }
     CryoCache cache;
@@ -153,7 +158,6 @@ int main( int argc, char *argv[]){
     initializeCache(cache, in_cap, argv[2], argv[3]);
     readBenchmark(cache, argv[4]);
     runCache(cache);
-    printStatistics(cache, argv[4]);
-    cout << "Done." << endl;
+    printStatistics(cache, argv[4], argv[5]);
     return 0;
 }
