@@ -20,22 +20,30 @@ def plot(benchTitle,data,cpu_usage_data,flag):
 	    domain.append(numModules-x)
 	capacities = []
 	decompressions = []
-	for item in reversed(data):
-	    capacities.append(item[0])
-	    decompressions.append(item[1])
-	print "Capacities in KB:"
-	capacities_kb = []
-	for item in capacities:
-		capacities_kb.append(item/1000)
-	print capacities_kb
-	print "Decompressions"
-	print decompressions
+	if flag != "max":
+		for item in reversed(data):
+		    capacities.append(item[0])
+		    decompressions.append(item[1])
+		print "Capacities in KB:"
+		capacities_kb = []
+		for item in capacities:
+			capacities_kb.append(item/1000)
+		print capacities_kb
+		print "Decompressions"
+		print decompressions
 	fig = plt.figure()
 	ax = fig.add_subplot(111)
-	
-	rects1 = ax.bar(ind, capacities_kb, width, label= 'Cache Capacity', color='black')
+	if flag == "max":
+		data_kb = []
+		for item in data:
+			data_kb.append(item/1000)
+		rects1 = ax.bar(ind, data_kb, width, label= 'Max Memory Usage', color='blue')	
+	else:
+		rects1 = ax.bar(ind, capacities_kb, width, label= 'Cache Capacity', color='black')
 	ax.set_xlim(-width,len(ind)+width)
-	ax2 = ax.twinx()
+	ax2 = ax
+	if flag != "max":
+		ax2 = ax.twinx()
 	second_bar_data = []
 	second_bar_label = '' 
 	third_bar_data = []
@@ -45,24 +53,34 @@ def plot(benchTitle,data,cpu_usage_data,flag):
 	colo = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
 	if flag == "cpu":
 		new_bar_label = 'CPU Time (Seconds)'
+		for item in cpu_usage_data:
+			new_bar_data = [] 
+			if flag == "memory":
+				for val in item:
+					new_bar_data.append(val/1000000)
+			else:
+				new_bar_data = item
+			print item
+			secondRects.append(ax2.bar(ind+(width*(cpu_usage_data.index(item)+1)), new_bar_data, width, label = new_bar_label, color = colo[cpu_usage_data.index(item)] ))
 	elif flag == "memory":
 		new_bar_label = 'Memory Usage (KB)'
-	else: 
+		for item in cpu_usage_data:
+			new_bar_data = [] 
+			if flag == "memory":
+				for val in item:
+					new_bar_data.append(val/1000000)
+			else:
+				new_bar_data = item
+			print item
+			secondRects.append(ax2.bar(ind+(width*(cpu_usage_data.index(item)+1)), new_bar_data, width, label = new_bar_label, color = colo[cpu_usage_data.index(item)] ))
+
+	elif flag == "both": 
 		second_bar_data = decompressions 
 		second_bar_label = 'Number of Decompressions'
 		third_bar_data = cpu_usage_data
 		third_bar_label = 'CPU Time (Seconds)'
 #		rects3 = ax2.bar(ind+(width*2), third_bar_data, width, label= third_bar_data, color='white')
-	for item in cpu_usage_data:
-		new_bar_data = [] 
-		if flag == "memory":
-			for val in item:
-				new_bar_data.append(val/1000000)
-		else:
-			new_bar_data = item
-		print item
-		secondRects.append(ax2.bar(ind+(width*(cpu_usage_data.index(item)+1)), new_bar_data, width, label = new_bar_label, color = colo[cpu_usage_data.index(item)] ))
-#	ax2.set_xlim(-width,len(ind)+width)
+	#	ax2.set_xlim(-width,len(ind)+width)
 	ax.set_ylabel("Capacity (KB)")
 	title = ""
 	if flag == "cpu":
@@ -74,6 +92,9 @@ def plot(benchTitle,data,cpu_usage_data,flag):
 	elif flag == "memory":
 		ax2.set_ylabel("Memory Used in Decompressions (MB)")
 		title = "Memory Used by Decompression Operations"
+	elif flag == "max":
+		ax2.set_ylabel("Memory (KB)")
+		title = "Max Memory Used by Decompression Algorithm"
 	else:	
 		ax2.set_ylabel("Decompressions Number/CPU Time")
 		title = "CPU Time and Decompressions Performed"
@@ -82,6 +103,9 @@ def plot(benchTitle,data,cpu_usage_data,flag):
 	ax.set_title(benchTitle + "\n" + "Cache Capacities and " + title)
 	xTickMarks = domain
 	xTickMarks[0] = "Entire Program"
+	if flag == "max":
+		ax.set_title(benchTitle + "\n" + title)
+		xTickMarks = ['BZIP', 'SCZ', 'ZIP', 'TAR', 'GZIP']
 	ax.set_xticks(ind+width)
 	xtickNames = ax.set_xticklabels(xTickMarks)
 	plt.setp(xtickNames, fontsize=10)
@@ -98,13 +122,12 @@ def plot(benchTitle,data,cpu_usage_data,flag):
 		#ax.legend( (rects1[0], rects2[0], rects3[0]), ('Cache Capacity', 'Decompressions', 'CPU Time (Seconds)') )
 	rects = []
 	rects.append(rects1[0])
-	for item in secondRects:
-		rects.append(item[0])
 	if flag == "cpu" or flag == "decompressions" or flag == "memory":
+		for item in secondRects:
+			rects.append(item[0])
 		labs = ['Cache Capacity', "BZIP2", "SCZ", "ZIP", "TAR", "GZIP"]
-	else:
-#		rects.append(rects3[0])
-		labs = ['Cache Capacity', second_bar_label, third_bar_label]
+	elif flag == "max":
+		labs = ['Memory (KB)'] 
 	ax.legend(rects, labs)
 	plt.savefig(str(str(ax.title) + ".pdf"), bbox_inches="tight")
 
@@ -250,6 +273,18 @@ memoryUsageStatisticsSCZ = compress_decompress("scz","decompress")[1]
 memoryUsageStatisticsZIP = compress_decompress("zip","decompress")[1]
 memoryUsageStatisticsTAR = compress_decompress("tar","decompress")[1]
 memoryUsageStatisticsGZIP = compress_decompress("gzip","decompress")[1]
+
+memoryUsageMax = []
+memoryUsageMax.append(numpy.amax(memoryUsageStatisticsBZIP2.values()))
+memoryUsageMax.append(numpy.amax(memoryUsageStatisticsSCZ.values()))
+memoryUsageMax.append(numpy.amax(memoryUsageStatisticsZIP.values()))
+memoryUsageMax.append(numpy.amax(memoryUsageStatisticsTAR.values()))
+memoryUsageMax.append(numpy.amax(memoryUsageStatisticsGZIP.values()))
+
+
+print "Max Memory Usage Requirements by Compression Algorithm:"
+print memoryUsageMax
+
 
 print "ccs[2]: Module Compression Complete"
 print "ccs[3]: Preparing Simulator Input Files"
@@ -426,3 +461,5 @@ memData.append(memDataGZIP)
 
 plot("BWT",compData,memData,"memory")
 plot("BWT",compData,cpuData,"cpu")
+plot("BWT",memoryUsageMax,cpuData,"max")
+
