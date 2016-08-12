@@ -24,6 +24,7 @@ struct CryoCache {
     vector<string> vectCalls;
     deque<string> cacheContents;
     map<string,int> modSizes;
+	map<string,int> decompressionMap;
     CryoCache():capacity(1024),associativity("full"),eviction("LRU"),used_memory(0),numHits(0),numMisses(0),numDecompressions(0),numRecompressions(0) { }
 };
 
@@ -49,6 +50,7 @@ void readBenchmark(CryoCache& cache, const char* benchName){
         int size;
         while(moduleSizeFile >> name >> size){
             cache.modSizes.insert(make_pair(name,size));
+			cache.decompressionMap.insert(make_pair(name,0));
         }
     }
     moduleSizeFile.close();
@@ -61,7 +63,6 @@ void readBenchmark(CryoCache& cache, const char* benchName){
     }
     CallStackFile.close();
 
-
     if(debugCacheSim){
         cout << "Module Sizes:" << endl;
         for(map<string,int>::iterator it = cache.modSizes.begin(); it != cache.modSizes.end(); ++it)
@@ -70,7 +71,6 @@ void readBenchmark(CryoCache& cache, const char* benchName){
         for(vector<string>::iterator it = cache.vectCalls.begin(); it != cache.vectCalls.end(); ++it)
             cout << *it << endl;
     }
-
 }
 
 
@@ -92,6 +92,7 @@ bool fillCache(CryoCache& cache, int instSize, string curInst){
         cache.used_memory += instSize;
         cache.cacheContents.push_back(curInst);
         cache.numDecompressions++;
+		cache.decompressionMap[curInst]++;
 
         if(debugCacheSim){
             cout << "Success" << endl;
@@ -129,8 +130,8 @@ void runCache(CryoCache& cache){
     }
 }
 
-void printStatistics(CryoCache cache, const char* benchName, bool workflowIntegrate){
-    if(!workflowIntegrate){
+void printStatistics(CryoCache cache, const char* benchName, int workflowIntegrate){
+    if(workflowIntegrate == 0){
         cout << "------- Cryogenic Control Module Statistics ----------" << endl;
         cout << "Benchmark: " << benchName << endl;
         cout << "Size of Cache: " << cache.capacity << endl;
@@ -141,9 +142,17 @@ void printStatistics(CryoCache cache, const char* benchName, bool workflowIntegr
         cout << "Number of module recompressions: " << cache.numRecompressions << endl;
         cout << "Number of cache hits: " << cache.numHits << endl;
         cout << "Number of cache misses: " << cache.numMisses << endl;
+
+		for(map<string,int>::iterator it = cache.decompressionMap.begin(); it!=cache.decompressionMap.end();++it){
+			cout << it->first << " " << it->second << endl;
+		}
     }
-    else if(workflowIntegrate){
-        cout << cache.numDecompressions;
+    else if(workflowIntegrate == 1){ 
+        cout << cache.numDecompressions << endl;
+		for(map<string,int>::iterator it = cache.decompressionMap.begin(); it!=cache.decompressionMap.end();++it){
+			cout << it->first << ":" << it->second << endl;
+		}
+
     }
 }
 
@@ -158,6 +167,6 @@ int main( int argc, char *argv[]){
     initializeCache(cache, in_cap, argv[2], argv[3]);
     readBenchmark(cache, argv[4]);
     runCache(cache);
-    printStatistics(cache, argv[4], argv[5]);
+    printStatistics(cache, argv[4], atoi(argv[5]));
     return 0;
 }
