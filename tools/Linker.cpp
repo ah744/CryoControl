@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
+#include <algorithm>
 #include <map>
 #include <string>
 #include <bitset>
@@ -12,6 +13,7 @@ using namespace std;
 bool debugLinker = false;
 
 vector<string> callStack;
+vector<string> leafModules;
 
 inline bool file_exists (const string& name){
     struct stat buffer;
@@ -222,7 +224,7 @@ void readMain(map<string,bitset<32> >& moduleOpcodes, map<string,bitset<8> >& in
                     cout << module << endl;
                 }
                 moduleCalls.push_back(module);
-                callStack.push_back(module);
+//                callStack.push_back(module);
                 addModule(moduleOpcodes, module, newModuleCode);
                 mainOutput.write((char*) &newModuleCode, sizeof(newModuleCode));
             }
@@ -242,6 +244,7 @@ void readModule(string& currModule, bitset<32>& newModuleCode, map<string,bitset
                 int timeStep;
                 string module;
                 if(ss >> timeStep) {
+					leafModules.push_back(currModule);
                     linkLeaf(currModule,instOpcodes,qRegs); 
                     break;
                 }
@@ -256,7 +259,7 @@ void readModule(string& currModule, bitset<32>& newModuleCode, map<string,bitset
                         addModule(moduleCodes, module, newModuleCode);
                         moduleOutputFile.write((char*) &newModuleCode, sizeof(newModuleCode));
                         string filename = module + ".bin";
-                        callStack.push_back(module);
+ //                       callStack.push_back(module);
                         if(!(file_exists(filename))){
                             readModule(module,newModuleCode,moduleCodes,instOpcodes,qRegs);    
                         }
@@ -266,6 +269,29 @@ void readModule(string& currModule, bitset<32>& newModuleCode, map<string,bitset
             }
         }
     }
+}
+
+void createCallStack(string& currModule){
+	cout << "[callstack] reading module: " << currModule << endl;
+	if(find(leafModules.begin(), leafModules.end(), currModule) != leafModules.end())
+		callStack.push_back(currModule);
+	else{
+    	ifstream mainFile (currModule.c_str());
+		string line;
+		//TODO Add a check for a ".", and correct the call to the decomposed rotation
+		while (getline(mainFile,line)){
+			istringstream ss(line);
+			string module;
+			ss >> module;
+			std::size_t found = module.find(".");
+			if(found != std::string::npos)
+				module = module.substr(0,found);
+			if (file_exists(module)){
+				callStack.push_back(currModule);
+				createCallStack(module);
+			}	
+		}
+	}
 }
 
 
@@ -284,6 +310,9 @@ int main( int argc, char* argv[] ){
         readModule((*it), newModuleCode, moduleCodes, instOpcodes, qRegs);
     }
     
+	string main = "main"; 
+	createCallStack(main);	
+
     ofstream callStackFile ("main.calls.txt");
     for(vector<string>::iterator it = callStack.begin(); it != callStack.end(); ++it){
         callStackFile << *it << endl;
