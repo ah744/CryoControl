@@ -16,7 +16,6 @@ if(len(sys.argv)<2):
     exit(1)
 
 absScriptsDir = os.path.abspath(os.getcwd()) 
-print absScriptsDir
 fullPathInput = str(sys.argv[1])
 splitInput = fullPathInput.split("/")
 algsDirectoryList = splitInput[:-1]
@@ -140,8 +139,6 @@ compressionStatisticsZIP = compress_decompress("zip","decompress")[0]
 compressionStatisticsTAR = compress_decompress("tar","decompress")[0]
 compressionStatisticsGZIP = compress_decompress("gzip","decompress")[0]
 
-print compressionStatisticsBZIP2
-
 print "Collecting Statistics..."
 memoryUsageStatisticsBZIP2 = compress_decompress("bzip2","decompress")[1]
 memoryUsageStatisticsSCZ = compress_decompress("scz","decompress")[1]
@@ -155,9 +152,6 @@ memoryUsageMax.append(numpy.amax(memoryUsageStatisticsSCZ.values()))
 memoryUsageMax.append(numpy.amax(memoryUsageStatisticsZIP.values()))
 memoryUsageMax.append(numpy.amax(memoryUsageStatisticsTAR.values()))
 memoryUsageMax.append(numpy.amax(memoryUsageStatisticsGZIP.values()))
-
-
-
 
 print "ccs[2]: Module Compression Complete"
 print "ccs[3]: Preparing Simulator Input Files"
@@ -185,51 +179,41 @@ for file in os.listdir(os.getcwd()):
 		sumCompressedLeaves += os.path.getsize(file)
 		filesizes_compressed[file] = os.path.getsize(file)
 		outputFile.write( file + " " + str(os.path.getsize(file)) + "\n")
-
-print filesizes_decompressed
 outputFile.close()
+
 with open(benchSizeFileName, "w") as sizesFile:
 	for filepair in filesizes_decompressed:
 		filename = filepair[:-4]
 		filesize = filesizes_decompressed[filepair]
 		sizesFile.write(filename + " " + str(filesize) + "\n")
-#	for filename in os.listdir(os.getcwd()):
-#		if filename.endswith(".leaf.bin"):
-#			trueFileName = filename[0:-9]
-#			print trueFileName
-#			sizesFile.write(trueFileName + " " + str(os.path.getsize(file)) + "\n")
 sizesFile.close()
-
 callStackFileName = benchName + "calls.txt"
 subprocess.call(['mv', 'main.calls.txt', callStackFileName])
+
+with open(str(benchName + 'decomp.sizes.txt'), 'w') as decompSizesFile:
+	for item in memoryUsageStatisticsGZIP:
+		decompSizesFile.write(item + " " + str(memoryUsageStatisticsGZIP[item]) + "\n")	
+decompSizesFile.close()
 
 print "ccs[3]: Simulator Inputs Prepared"
 print "ccs[4]: Preparing Data Ranges"
 
 numModules = len(filesizes_compressed)
-#print "Total Number of Modules: " + str(numModules) 
-#print "Sizes of Modules" + str(len(filesizes_compressed)) 
 sorted_filesizes_decompressed = sorted(filesizes_decompressed.items(), key=operator.itemgetter(1))
 ordered_filesizes_decompressed = []
 for pair in reversed(sorted_filesizes_decompressed):
     ordered_filesizes_decompressed.append(pair)
-    #print str(pair[1]) + "  " + pair[0] 
-#print "Total Decompressed Module Size: " + str(sumDecompressedModules) + " Bytes"
-#print "Total Compressed Module Size: " + str(sumCompressedModules) + " Bytes"
 largestModuleSize = ordered_filesizes_decompressed[0][1]
-#print "Largest Module Size: " + str(largestModuleSize) + "\n"
 
 ranges = []
 newValue = sumDecompressedModules
 ranges.append(newValue)
 for pair in sorted_filesizes_decompressed:
-    #print pair[0]
     newValue -= pair[1]
     ranges.append(newValue) 
 for x in ranges:
     if x < largestModuleSize:
         ranges.remove(x)
-print ranges
 
 
 print "ccs[4]: Data Ranges Prepared"
@@ -257,9 +241,6 @@ total_mem_usage_scz = 0
 total_mem_usage_zip = 0
 total_mem_usage_tar = 0
 total_mem_usage_gzip = 0
-
-
-
 
 for capacity in ranges:
 	print "\tSimulating Capacity: " + str(capacity)
@@ -345,7 +326,7 @@ def plot(benchTitle,data,cpu_usage_data,flag):
 	    domain.append(numModules-x)
 	capacities = []
 	decompressions = []
-	if flag != "max":
+	if flag != "max" and flag != "full":
 		for item in reversed(data):
 		    capacities.append(item[0])
 		    decompressions.append(item[1])
@@ -360,6 +341,9 @@ def plot(benchTitle,data,cpu_usage_data,flag):
 		for item in data:
 			data_kb.append(item/1000)
 		rects1 = ax.bar(ind, data_kb, width, label= 'Max Memory Usage', color='blue')	
+	elif flag == "full":
+		rects1 = ax.bar(ind, data, width, label= 'Max Memory Usage', color='blue')	
+		
 	else:
 		rects1 = ax.bar(ind, capacities_kb, width, label= 'Cache Capacity', color='black')
 
@@ -396,6 +380,14 @@ def plot(benchTitle,data,cpu_usage_data,flag):
 			for val in item:
 				new_bar_data.append(val/1000)
 			secondRects.append(ax2.bar(ind+(width*(cpu_usage_data.index(item)+1)), new_bar_data, width, label = new_bar_label, color = colo[cpu_usage_data.index(item)] ))
+	elif flag == "full":
+		new_bar_label = 'Speedup'
+		for item in cpu_usage_data.values():
+			lengthDiff = len(data) - len(item)
+			new_bar_data = item
+			for x in range(lengthDiff):
+				new_bar_data.append(0)	
+			secondRects.append(ax2.bar(ind+(width*(cpu_usage_data.values().index(item)+1)), new_bar_data, width, label = new_bar_label, color = colo[cpu_usage_data.values().index(item)] ))
 	elif flag == "both": 
 		second_bar_data = decompressions 
 		second_bar_label = 'Number of Decompressions'
@@ -404,6 +396,8 @@ def plot(benchTitle,data,cpu_usage_data,flag):
 #		rects3 = ax2.bar(ind+(width*2), third_bar_data, width, label= third_bar_data, color='white')
 	#	ax2.set_xlim(-width,len(ind)+width)
 	ax.set_ylabel("Capacity (KB)")
+	if flag == "full":
+		ax.set_ylabel("Capacity (Modules)")
 	title = ""
 	if flag == "cpu":
 		ax2.set_ylabel("CPU Time (Seconds)")
@@ -420,9 +414,9 @@ def plot(benchTitle,data,cpu_usage_data,flag):
 	elif flag == "max":
 		ax2.set_ylabel("Memory (KB)")
 		title = "Max Memory Used by Decompression Algorithm"
-	else:	
-		ax2.set_ylabel("Decompressions Number/CPU Time")
-		title = "CPU Time and Decompressions Performed"
+	elif flag == "full":
+		ax2.set_ylabel("Speedup")
+		ax2.set_ylim([0.98,1.02])
 
 	ax.set_xlabel("Number of Modules Containable by Cache")
 	ax.set_title(benchTitle + "\n" + "Cache Capacities and " + title)
@@ -431,7 +425,13 @@ def plot(benchTitle,data,cpu_usage_data,flag):
 	if flag == "max":
 		ax.set_title(benchTitle + "\n" + title)
 		xTickMarks = ['BZIP', 'SCZ', 'ZIP', 'TAR', 'GZIP']
-	ax.set_xticks(ind+width+2)
+	elif flag == "full":
+		ax.set_title("Benchmark Runtimes With Limited Cache Capacities")
+		for x in range(len(data)):
+			xTickMarks[x] = 'N - ' + str(x)
+			xTickMarks[0] = 'All'
+		ax.set_xlabel("Number of Modules Containable by Cache\nN = Total Number of Modules per Benchmark")
+	ax.set_xticks(ind+width+1.5)
 	if flag == "max":
 		ax.set_xticks(ind+0.4)
 	xtickNames = ax.set_xticklabels(xTickMarks)
@@ -455,12 +455,20 @@ def plot(benchTitle,data,cpu_usage_data,flag):
 		labs = ['Cache Capacity', "BZIP2", "SCZ", "ZIP", "TAR", "GZIP"]
 	elif flag == "max":
 		labs = ['Memory (KB)'] 
-	ax.legend(rects, labs)
+		ax.legend(rects, labs)
+	elif flag == "full":
+		for item in secondRects:
+			rects.append(item[0])
+		labs = ['Cache Capacity']
+		for item in cpu_usage_data.keys():	
+			labs.append(item[:(item.find("."))])
+		ax.legend(rects,labs, bbox_to_anchor=(1,1) )
+	else:
+		ax.legend(rects, labs, bbox_to_anchor=(1.5, 1))
 	plt.savefig(str(str(ax.title) + ".pdf"), bbox_inches="tight")
 
-
-print compData
 plot(benchName,compData,cpuData,"cputs")
+plot(benchName,compData,cpuData,"cpu")
 plot(benchName,memoryUsageMax,cpuData,"max")
 
 with open (str(benchName + "cputs"), 'w') as f:
@@ -483,22 +491,21 @@ def full_suite():
 	benchCPUData = {}
 	for file in os.listdir(os.getcwd()):
 		os.chdir(absScriptsDir)
-		os.chdir("../" + "Algorithms/" + file)
-		with open ((file + "time"), 'r') as f:
-			for line in f:
-				if line.startswith("#Num of SIMD time steps for function main : "):
-					lineSplit = line.split(" ")
-					benchTS[file] = lineSplit[-1][:-2]
-		os.chdir(absScriptsDir)
-		os.chdir("Algs/"+file)
-		with open ((file+"cputs"), 'r') as f:
-			allData = []
-			for line in f:
-				allData.append(line.split(" "))
-			benchCPUData[file] = (allData[-1][:-1])
-	
-	print benchCPUData
-	
+		if not file == ".DS_Store":
+			os.chdir("../" + "Algorithms/" + file)
+			with open ((file + "time"), 'r') as f:
+				for line in f:
+					if line.startswith("#Num of SIMD time steps for function main : "):
+						lineSplit = line.split(" ")
+						benchTS[file] = lineSplit[-1][:-2]
+			os.chdir(absScriptsDir)
+			os.chdir("Algs/"+file)
+			with open ((file+"cputs"), 'r') as f:
+				allData = []
+				for line in f:
+					allData.append(line.split(" "))
+				benchCPUData[file] = (allData[-1][:-1])
+	finalBenchData = {}	
 	finalBenchmarkTS = []
 	for benchmarkName in benchCPUData:
 		bench_modified_ts = []
@@ -509,11 +516,22 @@ def full_suite():
 		for cpu_ts in benchCPUData[benchmarkName]:
 			cpu_ts = float(cpu_ts)
 			alg_ts = float(alg_ts)
-			print cpu_ts
-			print alg_ts
-			bench_modified_ts.append((cpu_ts+alg_ts)/alg_ts)
+			bench_modified_ts.append(alg_ts/(cpu_ts+alg_ts))
 		finalBenchmarkTS.append(bench_modified_ts)
-	
-	print finalBenchmarkTS
+		finalBenchData[benchmarkName] = bench_modified_ts 
+	return finalBenchData
 
-full_suite()
+benchData = full_suite()
+maxBenchDomain = 0
+for item in benchData:
+	if len(benchData[item]) > maxBenchDomain:
+		maxBenchDomain = len(benchData[item])
+domain_full = numpy.arange(maxBenchDomain)
+domain_full_proper = []
+for item in reversed(domain_full):
+	domain_full_proper.append(item)
+
+plot(benchName,domain_full_proper,benchData,"full")
+
+
+

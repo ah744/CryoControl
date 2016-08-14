@@ -259,7 +259,7 @@ void readModule(string& currModule, bitset<32>& newModuleCode, map<string,bitset
                         addModule(moduleCodes, module, newModuleCode);
                         moduleOutputFile.write((char*) &newModuleCode, sizeof(newModuleCode));
                         string filename = module + ".bin";
- //                       callStack.push_back(module);
+//                       callStack.push_back(module);
                         if(!(file_exists(filename))){
                             readModule(module,newModuleCode,moduleCodes,instOpcodes,qRegs);    
                         }
@@ -272,7 +272,6 @@ void readModule(string& currModule, bitset<32>& newModuleCode, map<string,bitset
 }
 
 void createCallStack(string& currModule){
-	cout << "[callstack] reading module: " << currModule << endl;
 	if(find(leafModules.begin(), leafModules.end(), currModule) != leafModules.end())
 		callStack.push_back(currModule);
 	else{
