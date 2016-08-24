@@ -32,8 +32,10 @@ void readModuleFile(ifstream& inputs, vector<string>& modules, bool isCG){
                         }
                     }
                     else{
-                        getline(inputs,newLine);
-                        getline(inputs,newLine);
+						int i;
+						for(i=0;i<12;i++){
+                        	getline(inputs,newLine);
+						}
                         while(getline(inputs,newLine) && !(newLine.empty()))
                             outputModule << newLine << endl;
                     }
@@ -52,8 +54,8 @@ int main(int argc, char* argv[]){
         exit(1);
     }
     string benchName (argv[1]); 
-    string benchCGName = benchName + "rs.l1.lpfs.cg";
-    string benchLPFSName = benchName + "leaves.rs.l1.lpfs";
+    string benchCGName = benchName + "cg";
+    string benchLPFSName = benchName + "lpfs";
     ifstream inputs_cg (benchCGName.c_str()); 
     vector<string> moduleList;
     readModuleFile(inputs_cg,moduleList,true);

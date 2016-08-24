@@ -55,6 +55,9 @@ void addOp(map<string,bitset<8> >& instOpcodes, string newInstruction, bitset<8>
         newOp = incrementBitset8(newOp);
         instOpcodes.insert(make_pair(newInstruction,newOp));
     }
+	else{
+		newOp = instOpcodes.find(newInstruction)->second;
+	}
 }
 
 void addQreg(map<string,bitset<16> >& qRegs, string qreg, bitset<16>& newReg){
@@ -63,6 +66,8 @@ void addQreg(map<string,bitset<16> >& qRegs, string qreg, bitset<16>& newReg){
         newReg = incrementBitset16(newReg);
         qRegs.insert(make_pair(qreg,newReg));
     }
+	else newReg = qRegs.find(qreg)->second;
+	if(debugLinker) cout << "Added qreg: " << qreg << " with code: " << newReg << endl;
 }
     
 void printOpcodes(map<string,bitset<8> > instOpcodes){
@@ -92,6 +97,8 @@ void linkLeaf(string& moduleName, map<string,bitset<8> >& instOpcodes, map<strin
             while(getline(CallStackFile,line)){
                 cout << line << endl;
             }
+			CallStackFile.clear();
+			CallStackFile.seekg(0, ios::beg);
         }
         int timeStep;
         char delim;
@@ -136,7 +143,7 @@ void linkLeaf(string& moduleName, map<string,bitset<8> >& instOpcodes, map<strin
                 if(debugLinker) cout << "Found MOV Instruction" << endl;
 
             }
-            else CallStackFile >> instruction;
+            else instruction = instruction_or_schedts;
 
             if(instruction == "CNOT") {
                 CallStackFile >> qreg1 >> qreg2; 
@@ -191,6 +198,7 @@ void linkLeaf(string& moduleName, map<string,bitset<8> >& instOpcodes, map<strin
                 unsigned short qregister = qRegs.find(*vit)->second.to_ulong();
                 BinaryOutput.write((char*) &qregister, sizeof(qregister));
             }
+			if(debugLinker) cout << "Instruction Written To File" << endl;
         }
     }
     CallStackFile.close();
@@ -233,6 +241,7 @@ void readMain(map<string,bitset<32> >& moduleOpcodes, map<string,bitset<8> >& in
 }
 
 void readModule(string& currModule, bitset<32>& newModuleCode, map<string,bitset<32> >& moduleCodes, map<string,bitset<8> >& instOpcodes, map<string,bitset<16> >& qRegs) {
+	if(debugLinker) cout << "Reading module: " << currModule << " ...\n";
     ifstream moduleFile (currModule.c_str());
     string outputFile = currModule + ".bin";
     if(!(file_exists(outputFile))){
@@ -272,12 +281,12 @@ void readModule(string& currModule, bitset<32>& newModuleCode, map<string,bitset
 }
 
 void createCallStack(string& currModule){
+	if(debugLinker) cout << "Call Graph Traversal::" << currModule << endl;
 	if(find(leafModules.begin(), leafModules.end(), currModule) != leafModules.end())
 		callStack.push_back(currModule);
 	else{
     	ifstream mainFile (currModule.c_str());
 		string line;
-		//TODO Add a check for a ".", and correct the call to the decomposed rotation
 		while (getline(mainFile,line)){
 			istringstream ss(line);
 			string module;
@@ -303,12 +312,15 @@ int main( int argc, char* argv[] ){
     vector<string> moduleCalls;
 
     bitset<32> newModuleCode = (4294967295ul);
+
+	if(debugLinker) cout << "Reading main ...\n";
     readMain(moduleCodes, instOpcodes, qRegs, moduleCalls, newModuleCode);
     
     for(vector<string>::iterator it = moduleCalls.begin(); it != moduleCalls.end(); ++it){
+		if(debugLinker) cout << "Reading module --  " << (*it) << " ...\n";
         readModule((*it), newModuleCode, moduleCodes, instOpcodes, qRegs);
     }
-    
+    if(debugLinker) cout << "Creating Call Stack..." << endl; 
 	string main = "main"; 
 	createCallStack(main);	
 
