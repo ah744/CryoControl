@@ -229,7 +229,6 @@ ranges = []
 newValue = sumDecompressedModules
 moduleRanges = []
 
-
 for x in range(6,0,-1):
     moduleRanges.append(int((x/6.)*numModules))
 for modulecount in moduleRanges:
@@ -238,19 +237,44 @@ for modulecount in moduleRanges:
         newValue -= sorted_filesizes_decompressed[x][1]
     ranges.append(newValue)
 
+print "Current Ranges:"
+print ranges
+print "Current Module Ranges:"
+print moduleRanges
+
 for x in [8,4,2,1]:
     newValue = largestModuleSize
-    if x < numModules:
-        for i in range(x):
-            newValue += sorted_filesizes_decompressed[-x][1]
+    print "Trying: " + str(x)
+    if x < numModules and x > moduleRanges[-1]:
+        print "Fitting into current list"
+        for item in moduleRanges:
+            if item < x:
+                print "Found correct location"
+                moduleRanges.insert(moduleRanges.index(item),x)
+                break
+        if x > 1:
+            print "Calculating correct capacity"
+            for i in range(x):
+                newValue += sorted_filesizes_decompressed[-x][1]
+        ranges.insert(moduleRanges.index(x),newValue)
+        print "Finished adding capacity: " + str(newValue) + " at module count: " + str(x)
+    elif x < numModules and x < moduleRanges[-1]:
+        print "Adding: " + str(x)
+        if x > 1:
+            for i in range(x):
+                newValue += sorted_filesizes_decompressed[-x][1]
+        print "New capacity to be added: " + str(newValue)
         if newValue < ranges[-1]:
             ranges.append(newValue)
             moduleRanges.append(x)
+            print "Finished adding capacity: " + str(newValue) + " at module count: " + str(x)
 
 for x in ranges:
     if x < largestModuleSize:
         ranges.remove(x)
 
+print "Final Module Ranges:"
+print moduleRanges
 
 #   Step sizes of decrementing by a single module, fine grained
 #for pair in sorted_filesizes_decompressed:
@@ -497,6 +521,7 @@ def plot(benchTitle,data,cpu_usage_data,moduleRanges,flag):
 		for item in secondRects:
 			rects.append(item[0])
 		labs = ['Cache Capacity', "BZIP2", "SCZ", "ZIP", "TAR", "GZIP"]
+		ax.legend(rects,labs, bbox_to_anchor=(1.42,1) )
 	elif flag == "max":
 		labs = ['Memory (KB)'] 
 		ax.legend(rects, labs)
