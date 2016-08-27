@@ -282,8 +282,12 @@ void readModule(string& currModule, bitset<32>& newModuleCode, map<string,bitset
 
 void createCallStack(string& currModule){
 	if(debugLinker) cout << "Call Graph Traversal::" << currModule << endl;
-	if(find(leafModules.begin(), leafModules.end(), currModule) != leafModules.end())
-		callStack.push_back(currModule);
+	ofstream callStackFile ("main.calls.txt", ios::out | ios::app);
+	if(find(leafModules.begin(), leafModules.end(), currModule) != leafModules.end()){
+//		callStack.push_back(currModule);
+		callStackFile << currModule << endl;
+		callStackFile.close();
+	}
 	else{
     	ifstream mainFile (currModule.c_str());
 		string line;
@@ -295,7 +299,9 @@ void createCallStack(string& currModule){
 			if(found != std::string::npos)
 				module = module.substr(0,found);
 			if (file_exists(module)){
-				callStack.push_back(currModule);
+//				callStack.push_back(currModule);
+				callStackFile << currModule << endl;
+				callStackFile.close();
 				createCallStack(module);
 			}	
 		}
@@ -324,11 +330,11 @@ int main( int argc, char* argv[] ){
 	string main = "main"; 
 	createCallStack(main);	
 
-    ofstream callStackFile ("main.calls.txt");
-    for(vector<string>::iterator it = callStack.begin(); it != callStack.end(); ++it){
-        callStackFile << *it << endl;
-    }
-    callStackFile.close();
+//    ofstream callStackFile ("main.calls.txt");
+//    for(vector<string>::iterator it = callStack.begin(); it != callStack.end(); ++it){
+//        callStackFile << *it << endl;
+//    }
+//    callStackFile.close();
 
     if(debugLinker){
         printOpcodes(instOpcodes);

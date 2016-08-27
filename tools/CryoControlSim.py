@@ -9,7 +9,8 @@ import resource
 import psutil
 import operator
 import matplotlib.pyplot as plt
-
+import figureplot as fp 
+import FullSuite as fs
 
 if(len(sys.argv)<2):
     print "Too few arguments specified..."
@@ -23,8 +24,23 @@ algsDirectoryList = splitInput[:-1]
 algsDirectory = "/".join(algsDirectoryList)
 benchName = splitInput[-1]
 
+if benchName == "full_suite":
+    benchData = fs.full_suite()
+    maxBenchDomain = 0
+    for item in benchData:
+    	if len(benchData[item]) > maxBenchDomain:
+    		maxBenchDomain = len(benchData[item])
+    domain_full = numpy.arange(maxBenchDomain)
+    domain_full_proper = []
+    for item in reversed(domain_full):
+    	domain_full_proper.append(item)
+    print domain_full_proper
+    print "---------------"
+    print benchData
+    fs.plot(domain_full_proper,benchData,"full")
+    exit(1)
+
 print "------------Cryogenic Control Module Cache Simulator---------------"
-#compressionAlgorithm = input("Specify Compression Algorithm: ")
 compressionAlgorithm = "scz"
 
 print "Running: " + benchName
@@ -42,14 +58,18 @@ if(not os.path.exists(benchName)):
 os.chdir(benchName)
 newPathInput = "../" + newPathInput
 
-subprocess.call([scriptsDir + 'moduleextraction', newPathInput])
-moduleFilePath = scriptsDir + algsDirectory + "/" + benchName + "modules"
-subprocess.call(['mv', moduleFilePath, "."]) 
+if not os.path.isfile("moduleextractioncomplete"):
+    subprocess.call([scriptsDir + 'moduleextraction', newPathInput])
+    moduleFilePath = scriptsDir + algsDirectory + "/" + benchName + "modules"
+    subprocess.call(['mv', moduleFilePath, "."]) 
+    subprocess.call(['touch', "moduleextractioncomplete"])
 
 print "[ccs][0]: Module Extraction Complete"
 print "[ccs][1]: Linking Leaf Modules"
 
-subprocess.call([scriptsDir + 'linker'])
+if not os.path.isfile("linkercomplete"):
+    subprocess.call([scriptsDir + 'linker'])
+    subprocess.call(['touch', "linkercomplete"])
 
 print "[ccs][1]: Linking Complete"
 print "[ccs][2]: Compressing Modules"
@@ -64,7 +84,6 @@ def compress_decompress(compressionAlgorithm,switch):
 	    if file.endswith(".bin"):
 			filename = str(file) 
 			if compressionAlgorithm == "zip":
-#				usage_start = resource.getrusage(resource.RUSAGE_CHILDREN)
                                 t0 = time.clock()
 				if switch == "compress":
 					p = subprocess.Popen(["zip", "-r", str(filename + ".zip"), str(filename)], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -73,13 +92,11 @@ def compress_decompress(compressionAlgorithm,switch):
 				ru = os.wait4(p.pid,0)[2]
                                 t1 = time.clock()
 				usage_end = resource.getrusage(resource.RUSAGE_CHILDREN)
-#				cpu_time = usage_end.ru_utime - usage_start.ru_utime
                                 cpu_time = t1-t0
 				mem_used = usage_end.ru_maxrss
 				memoryUsageStatistics[filename] = mem_used
 				compressionStatistics[filename] = cpu_time			
 			elif compressionAlgorithm == "tar":
-#				usage_start = resource.getrusage(resource.RUSAGE_CHILDREN)
                                 t0 = time.clock()
 				if switch == "compress":
 				   	p = subprocess.Popen([compressionAlgorithm, "-zcvf", str(file + ".tar"), file], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
@@ -89,7 +106,6 @@ def compress_decompress(compressionAlgorithm,switch):
                                 t1 = time.clock()
                                 cpu_time = t1-t0
 			   	usage_end = resource.getrusage(resource.RUSAGE_CHILDREN)
-#			   	cpu_time = usage_end.ru_utime - usage_start.ru_utime
 			   	mem_used = usage_end.ru_maxrss
 				memoryUsageStatistics[filename] = mem_used
 			   	compressionStatistics[filename] = cpu_time			
@@ -104,7 +120,6 @@ def compress_decompress(compressionAlgorithm,switch):
                                 t1 = time.clock()
                                 cpu_time = t1-t0
 				usage_end = resource.getrusage(resource.RUSAGE_CHILDREN)
-#				cpu_time = usage_end.ru_utime - usage_start.ru_utime
 				mem_used = ru.ru_maxrss 
 				memoryUsageStatistics[filename] = mem_used
 				compressionStatistics[filename] = cpu_time			
@@ -122,7 +137,6 @@ def compress_decompress(compressionAlgorithm,switch):
                                         t1 = time.clock()
                                 cpu_time = t1-t0
 				usage_end = resource.getrusage(resource.RUSAGE_CHILDREN)
-#				cpu_time = usage_end.ru_utime - usage_start.ru_utime
 				mem_used = ru.ru_maxrss 
 				memoryUsageStatistics[filename] = mem_used
 				compressionStatistics[filename] = cpu_time			
@@ -138,13 +152,11 @@ def compress_decompress(compressionAlgorithm,switch):
 				ru = os.wait4(p.pid,0)[2]
                                 t1 = time.clock()
 				usage_end = resource.getrusage(resource.RUSAGE_CHILDREN)
-#				cpu_time = usage_end.ru_utime - usage_start.ru_utime
                                 cpu_time = t1 - t0
 				mem_used = ru.ru_maxrss 
 				memoryUsageStatistics[filename] = mem_used
 				compressionStatistics[filename] = cpu_time			
 	return [compressionStatistics,memoryUsageStatistics]
-
 
 print "Compressing..."
 compress_decompress("bzip2","compress")
@@ -255,14 +267,14 @@ for x in [8,4,2,1]:
         if x > 1:
             print "Calculating correct capacity"
             for i in range(x):
-                newValue += sorted_filesizes_decompressed[-x][1]
+                newValue += sorted_filesizes_decompressed[x][1]
         ranges.insert(moduleRanges.index(x),newValue)
         print "Finished adding capacity: " + str(newValue) + " at module count: " + str(x)
     elif x < numModules and x < moduleRanges[-1]:
         print "Adding: " + str(x)
         if x > 1:
             for i in range(x):
-                newValue += sorted_filesizes_decompressed[-x][1]
+                newValue += sorted_filesizes_decompressed[x][1]
         print "New capacity to be added: " + str(newValue)
         if newValue < ranges[-1]:
             ranges.append(newValue)
@@ -386,159 +398,9 @@ memData.append(memDataTAR)
 memData.append(memDataGZIP)
 
 
-def plot(benchTitle,data,cpu_usage_data,moduleRanges,flag):
-	N = len(data)
-	width = 0.8 
-	domain = []
-	ind = numpy.arange(N)*(len(cpu_usage_data)+1)
-	for x in range(N):
-	    domain.append(numModules-x)
-	capacities = []
-	decompressions = []
-	if flag != "max" and flag != "full":
-		for item in reversed(data):
-		    capacities.append(item[0])
-		    decompressions.append(item[1])
-		capacities_kb = []
-		for item in capacities:
-			capacities_kb.append(item/1000)
-	fig = plt.figure()
-	ax = fig.add_subplot(111)
-	if flag == "max":
-		data_kb = []
-		ind = numpy.arange(N)
-		for item in data:
-			data_kb.append(item/1000)
-		rects1 = ax.bar(ind, data_kb, width, label= 'Max Memory Usage', color='blue')	
-	elif flag == "full":
-		rects1 = ax.bar(ind, data, width, label= 'Max Memory Usage', color='blue')	
-		
-	else:
-		rects1 = ax.bar(ind, capacities_kb, width, label= 'Cache Capacity', color='black')
-
-	if flag == "max":
-		ax.set_xlim(-(width/2),len(ind))
-	else:
-		ax.set_xlim(-width,len(ind)+width)
-	ax2 = ax
-	if flag != "max":
-		ax2 = ax.twinx()
-	second_bar_data = []
-	second_bar_label = '' 
-	third_bar_data = []
-	third_bar_label = ''
-	secondRects = []
-	new_bar_data = []
-	colo = ['red', 'orange', 'yellow', 'green', 'blue', 'purple']
-	if flag == "cpu":
-		new_bar_label = 'CPU Time (Seconds)'
-		for item in cpu_usage_data:
-			new_bar_data = item
-			secondRects.append(ax2.bar(ind+(width*(cpu_usage_data.index(item)+1)), new_bar_data, width, label = new_bar_label, color = colo[cpu_usage_data.index(item)] ))
-	if flag == "cputs":
-		new_bar_label = 'CPU Time (Timesteps)'
-		for item in cpu_usage_data:
-			new_bar_data = []
-			new_bar_data_in = item
-			for val in new_bar_data_in:
-				new_bar_data.append(int(float(val)*(2.8*10**9)))
-                        secondRects.append(ax2.bar(ind+(width*(cpu_usage_data.index(item)+1)), new_bar_data, width, label = new_bar_label, color = colo[cpu_usage_data.index(item)] ))
-	elif flag == "memory":
-		new_bar_label = 'Memory Usage (KB)'
-		for item in cpu_usage_data:
-			for val in item:
-				new_bar_data.append(val/1000)
-			secondRects.append(ax2.bar(ind+(width*(cpu_usage_data.index(item)+1)), new_bar_data, width, label = new_bar_label, color = colo[cpu_usage_data.index(item)] ))
-	elif flag == "full":
-		new_bar_label = 'Speedup'
-		for item in cpu_usage_data.values():
-			lengthDiff = len(data) - len(item)
-			new_bar_data = item
-			for x in range(lengthDiff):
-				new_bar_data.append(0)	
-			secondRects.append(ax2.bar(ind+(width*(cpu_usage_data.values().index(item)+1)), new_bar_data, width, label = new_bar_label, color = colo[cpu_usage_data.values().index(item)] ))
-	elif flag == "both": 
-		second_bar_data = decompressions 
-		second_bar_label = 'Number of Decompressions'
-		third_bar_data = cpu_usage_data
-		third_bar_label = 'CPU Time (Seconds)'
-#		rects3 = ax2.bar(ind+(width*2), third_bar_data, width, label= third_bar_data, color='white')
-	#	ax2.set_xlim(-width,len(ind)+width)
-	ax.set_ylabel("Capacity (KB)")
-	if flag == "full":
-		ax.set_ylabel("Capacity (Modules)")
-	title = ""
-	if flag == "cpu":
-		ax2.set_ylabel("CPU Time (Seconds)")
-		title = "CPU Time Used"
-	if flag == "cputs":
-		ax2.set_ylabel("Timesteps")
-		title = "CPU Ticks (timesteps)"
-	elif flag == "decompressions":
-		ax2.set_ylabel("Decompressions")
-		title = "Decompressions Performed"
-	elif flag == "memory":
-		ax2.set_ylabel("Memory Used in Decompressions (MB)")
-		title = "Memory Used by Decompression Operations"
-	elif flag == "max":
-		ax2.set_ylabel("Memory (KB)")
-		title = "Max Memory Used by Decompression Algorithm"
-	elif flag == "full":
-		ax2.set_ylabel("Speedup")
-
-	ax.set_xlabel("Number of Modules Containable by Cache")
-	ax.set_title(benchTitle + "\n" + "Cache Capacities and " + title)
-	xTickMarks = moduleRanges 
-	xTickMarks[0] = "Entire Program"
-	if flag == "max":
-		ax.set_title(benchTitle + "\n" + title)
-		xTickMarks = ['BZIP', 'SCZ', 'ZIP', 'TAR', 'GZIP']
-	elif flag == "full":
-		ax.set_title("Benchmark Runtimes With Limited Cache Capacities")
-		for x in range(len(data)):
-			xTickMarks[x] = 'N - ' + str(x)
-			xTickMarks[0] = 'All'
-		ax.set_xlabel("Number of Modules Containable by Cache\nN = Total Number of Modules per Benchmark")
-	ax.set_xticks(ind+width+1.5)
-	if flag == "max":
-		ax.set_xticks(ind+0.4)
-	xtickNames = ax.set_xticklabels(xTickMarks)
-	plt.setp(xtickNames, fontsize=10)
-	
-	def autolabel(rects):
-	    # attach some text labels
-	    for rect in rects:
-	        height = rect.get_height()
-	        ax.text(rect.get_x() + rect.get_width()/2., 1.05*height,
-	                '%d' % int(height),
-	                ha='center', va='bottom')
-#	autolabel(secondRects[0])
-	## add a legend
-		#ax.legend( (rects1[0], rects2[0], rects3[0]), ('Cache Capacity', 'Decompressions', 'CPU Time (Seconds)') )
-	rects = []
-	rects.append(rects1[0])
-	if flag == "cpu" or flag == "cputs" or flag == "decompressions" or flag == "memory":
-		for item in secondRects:
-			rects.append(item[0])
-		labs = ['Cache Capacity', "BZIP2", "SCZ", "ZIP", "TAR", "GZIP"]
-		ax.legend(rects,labs, bbox_to_anchor=(1.42,1) )
-	elif flag == "max":
-		labs = ['Memory (KB)'] 
-		ax.legend(rects, labs)
-	elif flag == "full":
-		for item in secondRects:
-			rects.append(item[0])
-		labs = ['Cache Capacity']
-		for item in cpu_usage_data.keys():	
-			labs.append(item[:(item.find("."))])
-		ax.legend(rects,labs, bbox_to_anchor=(1,1) )
-	else:
-		ax.legend(rects, labs, bbox_to_anchor=(1.5, 1))
-	plt.savefig(str(str(ax.title) + ".pdf"), bbox_inches="tight")
-
-plot(benchName,compData,cpuData,moduleRanges,"cputs")
-plot(benchName,compData,cpuData,moduleRanges,"cpu")
-plot(benchName,memoryUsageMax,cpuData,moduleRanges,"max")
+fp.figplot(benchName,numModules,compData,cpuData,moduleRanges,"cputs")
+fp.figplot(benchName,numModules,compData,cpuData,moduleRanges,"cpu")
+fp.figplot(benchName,numModules,memoryUsageMax,cpuData,moduleRanges,"max")
 
 with open (str(benchName + "cputs"), 'w') as f:
 	for item in cpuData:
@@ -549,59 +411,5 @@ f.close()
 
 print "[ccs][6] Data Analysis Complete" 
 print "[ccs][7] Full Suite Analysis" 
-
-def full_suite():
-	os.chdir(scriptsDir)
-	if(not os.path.exists("Algs")):
-	    exit(1)
-	os.chdir("Algs")
-
-	benchTS = {}
-	benchCPUData = {}
-	for file in os.listdir(os.getcwd()):
-		os.chdir(absScriptsDir)
-		if not file == ".DS_Store":
-			os.chdir("../" + "Algorithms/" + file)
-			with open ((file + "cg"), 'r') as f:
-				for line in f:
-					if line.startswith("#Num of SIMD time steps for function main : "):
-						lineSplit = line.split(" ")
-						benchTS[file] = lineSplit[-1][:-2]
-			os.chdir(absScriptsDir)
-			os.chdir("Algs/"+file)
-			with open ((file+"cputs"), 'r') as f:
-				allData = []
-				for line in f:
-					allData.append(line.split(" "))
-				benchCPUData[file] = (allData[-1][:-1])
-	finalBenchData = {}	
-	finalBenchmarkTS = []
-	for benchmarkName in benchCPUData:
-		bench_modified_ts = []
-		alg_ts = 0
-		for item in benchTS:
-			if item == benchmarkName:
-				alg_ts = int(benchTS[item])
-		for cpu_ts in benchCPUData[benchmarkName]:
-			cpu_ts = float(cpu_ts)
-			alg_ts = float(alg_ts)
-			bench_modified_ts.append(alg_ts/(cpu_ts+alg_ts))
-		finalBenchmarkTS.append(bench_modified_ts)
-		finalBenchData[benchmarkName] = bench_modified_ts 
-        print finalBenchData
-	return finalBenchData
-
-#benchData = full_suite()
-#maxBenchDomain = 0
-#for item in benchData:
-#	if len(benchData[item]) > maxBenchDomain:
-#		maxBenchDomain = len(benchData[item])
-#domain_full = numpy.arange(maxBenchDomain)
-#domain_full_proper = []
-#for item in reversed(domain_full):
-#	domain_full_proper.append(item)
-#
-#plot(benchName,domain_full_proper,benchData,"full")
-
 
 
