@@ -1,0 +1,5406 @@
+M: $::SIMD_K=2; $::SIMD_D=1024; $::SIMD_L=1
+LPFS:
+Function: assign_value_of_1_to_a (sched: lpfs, op_cnt: 5, k: 2, d: 1024, l: 1, opp: 1, refill: 1)
+=================================================================================================
+ops = 3
+moves = 2
+total = 5
+ots = 3
+mts = 1
+ts = 7
+SIMDs = 1
+tgates = 0
+T(1) = 6
+T(inf) = 3
+T(2,1024) = 7
+Speedup = 0.857142857142857
+Efficiency = 0.428571428571429
+Utility = 0.357142857142857
+Quality = 0.357142857142857
+Overhead = 40% (reduction: 26.6666666666667)
+Avg load = 2
+Peak load = 2
+mlist = 2 0 0
+
+0,0 MOV 1 0 ancilla_one_g0
+0,0 MOV 1 0 target0
+0,1 1: CNOT target0 ancilla_one_g0
+1,1 2: CNOT ancilla_one_g0 target0
+2,1 3: CNOT target0 ancilla_one_g0
+
+LPFS:
+Function: assign_value_of_0_to_a (sched: lpfs, op_cnt: 5, k: 2, d: 1024, l: 1, opp: 1, refill: 1)
+=================================================================================================
+ops = 3
+moves = 2
+total = 5
+ots = 3
+mts = 1
+ts = 7
+SIMDs = 1
+tgates = 0
+T(1) = 6
+T(inf) = 3
+T(2,1024) = 7
+Speedup = 0.857142857142857
+Efficiency = 0.428571428571429
+Utility = 0.357142857142857
+Quality = 0.357142857142857
+Overhead = 40% (reduction: 26.6666666666667)
+Avg load = 2
+Peak load = 2
+mlist = 2 0 0
+
+0,0 MOV 1 0 ancilla_zero_g0
+0,0 MOV 1 0 target0
+0,1 4: CNOT target0 ancilla_zero_g0
+1,1 5: CNOT ancilla_zero_g0 target0
+2,1 6: CNOT target0 ancilla_zero_g0
+
+LPFS:
+Function: reverseBits32 (sched: lpfs, op_cnt: 448, k: 2, d: 1024, l: 1, opp: 1, refill: 1)
+==========================================================================================
+ops = 192
+moves = 256
+total = 448
+ots = 6
+mts = 4
+ts = 22
+SIMDs = 1
+tgates = 0
+T(1) = 384
+T(inf) = 6
+T(2,1024) = 22
+Speedup = 17.4545454545455
+Efficiency = 8.72727272727273
+Utility = 10.1818181818182
+Quality = 10.1818181818182
+Overhead = 57.1428571428571% (reduction: 9.52380952380953)
+Avg load = 64
+Peak load = 64
+mlist = 64 0 64 64 0 64
+
+0,0 MOV 1 0 ancilla0
+0,0 MOV 1 0 ancilla1
+0,0 MOV 1 0 ancilla10
+0,0 MOV 1 0 ancilla11
+0,0 MOV 1 0 ancilla12
+0,0 MOV 1 0 ancilla13
+0,0 MOV 1 0 ancilla14
+0,0 MOV 1 0 ancilla15
+0,0 MOV 1 0 ancilla16
+0,0 MOV 1 0 ancilla17
+0,0 MOV 1 0 ancilla18
+0,0 MOV 1 0 ancilla19
+0,0 MOV 1 0 ancilla2
+0,0 MOV 1 0 ancilla20
+0,0 MOV 1 0 ancilla21
+0,0 MOV 1 0 ancilla22
+0,0 MOV 1 0 ancilla23
+0,0 MOV 1 0 ancilla24
+0,0 MOV 1 0 ancilla25
+0,0 MOV 1 0 ancilla26
+0,0 MOV 1 0 ancilla27
+0,0 MOV 1 0 ancilla28
+0,0 MOV 1 0 ancilla29
+0,0 MOV 1 0 ancilla3
+0,0 MOV 1 0 ancilla30
+0,0 MOV 1 0 ancilla31
+0,0 MOV 1 0 ancilla4
+0,0 MOV 1 0 ancilla5
+0,0 MOV 1 0 ancilla6
+0,0 MOV 1 0 ancilla7
+0,0 MOV 1 0 ancilla8
+0,0 MOV 1 0 ancilla9
+0,0 MOV 1 0 ancilla_zg.i320
+0,0 MOV 1 0 ancilla_zg.i330
+0,0 MOV 1 0 ancilla_zg.i340
+0,0 MOV 1 0 ancilla_zg.i350
+0,0 MOV 1 0 ancilla_zg.i360
+0,0 MOV 1 0 ancilla_zg.i370
+0,0 MOV 1 0 ancilla_zg.i380
+0,0 MOV 1 0 ancilla_zg.i390
+0,0 MOV 1 0 ancilla_zg.i400
+0,0 MOV 1 0 ancilla_zg.i410
+0,0 MOV 1 0 ancilla_zg.i420
+0,0 MOV 1 0 ancilla_zg.i430
+0,0 MOV 1 0 ancilla_zg.i440
+0,0 MOV 1 0 ancilla_zg.i450
+0,0 MOV 1 0 ancilla_zg.i460
+0,0 MOV 1 0 ancilla_zg.i470
+0,0 MOV 1 0 ancilla_zg.i480
+0,0 MOV 1 0 ancilla_zg.i490
+0,0 MOV 1 0 ancilla_zg.i500
+0,0 MOV 1 0 ancilla_zg.i510
+0,0 MOV 1 0 ancilla_zg.i520
+0,0 MOV 1 0 ancilla_zg.i530
+0,0 MOV 1 0 ancilla_zg.i540
+0,0 MOV 1 0 ancilla_zg.i550
+0,0 MOV 1 0 ancilla_zg.i560
+0,0 MOV 1 0 ancilla_zg.i570
+0,0 MOV 1 0 ancilla_zg.i580
+0,0 MOV 1 0 ancilla_zg.i590
+0,0 MOV 1 0 ancilla_zg.i600
+0,0 MOV 1 0 ancilla_zg.i610
+0,0 MOV 1 0 ancilla_zg.i620
+0,0 MOV 1 0 ancilla_zg.i630
+0,1 10: CNOT ancilla23 ancilla_zg.i550
+0,1 11: CNOT ancilla13 ancilla_zg.i450
+0,1 12: CNOT ancilla22 ancilla_zg.i540
+0,1 13: CNOT ancilla14 ancilla_zg.i460
+0,1 14: CNOT ancilla21 ancilla_zg.i530
+0,1 15: CNOT ancilla6 ancilla_zg.i380
+0,1 16: CNOT ancilla3 ancilla_zg.i350
+0,1 17: CNOT ancilla20 ancilla_zg.i520
+0,1 18: CNOT ancilla15 ancilla_zg.i470
+0,1 19: CNOT ancilla19 ancilla_zg.i510
+0,1 20: CNOT ancilla18 ancilla_zg.i500
+0,1 21: CNOT ancilla16 ancilla_zg.i480
+0,1 22: CNOT ancilla4 ancilla_zg.i360
+0,1 23: CNOT ancilla17 ancilla_zg.i490
+0,1 24: CNOT ancilla5 ancilla_zg.i370
+0,1 25: CNOT ancilla31 ancilla_zg.i630
+0,1 26: CNOT ancilla8 ancilla_zg.i400
+0,1 27: CNOT ancilla7 ancilla_zg.i390
+0,1 28: CNOT ancilla30 ancilla_zg.i620
+0,1 29: CNOT ancilla0 ancilla_zg.i320
+0,1 30: CNOT ancilla29 ancilla_zg.i610
+0,1 31: CNOT ancilla9 ancilla_zg.i410
+0,1 32: CNOT ancilla24 ancilla_zg.i560
+0,1 33: CNOT ancilla10 ancilla_zg.i420
+0,1 34: CNOT ancilla11 ancilla_zg.i430
+0,1 35: CNOT ancilla26 ancilla_zg.i580
+0,1 36: CNOT ancilla1 ancilla_zg.i330
+0,1 37: CNOT ancilla28 ancilla_zg.i600
+0,1 38: CNOT ancilla27 ancilla_zg.i590
+0,1 7: CNOT ancilla25 ancilla_zg.i570
+0,1 8: CNOT ancilla12 ancilla_zg.i440
+0,1 9: CNOT ancilla2 ancilla_zg.i340
+1,1 39: CNOT ancilla_zg.i450 ancilla13
+1,1 40: CNOT ancilla_zg.i390 ancilla7
+1,1 41: CNOT ancilla_zg.i430 ancilla11
+1,1 42: CNOT ancilla_zg.i420 ancilla10
+1,1 43: CNOT ancilla_zg.i470 ancilla15
+1,1 44: CNOT ancilla_zg.i380 ancilla6
+1,1 45: CNOT ancilla_zg.i410 ancilla9
+1,1 46: CNOT ancilla_zg.i370 ancilla5
+1,1 47: CNOT ancilla_zg.i480 ancilla16
+1,1 48: CNOT ancilla_zg.i490 ancilla17
+1,1 49: CNOT ancilla_zg.i460 ancilla14
+1,1 50: CNOT ancilla_zg.i440 ancilla12
+1,1 51: CNOT ancilla_zg.i330 ancilla1
+1,1 52: CNOT ancilla_zg.i590 ancilla27
+1,1 53: CNOT ancilla_zg.i580 ancilla26
+1,1 54: CNOT ancilla_zg.i610 ancilla29
+1,1 55: CNOT ancilla_zg.i570 ancilla25
+1,1 56: CNOT ancilla_zg.i340 ancilla2
+1,1 57: CNOT ancilla_zg.i560 ancilla24
+1,1 58: CNOT ancilla_zg.i550 ancilla23
+1,1 59: CNOT ancilla_zg.i600 ancilla28
+1,1 60: CNOT ancilla_zg.i320 ancilla0
+1,1 61: CNOT ancilla_zg.i540 ancilla22
+1,1 62: CNOT ancilla_zg.i350 ancilla3
+1,1 63: CNOT ancilla_zg.i530 ancilla21
+1,1 64: CNOT ancilla_zg.i520 ancilla20
+1,1 65: CNOT ancilla_zg.i630 ancilla31
+1,1 66: CNOT ancilla_zg.i510 ancilla19
+1,1 67: CNOT ancilla_zg.i360 ancilla4
+1,1 68: CNOT ancilla_zg.i500 ancilla18
+1,1 69: CNOT ancilla_zg.i400 ancilla8
+1,1 70: CNOT ancilla_zg.i620 ancilla30
+2,0 MOV 0 1 ancilla_zg.i320
+2,0 MOV 0 1 ancilla_zg.i330
+2,0 MOV 0 1 ancilla_zg.i340
+2,0 MOV 0 1 ancilla_zg.i350
+2,0 MOV 0 1 ancilla_zg.i360
+2,0 MOV 0 1 ancilla_zg.i370
+2,0 MOV 0 1 ancilla_zg.i380
+2,0 MOV 0 1 ancilla_zg.i390
+2,0 MOV 0 1 ancilla_zg.i400
+2,0 MOV 0 1 ancilla_zg.i410
+2,0 MOV 0 1 ancilla_zg.i420
+2,0 MOV 0 1 ancilla_zg.i430
+2,0 MOV 0 1 ancilla_zg.i440
+2,0 MOV 0 1 ancilla_zg.i450
+2,0 MOV 0 1 ancilla_zg.i460
+2,0 MOV 0 1 ancilla_zg.i470
+2,0 MOV 0 1 ancilla_zg.i480
+2,0 MOV 0 1 ancilla_zg.i490
+2,0 MOV 0 1 ancilla_zg.i500
+2,0 MOV 0 1 ancilla_zg.i510
+2,0 MOV 0 1 ancilla_zg.i520
+2,0 MOV 0 1 ancilla_zg.i530
+2,0 MOV 0 1 ancilla_zg.i540
+2,0 MOV 0 1 ancilla_zg.i550
+2,0 MOV 0 1 ancilla_zg.i560
+2,0 MOV 0 1 ancilla_zg.i570
+2,0 MOV 0 1 ancilla_zg.i580
+2,0 MOV 0 1 ancilla_zg.i590
+2,0 MOV 0 1 ancilla_zg.i600
+2,0 MOV 0 1 ancilla_zg.i610
+2,0 MOV 0 1 ancilla_zg.i620
+2,0 MOV 0 1 ancilla_zg.i630
+2,0 MOV 1 0 a0
+2,0 MOV 1 0 a1
+2,0 MOV 1 0 a10
+2,0 MOV 1 0 a11
+2,0 MOV 1 0 a12
+2,0 MOV 1 0 a13
+2,0 MOV 1 0 a14
+2,0 MOV 1 0 a15
+2,0 MOV 1 0 a16
+2,0 MOV 1 0 a17
+2,0 MOV 1 0 a18
+2,0 MOV 1 0 a19
+2,0 MOV 1 0 a2
+2,0 MOV 1 0 a20
+2,0 MOV 1 0 a21
+2,0 MOV 1 0 a22
+2,0 MOV 1 0 a23
+2,0 MOV 1 0 a24
+2,0 MOV 1 0 a25
+2,0 MOV 1 0 a26
+2,0 MOV 1 0 a27
+2,0 MOV 1 0 a28
+2,0 MOV 1 0 a29
+2,0 MOV 1 0 a3
+2,0 MOV 1 0 a30
+2,0 MOV 1 0 a31
+2,0 MOV 1 0 a4
+2,0 MOV 1 0 a5
+2,0 MOV 1 0 a6
+2,0 MOV 1 0 a7
+2,0 MOV 1 0 a8
+2,0 MOV 1 0 a9
+2,1 100: CNOT a13 ancilla18
+2,1 101: CNOT a12 ancilla19
+2,1 102: CNOT a11 ancilla20
+2,1 71: CNOT a30 ancilla1
+2,1 72: CNOT a24 ancilla7
+2,1 73: CNOT a29 ancilla2
+2,1 74: CNOT a28 ancilla3
+2,1 75: CNOT a25 ancilla6
+2,1 76: CNOT a27 ancilla4
+2,1 77: CNOT a26 ancilla5
+2,1 78: CNOT a23 ancilla8
+2,1 79: CNOT a31 ancilla0
+2,1 80: CNOT a0 ancilla31
+2,1 81: CNOT a1 ancilla30
+2,1 82: CNOT a2 ancilla29
+2,1 83: CNOT a3 ancilla28
+2,1 84: CNOT a4 ancilla27
+2,1 85: CNOT a5 ancilla26
+2,1 86: CNOT a6 ancilla25
+2,1 87: CNOT a7 ancilla24
+2,1 88: CNOT a8 ancilla23
+2,1 89: CNOT a9 ancilla22
+2,1 90: CNOT a10 ancilla21
+2,1 91: CNOT a22 ancilla9
+2,1 92: CNOT a21 ancilla10
+2,1 93: CNOT a20 ancilla11
+2,1 94: CNOT a19 ancilla12
+2,1 95: CNOT a18 ancilla13
+2,1 96: CNOT a17 ancilla14
+2,1 97: CNOT a16 ancilla15
+2,1 98: CNOT a15 ancilla16
+2,1 99: CNOT a14 ancilla17
+3,0 MOV 0 1 ancilla0
+3,0 MOV 0 1 ancilla1
+3,0 MOV 0 1 ancilla10
+3,0 MOV 0 1 ancilla11
+3,0 MOV 0 1 ancilla12
+3,0 MOV 0 1 ancilla13
+3,0 MOV 0 1 ancilla14
+3,0 MOV 0 1 ancilla15
+3,0 MOV 0 1 ancilla16
+3,0 MOV 0 1 ancilla17
+3,0 MOV 0 1 ancilla18
+3,0 MOV 0 1 ancilla19
+3,0 MOV 0 1 ancilla2
+3,0 MOV 0 1 ancilla20
+3,0 MOV 0 1 ancilla21
+3,0 MOV 0 1 ancilla22
+3,0 MOV 0 1 ancilla23
+3,0 MOV 0 1 ancilla24
+3,0 MOV 0 1 ancilla25
+3,0 MOV 0 1 ancilla26
+3,0 MOV 0 1 ancilla27
+3,0 MOV 0 1 ancilla28
+3,0 MOV 0 1 ancilla29
+3,0 MOV 0 1 ancilla3
+3,0 MOV 0 1 ancilla30
+3,0 MOV 0 1 ancilla31
+3,0 MOV 0 1 ancilla4
+3,0 MOV 0 1 ancilla5
+3,0 MOV 0 1 ancilla6
+3,0 MOV 0 1 ancilla7
+3,0 MOV 0 1 ancilla8
+3,0 MOV 0 1 ancilla9
+3,0 MOV 1 0 ancilla_zg.i0
+3,0 MOV 1 0 ancilla_zg.i10
+3,0 MOV 1 0 ancilla_zg.i100
+3,0 MOV 1 0 ancilla_zg.i110
+3,0 MOV 1 0 ancilla_zg.i120
+3,0 MOV 1 0 ancilla_zg.i130
+3,0 MOV 1 0 ancilla_zg.i140
+3,0 MOV 1 0 ancilla_zg.i150
+3,0 MOV 1 0 ancilla_zg.i160
+3,0 MOV 1 0 ancilla_zg.i170
+3,0 MOV 1 0 ancilla_zg.i180
+3,0 MOV 1 0 ancilla_zg.i190
+3,0 MOV 1 0 ancilla_zg.i20
+3,0 MOV 1 0 ancilla_zg.i200
+3,0 MOV 1 0 ancilla_zg.i210
+3,0 MOV 1 0 ancilla_zg.i220
+3,0 MOV 1 0 ancilla_zg.i230
+3,0 MOV 1 0 ancilla_zg.i240
+3,0 MOV 1 0 ancilla_zg.i250
+3,0 MOV 1 0 ancilla_zg.i260
+3,0 MOV 1 0 ancilla_zg.i270
+3,0 MOV 1 0 ancilla_zg.i280
+3,0 MOV 1 0 ancilla_zg.i290
+3,0 MOV 1 0 ancilla_zg.i30
+3,0 MOV 1 0 ancilla_zg.i300
+3,0 MOV 1 0 ancilla_zg.i310
+3,0 MOV 1 0 ancilla_zg.i40
+3,0 MOV 1 0 ancilla_zg.i50
+3,0 MOV 1 0 ancilla_zg.i60
+3,0 MOV 1 0 ancilla_zg.i70
+3,0 MOV 1 0 ancilla_zg.i80
+3,0 MOV 1 0 ancilla_zg.i90
+3,1 103: CNOT a11 ancilla_zg.i200
+3,1 104: CNOT a7 ancilla_zg.i240
+3,1 105: CNOT a24 ancilla_zg.i70
+3,1 106: CNOT a8 ancilla_zg.i230
+3,1 107: CNOT a23 ancilla_zg.i80
+3,1 108: CNOT a9 ancilla_zg.i220
+3,1 109: CNOT a22 ancilla_zg.i90
+3,1 110: CNOT a10 ancilla_zg.i210
+3,1 111: CNOT a21 ancilla_zg.i100
+3,1 112: CNOT a20 ancilla_zg.i110
+3,1 113: CNOT a12 ancilla_zg.i190
+3,1 114: CNOT a19 ancilla_zg.i120
+3,1 115: CNOT a13 ancilla_zg.i180
+3,1 116: CNOT a18 ancilla_zg.i130
+3,1 117: CNOT a14 ancilla_zg.i170
+3,1 118: CNOT a17 ancilla_zg.i140
+3,1 119: CNOT a16 ancilla_zg.i150
+3,1 120: CNOT a6 ancilla_zg.i250
+3,1 121: CNOT a25 ancilla_zg.i60
+3,1 122: CNOT a29 ancilla_zg.i20
+3,1 123: CNOT a15 ancilla_zg.i160
+3,1 124: CNOT a3 ancilla_zg.i280
+3,1 125: CNOT a28 ancilla_zg.i30
+3,1 126: CNOT a30 ancilla_zg.i10
+3,1 127: CNOT a1 ancilla_zg.i300
+3,1 128: CNOT a4 ancilla_zg.i270
+3,1 129: CNOT a27 ancilla_zg.i40
+3,1 130: CNOT a31 ancilla_zg.i0
+3,1 131: CNOT a5 ancilla_zg.i260
+3,1 132: CNOT a26 ancilla_zg.i50
+3,1 133: CNOT a2 ancilla_zg.i290
+3,1 134: CNOT a0 ancilla_zg.i310
+4,1 135: CNOT ancilla_zg.i140 a17
+4,1 136: CNOT ancilla_zg.i10 a30
+4,1 137: CNOT ancilla_zg.i150 a16
+4,1 138: CNOT ancilla_zg.i130 a18
+4,1 139: CNOT ancilla_zg.i20 a29
+4,1 140: CNOT ancilla_zg.i120 a19
+4,1 141: CNOT ancilla_zg.i30 a28
+4,1 142: CNOT ancilla_zg.i100 a21
+4,1 143: CNOT ancilla_zg.i40 a27
+4,1 144: CNOT ancilla_zg.i90 a22
+4,1 145: CNOT ancilla_zg.i50 a26
+4,1 146: CNOT ancilla_zg.i80 a23
+4,1 147: CNOT ancilla_zg.i70 a24
+4,1 148: CNOT ancilla_zg.i60 a25
+4,1 149: CNOT ancilla_zg.i110 a20
+4,1 150: CNOT ancilla_zg.i270 a4
+4,1 151: CNOT ancilla_zg.i210 a10
+4,1 152: CNOT ancilla_zg.i280 a3
+4,1 153: CNOT ancilla_zg.i230 a8
+4,1 154: CNOT ancilla_zg.i200 a11
+4,1 155: CNOT ancilla_zg.i290 a2
+4,1 156: CNOT ancilla_zg.i190 a12
+4,1 157: CNOT ancilla_zg.i220 a9
+4,1 158: CNOT ancilla_zg.i240 a7
+4,1 159: CNOT ancilla_zg.i180 a13
+4,1 160: CNOT ancilla_zg.i300 a1
+4,1 161: CNOT ancilla_zg.i260 a5
+4,1 162: CNOT ancilla_zg.i170 a14
+4,1 163: CNOT ancilla_zg.i310 a0
+4,1 164: CNOT ancilla_zg.i160 a15
+4,1 165: CNOT ancilla_zg.i250 a6
+4,1 166: CNOT ancilla_zg.i0 a31
+5,0 MOV 0 1 ancilla_zg.i0
+5,0 MOV 0 1 ancilla_zg.i10
+5,0 MOV 0 1 ancilla_zg.i100
+5,0 MOV 0 1 ancilla_zg.i110
+5,0 MOV 0 1 ancilla_zg.i120
+5,0 MOV 0 1 ancilla_zg.i130
+5,0 MOV 0 1 ancilla_zg.i140
+5,0 MOV 0 1 ancilla_zg.i150
+5,0 MOV 0 1 ancilla_zg.i160
+5,0 MOV 0 1 ancilla_zg.i170
+5,0 MOV 0 1 ancilla_zg.i180
+5,0 MOV 0 1 ancilla_zg.i190
+5,0 MOV 0 1 ancilla_zg.i20
+5,0 MOV 0 1 ancilla_zg.i200
+5,0 MOV 0 1 ancilla_zg.i210
+5,0 MOV 0 1 ancilla_zg.i220
+5,0 MOV 0 1 ancilla_zg.i230
+5,0 MOV 0 1 ancilla_zg.i240
+5,0 MOV 0 1 ancilla_zg.i250
+5,0 MOV 0 1 ancilla_zg.i260
+5,0 MOV 0 1 ancilla_zg.i270
+5,0 MOV 0 1 ancilla_zg.i280
+5,0 MOV 0 1 ancilla_zg.i290
+5,0 MOV 0 1 ancilla_zg.i30
+5,0 MOV 0 1 ancilla_zg.i300
+5,0 MOV 0 1 ancilla_zg.i310
+5,0 MOV 0 1 ancilla_zg.i40
+5,0 MOV 0 1 ancilla_zg.i50
+5,0 MOV 0 1 ancilla_zg.i60
+5,0 MOV 0 1 ancilla_zg.i70
+5,0 MOV 0 1 ancilla_zg.i80
+5,0 MOV 0 1 ancilla_zg.i90
+5,0 MOV 1 0 ancilla0
+5,0 MOV 1 0 ancilla1
+5,0 MOV 1 0 ancilla10
+5,0 MOV 1 0 ancilla11
+5,0 MOV 1 0 ancilla12
+5,0 MOV 1 0 ancilla13
+5,0 MOV 1 0 ancilla14
+5,0 MOV 1 0 ancilla15
+5,0 MOV 1 0 ancilla16
+5,0 MOV 1 0 ancilla17
+5,0 MOV 1 0 ancilla18
+5,0 MOV 1 0 ancilla19
+5,0 MOV 1 0 ancilla2
+5,0 MOV 1 0 ancilla20
+5,0 MOV 1 0 ancilla21
+5,0 MOV 1 0 ancilla22
+5,0 MOV 1 0 ancilla23
+5,0 MOV 1 0 ancilla24
+5,0 MOV 1 0 ancilla25
+5,0 MOV 1 0 ancilla26
+5,0 MOV 1 0 ancilla27
+5,0 MOV 1 0 ancilla28
+5,0 MOV 1 0 ancilla29
+5,0 MOV 1 0 ancilla3
+5,0 MOV 1 0 ancilla30
+5,0 MOV 1 0 ancilla31
+5,0 MOV 1 0 ancilla4
+5,0 MOV 1 0 ancilla5
+5,0 MOV 1 0 ancilla6
+5,0 MOV 1 0 ancilla7
+5,0 MOV 1 0 ancilla8
+5,0 MOV 1 0 ancilla9
+5,1 167: CNOT ancilla4 a4
+5,1 168: CNOT ancilla25 a25
+5,1 169: CNOT ancilla26 a26
+5,1 170: CNOT ancilla3 a3
+5,1 171: CNOT ancilla27 a27
+5,1 172: CNOT ancilla5 a5
+5,1 173: CNOT ancilla28 a28
+5,1 174: CNOT ancilla1 a1
+5,1 175: CNOT ancilla29 a29
+5,1 176: CNOT ancilla0 a0
+5,1 177: CNOT ancilla30 a30
+5,1 178: CNOT ancilla31 a31
+5,1 179: CNOT ancilla2 a2
+5,1 180: CNOT ancilla15 a15
+5,1 181: CNOT ancilla14 a14
+5,1 182: CNOT ancilla16 a16
+5,1 183: CNOT ancilla13 a13
+5,1 184: CNOT ancilla17 a17
+5,1 185: CNOT ancilla12 a12
+5,1 186: CNOT ancilla18 a18
+5,1 187: CNOT ancilla11 a11
+5,1 188: CNOT ancilla23 a23
+5,1 189: CNOT ancilla10 a10
+5,1 190: CNOT ancilla20 a20
+5,1 191: CNOT ancilla9 a9
+5,1 192: CNOT ancilla21 a21
+5,1 193: CNOT ancilla8 a8
+5,1 194: CNOT ancilla22 a22
+5,1 195: CNOT ancilla7 a7
+5,1 196: CNOT ancilla6 a6
+5,1 197: CNOT ancilla24 a24
+5,1 198: CNOT ancilla19 a19
+
+LPFS:
+Function: assign_value_of_b_to_a (sched: lpfs, op_cnt: 7, k: 2, d: 1024, l: 1, opp: 1, refill: 1)
+=================================================================================================
+ops = 3
+moves = 4
+total = 7
+ots = 3
+mts = 2
+ts = 11
+SIMDs = 1
+tgates = 0
+T(1) = 6
+T(inf) = 3
+T(2,1024) = 11
+Speedup = 0.545454545454545
+Efficiency = 0.272727272727273
+Utility = 0.318181818181818
+Quality = 0.318181818181818
+Overhead = 57.1428571428571% (reduction: 9.52380952380953)
+Avg load = 2
+Peak load = 2
+mlist = 2 0 2
+
+0,0 MOV 1 0 ancilla_zg0
+0,0 MOV 1 0 target0
+0,1 199: CNOT target0 ancilla_zg0
+1,1 200: CNOT ancilla_zg0 target0
+2,0 MOV 0 1 ancilla_zg0
+2,0 MOV 1 0 control0
+2,1 201: CNOT control0 target0
+
+LPFS:
+Function: AND (sched: lpfs, op_cnt: 1312, k: 2, d: 1024, l: 1, opp: 1, refill: 1)
+=================================================================================
+ops = 640
+moves = 672
+total = 1312
+ots = 11
+mts = 9
+ts = 47
+SIMDs = 2
+tgates = 5
+T(1) = 1280
+T(inf) = 10
+T(2,1024) = 47
+Speedup = 27.2340425531915
+Efficiency = 13.6170212765957
+Utility = 13.9574468085106
+Quality = 13.9574468085106
+Overhead = 51.219512195122% (reduction: 15.4471544715447)
+Avg load = 74.6666666666667
+Peak load = 128
+mlist = 64 128 0 64 128 32 0 64 64 64 64
+
+0,0 MOV 1 0 ancilla.i0
+0,0 MOV 1 0 ancilla.i1
+0,0 MOV 1 0 ancilla.i10
+0,0 MOV 1 0 ancilla.i11
+0,0 MOV 1 0 ancilla.i12
+0,0 MOV 1 0 ancilla.i13
+0,0 MOV 1 0 ancilla.i14
+0,0 MOV 1 0 ancilla.i15
+0,0 MOV 1 0 ancilla.i16
+0,0 MOV 1 0 ancilla.i17
+0,0 MOV 1 0 ancilla.i18
+0,0 MOV 1 0 ancilla.i19
+0,0 MOV 1 0 ancilla.i2
+0,0 MOV 1 0 ancilla.i20
+0,0 MOV 1 0 ancilla.i21
+0,0 MOV 1 0 ancilla.i22
+0,0 MOV 1 0 ancilla.i23
+0,0 MOV 1 0 ancilla.i24
+0,0 MOV 1 0 ancilla.i25
+0,0 MOV 1 0 ancilla.i26
+0,0 MOV 1 0 ancilla.i27
+0,0 MOV 1 0 ancilla.i28
+0,0 MOV 1 0 ancilla.i29
+0,0 MOV 1 0 ancilla.i3
+0,0 MOV 1 0 ancilla.i30
+0,0 MOV 1 0 ancilla.i31
+0,0 MOV 1 0 ancilla.i4
+0,0 MOV 1 0 ancilla.i5
+0,0 MOV 1 0 ancilla.i6
+0,0 MOV 1 0 ancilla.i7
+0,0 MOV 1 0 ancilla.i8
+0,0 MOV 1 0 ancilla.i9
+0,0 MOV 2 0 in20
+0,0 MOV 2 0 in21
+0,0 MOV 2 0 in210
+0,0 MOV 2 0 in211
+0,0 MOV 2 0 in212
+0,0 MOV 2 0 in213
+0,0 MOV 2 0 in214
+0,0 MOV 2 0 in215
+0,0 MOV 2 0 in216
+0,0 MOV 2 0 in217
+0,0 MOV 2 0 in218
+0,0 MOV 2 0 in219
+0,0 MOV 2 0 in22
+0,0 MOV 2 0 in220
+0,0 MOV 2 0 in221
+0,0 MOV 2 0 in222
+0,0 MOV 2 0 in223
+0,0 MOV 2 0 in224
+0,0 MOV 2 0 in225
+0,0 MOV 2 0 in226
+0,0 MOV 2 0 in227
+0,0 MOV 2 0 in228
+0,0 MOV 2 0 in229
+0,0 MOV 2 0 in23
+0,0 MOV 2 0 in230
+0,0 MOV 2 0 in231
+0,0 MOV 2 0 in24
+0,0 MOV 2 0 in25
+0,0 MOV 2 0 in26
+0,0 MOV 2 0 in27
+0,0 MOV 2 0 in28
+0,0 MOV 2 0 in29
+0,1 202: T ancilla.i31
+0,1 207: T ancilla.i12
+0,1 210: T ancilla.i13
+0,1 213: T ancilla.i14
+0,1 214: T ancilla.i30
+0,1 217: T ancilla.i15
+0,1 223: T ancilla.i5
+0,1 226: T ancilla.i6
+0,1 229: T ancilla.i7
+0,1 231: T ancilla.i11
+0,1 232: T ancilla.i8
+0,1 235: T ancilla.i9
+0,1 238: T ancilla.i10
+0,1 243: T ancilla.i22
+0,1 244: T ancilla.i28
+0,1 249: T ancilla.i23
+0,1 252: T ancilla.i24
+0,1 255: T ancilla.i25
+0,1 258: T ancilla.i26
+0,1 259: T ancilla.i27
+0,1 262: T ancilla.i16
+0,1 265: T ancilla.i17
+0,1 268: T ancilla.i18
+0,1 269: T ancilla.i29
+0,1 273: T ancilla.i19
+0,1 277: T ancilla.i20
+0,1 280: T ancilla.i21
+0,1 282: T ancilla.i1
+0,1 285: T ancilla.i3
+0,1 288: T ancilla.i4
+0,1 293: T ancilla.i2
+0,1 294: T ancilla.i0
+0,2 203: Tdag in231
+0,2 206: Tdag in212
+0,2 209: Tdag in213
+0,2 212: Tdag in214
+0,2 216: Tdag in215
+0,2 218: Tdag in230
+0,2 222: Tdag in25
+0,2 225: Tdag in26
+0,2 228: Tdag in27
+0,2 234: Tdag in29
+0,2 237: Tdag in210
+0,2 240: Tdag in211
+0,2 241: Tdag in28
+0,2 242: Tdag in222
+0,2 245: Tdag in228
+0,2 248: Tdag in223
+0,2 251: Tdag in216
+0,2 254: Tdag in225
+0,2 257: Tdag in226
+0,2 260: Tdag in227
+0,2 261: Tdag in224
+0,2 264: Tdag in217
+0,2 267: Tdag in218
+0,2 270: Tdag in229
+0,2 272: Tdag in219
+0,2 276: Tdag in220
+0,2 279: Tdag in221
+0,2 283: Tdag in21
+0,2 287: Tdag in24
+0,2 289: Tdag in23
+0,2 292: Tdag in22
+0,2 297: Tdag in20
+1,0 MOV 1 0 ancilla_zg.i.i0
+1,0 MOV 1 0 ancilla_zg.i1.i0
+1,0 MOV 1 0 ancilla_zg.i10.i0
+1,0 MOV 1 0 ancilla_zg.i11.i0
+1,0 MOV 1 0 ancilla_zg.i12.i0
+1,0 MOV 1 0 ancilla_zg.i13.i0
+1,0 MOV 1 0 ancilla_zg.i14.i0
+1,0 MOV 1 0 ancilla_zg.i15.i0
+1,0 MOV 1 0 ancilla_zg.i16.i0
+1,0 MOV 1 0 ancilla_zg.i17.i0
+1,0 MOV 1 0 ancilla_zg.i18.i0
+1,0 MOV 1 0 ancilla_zg.i19.i0
+1,0 MOV 1 0 ancilla_zg.i2.i0
+1,0 MOV 1 0 ancilla_zg.i20.i0
+1,0 MOV 1 0 ancilla_zg.i21.i0
+1,0 MOV 1 0 ancilla_zg.i22.i0
+1,0 MOV 1 0 ancilla_zg.i23.i0
+1,0 MOV 1 0 ancilla_zg.i24.i0
+1,0 MOV 1 0 ancilla_zg.i25.i0
+1,0 MOV 1 0 ancilla_zg.i26.i0
+1,0 MOV 1 0 ancilla_zg.i27.i0
+1,0 MOV 1 0 ancilla_zg.i28.i0
+1,0 MOV 1 0 ancilla_zg.i29.i0
+1,0 MOV 1 0 ancilla_zg.i3.i0
+1,0 MOV 1 0 ancilla_zg.i30.i0
+1,0 MOV 1 0 ancilla_zg.i31.i0
+1,0 MOV 1 0 ancilla_zg.i4.i0
+1,0 MOV 1 0 ancilla_zg.i5.i0
+1,0 MOV 1 0 ancilla_zg.i6.i0
+1,0 MOV 1 0 ancilla_zg.i7.i0
+1,0 MOV 1 0 ancilla_zg.i8.i0
+1,0 MOV 1 0 ancilla_zg.i9.i0
+1,0 MOV 1 0 target0
+1,0 MOV 1 0 target1
+1,0 MOV 1 0 target10
+1,0 MOV 1 0 target11
+1,0 MOV 1 0 target12
+1,0 MOV 1 0 target13
+1,0 MOV 1 0 target14
+1,0 MOV 1 0 target15
+1,0 MOV 1 0 target16
+1,0 MOV 1 0 target17
+1,0 MOV 1 0 target18
+1,0 MOV 1 0 target19
+1,0 MOV 1 0 target2
+1,0 MOV 1 0 target20
+1,0 MOV 1 0 target21
+1,0 MOV 1 0 target22
+1,0 MOV 1 0 target23
+1,0 MOV 1 0 target24
+1,0 MOV 1 0 target25
+1,0 MOV 1 0 target26
+1,0 MOV 1 0 target27
+1,0 MOV 1 0 target28
+1,0 MOV 1 0 target29
+1,0 MOV 1 0 target3
+1,0 MOV 1 0 target30
+1,0 MOV 1 0 target31
+1,0 MOV 1 0 target4
+1,0 MOV 1 0 target5
+1,0 MOV 1 0 target6
+1,0 MOV 1 0 target7
+1,0 MOV 1 0 target8
+1,0 MOV 1 0 target9
+1,0 MOV 1 2 in20
+1,0 MOV 1 2 in21
+1,0 MOV 1 2 in210
+1,0 MOV 1 2 in211
+1,0 MOV 1 2 in212
+1,0 MOV 1 2 in213
+1,0 MOV 1 2 in214
+1,0 MOV 1 2 in215
+1,0 MOV 1 2 in216
+1,0 MOV 1 2 in217
+1,0 MOV 1 2 in218
+1,0 MOV 1 2 in219
+1,0 MOV 1 2 in22
+1,0 MOV 1 2 in220
+1,0 MOV 1 2 in221
+1,0 MOV 1 2 in222
+1,0 MOV 1 2 in223
+1,0 MOV 1 2 in224
+1,0 MOV 1 2 in225
+1,0 MOV 1 2 in226
+1,0 MOV 1 2 in227
+1,0 MOV 1 2 in228
+1,0 MOV 1 2 in229
+1,0 MOV 1 2 in23
+1,0 MOV 1 2 in230
+1,0 MOV 1 2 in231
+1,0 MOV 1 2 in24
+1,0 MOV 1 2 in25
+1,0 MOV 1 2 in26
+1,0 MOV 1 2 in27
+1,0 MOV 1 2 in28
+1,0 MOV 1 2 in29
+1,0 MOV 2 0 in10
+1,0 MOV 2 0 in11
+1,0 MOV 2 0 in110
+1,0 MOV 2 0 in111
+1,0 MOV 2 0 in112
+1,0 MOV 2 0 in113
+1,0 MOV 2 0 in114
+1,0 MOV 2 0 in115
+1,0 MOV 2 0 in116
+1,0 MOV 2 0 in117
+1,0 MOV 2 0 in118
+1,0 MOV 2 0 in119
+1,0 MOV 2 0 in12
+1,0 MOV 2 0 in120
+1,0 MOV 2 0 in121
+1,0 MOV 2 0 in122
+1,0 MOV 2 0 in123
+1,0 MOV 2 0 in124
+1,0 MOV 2 0 in125
+1,0 MOV 2 0 in126
+1,0 MOV 2 0 in127
+1,0 MOV 2 0 in128
+1,0 MOV 2 0 in129
+1,0 MOV 2 0 in13
+1,0 MOV 2 0 in130
+1,0 MOV 2 0 in131
+1,0 MOV 2 0 in14
+1,0 MOV 2 0 in15
+1,0 MOV 2 0 in16
+1,0 MOV 2 0 in17
+1,0 MOV 2 0 in18
+1,0 MOV 2 0 in19
+1,1 301: CNOT ancilla.i23 in223
+1,1 302: CNOT ancilla.i2 in22
+1,1 304: CNOT ancilla.i3 in23
+1,1 305: CNOT ancilla.i8 in28
+1,1 308: CNOT ancilla.i16 in216
+1,1 309: CNOT ancilla.i26 in226
+1,1 313: CNOT ancilla.i12 in212
+1,1 314: CNOT ancilla.i10 in210
+1,1 317: CNOT ancilla.i21 in221
+1,1 319: CNOT ancilla.i1 in21
+1,1 320: CNOT ancilla.i31 in231
+1,1 323: CNOT ancilla.i28 in228
+1,1 324: CNOT ancilla.i11 in211
+1,1 325: CNOT ancilla.i20 in220
+1,1 326: CNOT ancilla.i9 in29
+1,1 329: CNOT ancilla.i22 in222
+1,1 330: CNOT ancilla.i24 in224
+1,1 332: CNOT ancilla.i14 in214
+1,1 334: CNOT ancilla.i25 in225
+1,1 335: CNOT ancilla.i17 in217
+1,1 337: CNOT ancilla.i6 in26
+1,1 343: CNOT ancilla.i27 in227
+1,1 345: CNOT ancilla.i0 in20
+1,1 347: CNOT ancilla.i15 in215
+1,1 348: CNOT ancilla.i30 in230
+1,1 349: CNOT ancilla.i7 in27
+1,1 351: CNOT ancilla.i29 in229
+1,1 353: CNOT ancilla.i4 in24
+1,1 354: CNOT ancilla.i13 in213
+1,1 357: CNOT ancilla.i18 in218
+1,1 360: CNOT ancilla.i5 in25
+1,1 361: CNOT ancilla.i19 in219
+1,1 618: CNOT target15 ancilla_zg.i16.i0
+1,1 620: CNOT target8 ancilla_zg.i23.i0
+1,1 621: CNOT target9 ancilla_zg.i22.i0
+1,1 622: CNOT target21 ancilla_zg.i10.i0
+1,1 623: CNOT target24 ancilla_zg.i7.i0
+1,1 624: CNOT target22 ancilla_zg.i9.i0
+1,1 625: CNOT target23 ancilla_zg.i8.i0
+1,1 626: CNOT target14 ancilla_zg.i17.i0
+1,1 627: CNOT target10 ancilla_zg.i21.i0
+1,1 628: CNOT target11 ancilla_zg.i20.i0
+1,1 629: CNOT target13 ancilla_zg.i18.i0
+1,1 630: CNOT target12 ancilla_zg.i19.i0
+1,1 632: CNOT target17 ancilla_zg.i14.i0
+1,1 633: CNOT target16 ancilla_zg.i15.i0
+1,1 634: CNOT target18 ancilla_zg.i13.i0
+1,1 637: CNOT target19 ancilla_zg.i12.i0
+1,1 638: CNOT target28 ancilla_zg.i3.i0
+1,1 639: CNOT target29 ancilla_zg.i2.i0
+1,1 640: CNOT target30 ancilla_zg.i1.i0
+1,1 641: CNOT target31 ancilla_zg.i.i0
+1,1 642: CNOT target0 ancilla_zg.i31.i0
+1,1 643: CNOT target1 ancilla_zg.i30.i0
+1,1 644: CNOT target2 ancilla_zg.i29.i0
+1,1 645: CNOT target4 ancilla_zg.i27.i0
+1,1 649: CNOT target3 ancilla_zg.i28.i0
+1,1 651: CNOT target27 ancilla_zg.i4.i0
+1,1 652: CNOT target26 ancilla_zg.i5.i0
+1,1 654: CNOT target5 ancilla_zg.i26.i0
+1,1 655: CNOT target6 ancilla_zg.i25.i0
+1,1 656: CNOT target7 ancilla_zg.i24.i0
+1,1 657: CNOT target20 ancilla_zg.i11.i0
+1,1 658: CNOT target25 ancilla_zg.i6.i0
+1,2 204: H in131
+1,2 205: H in112
+1,2 208: H in113
+1,2 211: H in15
+1,2 215: H in115
+1,2 219: H in130
+1,2 220: H in116
+1,2 221: H in114
+1,2 224: H in16
+1,2 227: H in17
+1,2 230: H in18
+1,2 233: H in19
+1,2 236: H in110
+1,2 239: H in111
+1,2 246: H in128
+1,2 247: H in123
+1,2 250: H in124
+1,2 253: H in125
+1,2 256: H in126
+1,2 263: H in117
+1,2 266: H in118
+1,2 271: H in122
+1,2 274: H in129
+1,2 275: H in120
+1,2 278: H in121
+1,2 281: H in119
+1,2 284: H in11
+1,2 286: H in14
+1,2 290: H in13
+1,2 291: H in12
+1,2 295: H in10
+1,2 296: H in127
+2,2 298: T in13
+2,2 299: T in128
+2,2 300: T in123
+2,2 303: T in112
+2,2 306: T in18
+2,2 307: T in116
+2,2 310: T in119
+2,2 311: T in129
+2,2 312: T in124
+2,2 315: T in110
+2,2 316: T in121
+2,2 318: T in11
+2,2 321: T in131
+2,2 322: T in120
+2,2 327: T in19
+2,2 328: T in122
+2,2 331: T in111
+2,2 333: T in125
+2,2 336: T in117
+2,2 338: T in16
+2,2 339: T in114
+2,2 340: T in130
+2,2 341: T in12
+2,2 342: T in115
+2,2 344: T in127
+2,2 346: T in10
+2,2 350: T in17
+2,2 352: T in14
+2,2 355: T in113
+2,2 356: T in15
+2,2 358: T in126
+2,2 359: T in118
+3,0 MOV 0 1 ancilla.i0
+3,0 MOV 0 1 ancilla.i1
+3,0 MOV 0 1 ancilla.i10
+3,0 MOV 0 1 ancilla.i11
+3,0 MOV 0 1 ancilla.i12
+3,0 MOV 0 1 ancilla.i13
+3,0 MOV 0 1 ancilla.i14
+3,0 MOV 0 1 ancilla.i15
+3,0 MOV 0 1 ancilla.i16
+3,0 MOV 0 1 ancilla.i17
+3,0 MOV 0 1 ancilla.i18
+3,0 MOV 0 1 ancilla.i19
+3,0 MOV 0 1 ancilla.i2
+3,0 MOV 0 1 ancilla.i20
+3,0 MOV 0 1 ancilla.i21
+3,0 MOV 0 1 ancilla.i22
+3,0 MOV 0 1 ancilla.i23
+3,0 MOV 0 1 ancilla.i24
+3,0 MOV 0 1 ancilla.i25
+3,0 MOV 0 1 ancilla.i26
+3,0 MOV 0 1 ancilla.i27
+3,0 MOV 0 1 ancilla.i28
+3,0 MOV 0 1 ancilla.i29
+3,0 MOV 0 1 ancilla.i3
+3,0 MOV 0 1 ancilla.i30
+3,0 MOV 0 1 ancilla.i31
+3,0 MOV 0 1 ancilla.i4
+3,0 MOV 0 1 ancilla.i5
+3,0 MOV 0 1 ancilla.i6
+3,0 MOV 0 1 ancilla.i7
+3,0 MOV 0 1 ancilla.i8
+3,0 MOV 0 1 ancilla.i9
+3,0 MOV 1 2 in10
+3,0 MOV 1 2 in11
+3,0 MOV 1 2 in110
+3,0 MOV 1 2 in111
+3,0 MOV 1 2 in112
+3,0 MOV 1 2 in113
+3,0 MOV 1 2 in114
+3,0 MOV 1 2 in115
+3,0 MOV 1 2 in116
+3,0 MOV 1 2 in117
+3,0 MOV 1 2 in118
+3,0 MOV 1 2 in119
+3,0 MOV 1 2 in12
+3,0 MOV 1 2 in120
+3,0 MOV 1 2 in121
+3,0 MOV 1 2 in122
+3,0 MOV 1 2 in123
+3,0 MOV 1 2 in124
+3,0 MOV 1 2 in125
+3,0 MOV 1 2 in126
+3,0 MOV 1 2 in127
+3,0 MOV 1 2 in128
+3,0 MOV 1 2 in129
+3,0 MOV 1 2 in13
+3,0 MOV 1 2 in130
+3,0 MOV 1 2 in131
+3,0 MOV 1 2 in14
+3,0 MOV 1 2 in15
+3,0 MOV 1 2 in16
+3,0 MOV 1 2 in17
+3,0 MOV 1 2 in18
+3,0 MOV 1 2 in19
+3,1 362: CNOT in219 in119
+3,1 363: CNOT in21 in11
+3,1 364: CNOT in231 in131
+3,1 365: CNOT in213 in113
+3,1 366: CNOT in215 in115
+3,1 367: CNOT in220 in120
+3,1 368: CNOT in230 in130
+3,1 369: CNOT in211 in111
+3,1 370: CNOT in216 in116
+3,1 371: CNOT in212 in112
+3,1 372: CNOT in218 in118
+3,1 373: CNOT in217 in117
+3,1 374: CNOT in214 in114
+3,1 375: CNOT in23 in13
+3,1 376: CNOT in229 in129
+3,1 377: CNOT in210 in110
+3,1 378: CNOT in29 in19
+3,1 379: CNOT in222 in122
+3,1 380: CNOT in228 in128
+3,1 381: CNOT in225 in125
+3,1 382: CNOT in227 in127
+3,1 383: CNOT in26 in16
+3,1 384: CNOT in24 in14
+3,1 385: CNOT in28 in18
+3,1 386: CNOT in224 in124
+3,1 387: CNOT in25 in15
+3,1 388: CNOT in226 in126
+3,1 389: CNOT in27 in17
+3,1 390: CNOT in221 in121
+3,1 391: CNOT in223 in123
+3,1 392: CNOT in20 in10
+3,1 393: CNOT in22 in12
+3,1 715: CNOT ancilla_zg.i28.i0 target3
+3,1 716: CNOT ancilla_zg.i26.i0 target5
+3,1 717: CNOT ancilla_zg.i27.i0 target4
+3,1 718: CNOT ancilla_zg.i22.i0 target9
+3,1 720: CNOT ancilla_zg.i25.i0 target6
+3,1 721: CNOT ancilla_zg.i29.i0 target2
+3,1 722: CNOT ancilla_zg.i21.i0 target10
+3,1 723: CNOT ancilla_zg.i24.i0 target7
+3,1 724: CNOT ancilla_zg.i23.i0 target8
+3,1 725: CNOT ancilla_zg.i.i0 target31
+3,1 726: CNOT ancilla_zg.i1.i0 target30
+3,1 727: CNOT ancilla_zg.i2.i0 target29
+3,1 729: CNOT ancilla_zg.i3.i0 target28
+3,1 730: CNOT ancilla_zg.i4.i0 target27
+3,1 731: CNOT ancilla_zg.i5.i0 target26
+3,1 732: CNOT ancilla_zg.i6.i0 target25
+3,1 734: CNOT ancilla_zg.i7.i0 target24
+3,1 735: CNOT ancilla_zg.i8.i0 target23
+3,1 736: CNOT ancilla_zg.i9.i0 target22
+3,1 739: CNOT ancilla_zg.i11.i0 target20
+3,1 740: CNOT ancilla_zg.i12.i0 target19
+3,1 741: CNOT ancilla_zg.i13.i0 target18
+3,1 742: CNOT ancilla_zg.i14.i0 target17
+3,1 743: CNOT ancilla_zg.i15.i0 target16
+3,1 744: CNOT ancilla_zg.i16.i0 target15
+3,1 745: CNOT ancilla_zg.i17.i0 target14
+3,1 746: CNOT ancilla_zg.i18.i0 target13
+3,1 748: CNOT ancilla_zg.i19.i0 target12
+3,1 749: CNOT ancilla_zg.i20.i0 target11
+3,1 750: CNOT ancilla_zg.i10.i0 target21
+3,1 767: CNOT ancilla_zg.i30.i0 target1
+3,1 777: CNOT ancilla_zg.i31.i0 target0
+4,0 MOV 0 1 ancilla_zg.i.i0
+4,0 MOV 0 1 ancilla_zg.i1.i0
+4,0 MOV 0 1 ancilla_zg.i10.i0
+4,0 MOV 0 1 ancilla_zg.i11.i0
+4,0 MOV 0 1 ancilla_zg.i12.i0
+4,0 MOV 0 1 ancilla_zg.i13.i0
+4,0 MOV 0 1 ancilla_zg.i14.i0
+4,0 MOV 0 1 ancilla_zg.i15.i0
+4,0 MOV 0 1 ancilla_zg.i16.i0
+4,0 MOV 0 1 ancilla_zg.i17.i0
+4,0 MOV 0 1 ancilla_zg.i18.i0
+4,0 MOV 0 1 ancilla_zg.i19.i0
+4,0 MOV 0 1 ancilla_zg.i2.i0
+4,0 MOV 0 1 ancilla_zg.i20.i0
+4,0 MOV 0 1 ancilla_zg.i21.i0
+4,0 MOV 0 1 ancilla_zg.i22.i0
+4,0 MOV 0 1 ancilla_zg.i23.i0
+4,0 MOV 0 1 ancilla_zg.i24.i0
+4,0 MOV 0 1 ancilla_zg.i25.i0
+4,0 MOV 0 1 ancilla_zg.i26.i0
+4,0 MOV 0 1 ancilla_zg.i27.i0
+4,0 MOV 0 1 ancilla_zg.i28.i0
+4,0 MOV 0 1 ancilla_zg.i29.i0
+4,0 MOV 0 1 ancilla_zg.i3.i0
+4,0 MOV 0 1 ancilla_zg.i30.i0
+4,0 MOV 0 1 ancilla_zg.i31.i0
+4,0 MOV 0 1 ancilla_zg.i4.i0
+4,0 MOV 0 1 ancilla_zg.i5.i0
+4,0 MOV 0 1 ancilla_zg.i6.i0
+4,0 MOV 0 1 ancilla_zg.i7.i0
+4,0 MOV 0 1 ancilla_zg.i8.i0
+4,0 MOV 0 1 ancilla_zg.i9.i0
+4,0 MOV 0 1 target0
+4,0 MOV 0 1 target1
+4,0 MOV 0 1 target10
+4,0 MOV 0 1 target11
+4,0 MOV 0 1 target12
+4,0 MOV 0 1 target13
+4,0 MOV 0 1 target14
+4,0 MOV 0 1 target15
+4,0 MOV 0 1 target16
+4,0 MOV 0 1 target17
+4,0 MOV 0 1 target18
+4,0 MOV 0 1 target19
+4,0 MOV 0 1 target2
+4,0 MOV 0 1 target20
+4,0 MOV 0 1 target21
+4,0 MOV 0 1 target22
+4,0 MOV 0 1 target23
+4,0 MOV 0 1 target24
+4,0 MOV 0 1 target25
+4,0 MOV 0 1 target26
+4,0 MOV 0 1 target27
+4,0 MOV 0 1 target28
+4,0 MOV 0 1 target29
+4,0 MOV 0 1 target3
+4,0 MOV 0 1 target30
+4,0 MOV 0 1 target31
+4,0 MOV 0 1 target4
+4,0 MOV 0 1 target5
+4,0 MOV 0 1 target6
+4,0 MOV 0 1 target7
+4,0 MOV 0 1 target8
+4,0 MOV 0 1 target9
+4,0 MOV 2 0 ancilla.i0
+4,0 MOV 2 0 ancilla.i1
+4,0 MOV 2 0 ancilla.i10
+4,0 MOV 2 0 ancilla.i11
+4,0 MOV 2 0 ancilla.i12
+4,0 MOV 2 0 ancilla.i13
+4,0 MOV 2 0 ancilla.i14
+4,0 MOV 2 0 ancilla.i15
+4,0 MOV 2 0 ancilla.i16
+4,0 MOV 2 0 ancilla.i17
+4,0 MOV 2 0 ancilla.i18
+4,0 MOV 2 0 ancilla.i19
+4,0 MOV 2 0 ancilla.i2
+4,0 MOV 2 0 ancilla.i20
+4,0 MOV 2 0 ancilla.i21
+4,0 MOV 2 0 ancilla.i22
+4,0 MOV 2 0 ancilla.i23
+4,0 MOV 2 0 ancilla.i24
+4,0 MOV 2 0 ancilla.i25
+4,0 MOV 2 0 ancilla.i26
+4,0 MOV 2 0 ancilla.i27
+4,0 MOV 2 0 ancilla.i28
+4,0 MOV 2 0 ancilla.i29
+4,0 MOV 2 0 ancilla.i3
+4,0 MOV 2 0 ancilla.i30
+4,0 MOV 2 0 ancilla.i31
+4,0 MOV 2 0 ancilla.i4
+4,0 MOV 2 0 ancilla.i5
+4,0 MOV 2 0 ancilla.i6
+4,0 MOV 2 0 ancilla.i7
+4,0 MOV 2 0 ancilla.i8
+4,0 MOV 2 0 ancilla.i9
+4,0 MOV 2 1 in10
+4,0 MOV 2 1 in11
+4,0 MOV 2 1 in110
+4,0 MOV 2 1 in111
+4,0 MOV 2 1 in112
+4,0 MOV 2 1 in113
+4,0 MOV 2 1 in114
+4,0 MOV 2 1 in115
+4,0 MOV 2 1 in116
+4,0 MOV 2 1 in117
+4,0 MOV 2 1 in118
+4,0 MOV 2 1 in119
+4,0 MOV 2 1 in12
+4,0 MOV 2 1 in120
+4,0 MOV 2 1 in121
+4,0 MOV 2 1 in122
+4,0 MOV 2 1 in123
+4,0 MOV 2 1 in124
+4,0 MOV 2 1 in125
+4,0 MOV 2 1 in126
+4,0 MOV 2 1 in127
+4,0 MOV 2 1 in128
+4,0 MOV 2 1 in129
+4,0 MOV 2 1 in13
+4,0 MOV 2 1 in130
+4,0 MOV 2 1 in131
+4,0 MOV 2 1 in14
+4,0 MOV 2 1 in15
+4,0 MOV 2 1 in16
+4,0 MOV 2 1 in17
+4,0 MOV 2 1 in18
+4,0 MOV 2 1 in19
+4,1 395: Tdag in20
+4,1 396: Tdag in230
+4,1 402: Tdag in213
+4,1 403: Tdag in27
+4,1 405: Tdag in229
+4,1 406: Tdag in22
+4,1 409: Tdag in226
+4,1 410: Tdag in216
+4,1 412: Tdag in215
+4,1 413: Tdag in25
+4,1 415: Tdag in26
+4,1 416: Tdag in227
+4,1 418: Tdag in225
+4,1 420: Tdag in24
+4,1 422: Tdag in217
+4,1 424: Tdag in214
+4,1 426: Tdag in222
+4,1 427: Tdag in23
+4,1 428: Tdag in218
+4,1 430: Tdag in21
+4,1 432: Tdag in211
+4,1 433: Tdag in29
+4,1 436: Tdag in220
+4,1 440: Tdag in231
+4,1 441: Tdag in221
+4,1 444: Tdag in210
+4,1 445: Tdag in228
+4,1 447: Tdag in224
+4,1 451: Tdag in219
+4,1 454: Tdag in212
+4,1 455: Tdag in223
+4,1 457: Tdag in28
+4,2 394: CNOT in117 ancilla.i17
+4,2 397: CNOT in130 ancilla.i30
+4,2 398: CNOT in129 ancilla.i29
+4,2 399: CNOT in10 ancilla.i0
+4,2 400: CNOT in127 ancilla.i27
+4,2 401: CNOT in113 ancilla.i13
+4,2 404: CNOT in17 ancilla.i7
+4,2 407: CNOT in12 ancilla.i2
+4,2 408: CNOT in126 ancilla.i26
+4,2 411: CNOT in115 ancilla.i15
+4,2 414: CNOT in15 ancilla.i5
+4,2 417: CNOT in125 ancilla.i25
+4,2 419: CNOT in14 ancilla.i4
+4,2 421: CNOT in16 ancilla.i6
+4,2 423: CNOT in114 ancilla.i14
+4,2 425: CNOT in116 ancilla.i16
+4,2 429: CNOT in11 ancilla.i1
+4,2 431: CNOT in111 ancilla.i11
+4,2 434: CNOT in19 ancilla.i9
+4,2 435: CNOT in122 ancilla.i22
+4,2 437: CNOT in120 ancilla.i20
+4,2 438: CNOT in128 ancilla.i28
+4,2 439: CNOT in121 ancilla.i21
+4,2 442: CNOT in131 ancilla.i31
+4,2 443: CNOT in110 ancilla.i10
+4,2 446: CNOT in124 ancilla.i24
+4,2 448: CNOT in118 ancilla.i18
+4,2 449: CNOT in123 ancilla.i23
+4,2 450: CNOT in13 ancilla.i3
+4,2 452: CNOT in119 ancilla.i19
+4,2 453: CNOT in112 ancilla.i12
+4,2 456: CNOT in18 ancilla.i8
+5,0 MOV 1 2 ancilla.i0
+5,0 MOV 1 2 ancilla.i1
+5,0 MOV 1 2 ancilla.i10
+5,0 MOV 1 2 ancilla.i11
+5,0 MOV 1 2 ancilla.i12
+5,0 MOV 1 2 ancilla.i13
+5,0 MOV 1 2 ancilla.i14
+5,0 MOV 1 2 ancilla.i15
+5,0 MOV 1 2 ancilla.i16
+5,0 MOV 1 2 ancilla.i17
+5,0 MOV 1 2 ancilla.i18
+5,0 MOV 1 2 ancilla.i19
+5,0 MOV 1 2 ancilla.i2
+5,0 MOV 1 2 ancilla.i20
+5,0 MOV 1 2 ancilla.i21
+5,0 MOV 1 2 ancilla.i22
+5,0 MOV 1 2 ancilla.i23
+5,0 MOV 1 2 ancilla.i24
+5,0 MOV 1 2 ancilla.i25
+5,0 MOV 1 2 ancilla.i26
+5,0 MOV 1 2 ancilla.i27
+5,0 MOV 1 2 ancilla.i28
+5,0 MOV 1 2 ancilla.i29
+5,0 MOV 1 2 ancilla.i3
+5,0 MOV 1 2 ancilla.i30
+5,0 MOV 1 2 ancilla.i31
+5,0 MOV 1 2 ancilla.i4
+5,0 MOV 1 2 ancilla.i5
+5,0 MOV 1 2 ancilla.i6
+5,0 MOV 1 2 ancilla.i7
+5,0 MOV 1 2 ancilla.i8
+5,0 MOV 1 2 ancilla.i9
+5,1 458: CNOT in222 ancilla.i22
+5,1 459: CNOT in226 ancilla.i26
+5,1 460: CNOT in218 ancilla.i18
+5,1 461: CNOT in228 ancilla.i28
+5,1 462: CNOT in220 ancilla.i20
+5,1 463: CNOT in20 ancilla.i0
+5,1 464: CNOT in223 ancilla.i23
+5,1 465: CNOT in221 ancilla.i21
+5,1 466: CNOT in224 ancilla.i24
+5,1 467: CNOT in227 ancilla.i27
+5,1 468: CNOT in21 ancilla.i1
+5,1 469: CNOT in216 ancilla.i16
+5,1 470: CNOT in217 ancilla.i17
+5,1 471: CNOT in225 ancilla.i25
+5,1 472: CNOT in229 ancilla.i29
+5,1 473: CNOT in219 ancilla.i19
+5,1 474: CNOT in29 ancilla.i9
+5,1 475: CNOT in231 ancilla.i31
+5,1 476: CNOT in210 ancilla.i10
+5,1 477: CNOT in28 ancilla.i8
+5,1 478: CNOT in23 ancilla.i3
+5,1 479: CNOT in211 ancilla.i11
+5,1 480: CNOT in212 ancilla.i12
+5,1 481: CNOT in213 ancilla.i13
+5,1 482: CNOT in26 ancilla.i6
+5,1 483: CNOT in24 ancilla.i4
+5,1 484: CNOT in230 ancilla.i30
+5,1 485: CNOT in214 ancilla.i14
+5,1 486: CNOT in25 ancilla.i5
+5,1 487: CNOT in22 ancilla.i2
+5,1 488: CNOT in27 ancilla.i7
+5,1 489: CNOT in215 ancilla.i15
+5,2 490: T in18
+5,2 491: T in127
+5,2 493: T in119
+5,2 496: T in124
+5,2 498: T in17
+5,2 499: T in112
+5,2 502: T in11
+5,2 503: T in131
+5,2 504: T in122
+5,2 505: T in129
+5,2 506: T in110
+5,2 508: T in10
+5,2 509: T in128
+5,2 511: T in120
+5,2 513: T in123
+5,2 514: T in115
+5,2 517: T in126
+5,2 520: T in13
+5,2 521: T in111
+5,2 524: T in14
+5,2 526: T in117
+5,2 527: T in125
+5,2 529: T in19
+5,2 532: T in15
+5,2 533: T in114
+5,2 536: T in12
+5,2 539: T in116
+5,2 541: T in113
+5,2 548: T in16
+5,2 549: T in121
+5,2 550: T in130
+5,2 553: T in118
+6,1 492: Tdag in21
+6,1 494: Tdag in20
+6,1 495: Tdag in219
+6,1 497: Tdag in212
+6,1 500: Tdag in231
+6,1 501: Tdag in27
+6,1 507: Tdag in228
+6,1 510: Tdag in210
+6,1 512: Tdag in28
+6,1 515: Tdag in223
+6,1 516: Tdag in23
+6,1 518: Tdag in215
+6,1 519: Tdag in211
+6,1 522: Tdag in220
+6,1 523: Tdag in224
+6,1 525: Tdag in225
+6,1 528: Tdag in217
+6,1 530: Tdag in216
+6,1 531: Tdag in214
+6,1 534: Tdag in29
+6,1 535: Tdag in25
+6,1 537: Tdag in229
+6,1 538: Tdag in24
+6,1 540: Tdag in221
+6,1 542: Tdag in226
+6,1 543: Tdag in26
+6,1 544: Tdag in222
+6,1 545: Tdag in213
+6,1 546: Tdag in22
+6,1 547: Tdag in230
+6,1 551: Tdag in218
+6,1 552: Tdag in227
+6,1 555: Tdag ancilla.i22
+6,1 560: Tdag ancilla.i4
+6,1 561: Tdag ancilla.i5
+6,1 564: Tdag ancilla.i25
+6,1 565: Tdag ancilla.i6
+6,1 567: Tdag ancilla.i27
+6,1 569: Tdag ancilla.i24
+6,1 570: Tdag ancilla.i7
+6,1 571: Tdag ancilla.i0
+6,1 574: Tdag ancilla.i23
+6,1 575: Tdag ancilla.i26
+6,1 576: Tdag ancilla.i8
+6,1 578: Tdag ancilla.i29
+6,1 579: Tdag ancilla.i3
+6,1 580: Tdag ancilla.i11
+6,1 584: Tdag ancilla.i14
+6,1 586: Tdag ancilla.i19
+6,1 587: Tdag ancilla.i12
+6,1 589: Tdag ancilla.i1
+6,1 592: Tdag ancilla.i17
+6,1 596: Tdag ancilla.i18
+6,1 597: Tdag ancilla.i30
+6,1 599: Tdag ancilla.i13
+6,1 601: Tdag ancilla.i9
+6,1 603: Tdag ancilla.i15
+6,1 606: Tdag ancilla.i21
+6,1 607: Tdag ancilla.i31
+6,1 608: Tdag ancilla.i2
+6,1 611: Tdag ancilla.i16
+6,1 612: Tdag ancilla.i10
+6,1 613: Tdag ancilla.i28
+6,1 617: Tdag ancilla.i20
+7,0 MOV 0 1 ancilla.i0
+7,0 MOV 0 1 ancilla.i1
+7,0 MOV 0 1 ancilla.i10
+7,0 MOV 0 1 ancilla.i11
+7,0 MOV 0 1 ancilla.i12
+7,0 MOV 0 1 ancilla.i13
+7,0 MOV 0 1 ancilla.i14
+7,0 MOV 0 1 ancilla.i15
+7,0 MOV 0 1 ancilla.i16
+7,0 MOV 0 1 ancilla.i17
+7,0 MOV 0 1 ancilla.i18
+7,0 MOV 0 1 ancilla.i19
+7,0 MOV 0 1 ancilla.i2
+7,0 MOV 0 1 ancilla.i20
+7,0 MOV 0 1 ancilla.i21
+7,0 MOV 0 1 ancilla.i22
+7,0 MOV 0 1 ancilla.i23
+7,0 MOV 0 1 ancilla.i24
+7,0 MOV 0 1 ancilla.i25
+7,0 MOV 0 1 ancilla.i26
+7,0 MOV 0 1 ancilla.i27
+7,0 MOV 0 1 ancilla.i28
+7,0 MOV 0 1 ancilla.i29
+7,0 MOV 0 1 ancilla.i3
+7,0 MOV 0 1 ancilla.i30
+7,0 MOV 0 1 ancilla.i31
+7,0 MOV 0 1 ancilla.i4
+7,0 MOV 0 1 ancilla.i5
+7,0 MOV 0 1 ancilla.i6
+7,0 MOV 0 1 ancilla.i7
+7,0 MOV 0 1 ancilla.i8
+7,0 MOV 0 1 ancilla.i9
+7,0 MOV 1 2 in10
+7,0 MOV 1 2 in11
+7,0 MOV 1 2 in110
+7,0 MOV 1 2 in111
+7,0 MOV 1 2 in112
+7,0 MOV 1 2 in113
+7,0 MOV 1 2 in114
+7,0 MOV 1 2 in115
+7,0 MOV 1 2 in116
+7,0 MOV 1 2 in117
+7,0 MOV 1 2 in118
+7,0 MOV 1 2 in119
+7,0 MOV 1 2 in12
+7,0 MOV 1 2 in120
+7,0 MOV 1 2 in121
+7,0 MOV 1 2 in122
+7,0 MOV 1 2 in123
+7,0 MOV 1 2 in124
+7,0 MOV 1 2 in125
+7,0 MOV 1 2 in126
+7,0 MOV 1 2 in127
+7,0 MOV 1 2 in128
+7,0 MOV 1 2 in129
+7,0 MOV 1 2 in13
+7,0 MOV 1 2 in130
+7,0 MOV 1 2 in131
+7,0 MOV 1 2 in14
+7,0 MOV 1 2 in15
+7,0 MOV 1 2 in16
+7,0 MOV 1 2 in17
+7,0 MOV 1 2 in18
+7,0 MOV 1 2 in19
+7,1 554: CNOT in20 in10
+7,1 556: CNOT in28 in18
+7,1 557: CNOT in226 in126
+7,1 558: CNOT in222 in122
+7,1 559: CNOT in231 in131
+7,1 562: CNOT in25 in15
+7,1 563: CNOT in225 in125
+7,1 566: CNOT in26 in16
+7,1 568: CNOT in27 in17
+7,1 572: CNOT in227 in127
+7,1 573: CNOT in223 in123
+7,1 577: CNOT in224 in124
+7,1 581: CNOT in228 in128
+7,1 582: CNOT in22 in12
+7,1 583: CNOT in214 in114
+7,1 585: CNOT in219 in119
+7,1 588: CNOT in229 in129
+7,1 590: CNOT in21 in11
+7,1 591: CNOT in24 in14
+7,1 593: CNOT in217 in117
+7,1 594: CNOT in230 in130
+7,1 595: CNOT in218 in118
+7,1 598: CNOT in213 in113
+7,1 600: CNOT in212 in112
+7,1 602: CNOT in215 in115
+7,1 604: CNOT in29 in19
+7,1 605: CNOT in221 in121
+7,1 609: CNOT in23 in13
+7,1 610: CNOT in216 in116
+7,1 614: CNOT in211 in111
+7,1 615: CNOT in220 in120
+7,1 616: CNOT in210 in110
+8,0 MOV 1 0 ancilla.i0
+8,0 MOV 1 0 ancilla.i1
+8,0 MOV 1 0 ancilla.i10
+8,0 MOV 1 0 ancilla.i11
+8,0 MOV 1 0 ancilla.i12
+8,0 MOV 1 0 ancilla.i13
+8,0 MOV 1 0 ancilla.i14
+8,0 MOV 1 0 ancilla.i15
+8,0 MOV 1 0 ancilla.i16
+8,0 MOV 1 0 ancilla.i17
+8,0 MOV 1 0 ancilla.i18
+8,0 MOV 1 0 ancilla.i19
+8,0 MOV 1 0 ancilla.i2
+8,0 MOV 1 0 ancilla.i20
+8,0 MOV 1 0 ancilla.i21
+8,0 MOV 1 0 ancilla.i22
+8,0 MOV 1 0 ancilla.i23
+8,0 MOV 1 0 ancilla.i24
+8,0 MOV 1 0 ancilla.i25
+8,0 MOV 1 0 ancilla.i26
+8,0 MOV 1 0 ancilla.i27
+8,0 MOV 1 0 ancilla.i28
+8,0 MOV 1 0 ancilla.i29
+8,0 MOV 1 0 ancilla.i3
+8,0 MOV 1 0 ancilla.i30
+8,0 MOV 1 0 ancilla.i31
+8,0 MOV 1 0 ancilla.i4
+8,0 MOV 1 0 ancilla.i5
+8,0 MOV 1 0 ancilla.i6
+8,0 MOV 1 0 ancilla.i7
+8,0 MOV 1 0 ancilla.i8
+8,0 MOV 1 0 ancilla.i9
+8,0 MOV 2 1 in20
+8,0 MOV 2 1 in21
+8,0 MOV 2 1 in210
+8,0 MOV 2 1 in211
+8,0 MOV 2 1 in212
+8,0 MOV 2 1 in213
+8,0 MOV 2 1 in214
+8,0 MOV 2 1 in215
+8,0 MOV 2 1 in216
+8,0 MOV 2 1 in217
+8,0 MOV 2 1 in218
+8,0 MOV 2 1 in219
+8,0 MOV 2 1 in22
+8,0 MOV 2 1 in220
+8,0 MOV 2 1 in221
+8,0 MOV 2 1 in222
+8,0 MOV 2 1 in223
+8,0 MOV 2 1 in224
+8,0 MOV 2 1 in225
+8,0 MOV 2 1 in226
+8,0 MOV 2 1 in227
+8,0 MOV 2 1 in228
+8,0 MOV 2 1 in229
+8,0 MOV 2 1 in23
+8,0 MOV 2 1 in230
+8,0 MOV 2 1 in231
+8,0 MOV 2 1 in24
+8,0 MOV 2 1 in25
+8,0 MOV 2 1 in26
+8,0 MOV 2 1 in27
+8,0 MOV 2 1 in28
+8,0 MOV 2 1 in29
+8,1 619: CNOT in129 ancilla.i29
+8,1 636: CNOT in131 ancilla.i31
+8,1 648: CNOT in128 ancilla.i28
+8,1 650: CNOT in130 ancilla.i30
+8,1 659: CNOT in127 ancilla.i27
+8,1 660: CNOT in19 ancilla.i9
+8,1 661: CNOT in12 ancilla.i2
+8,1 662: CNOT in112 ancilla.i12
+8,1 666: CNOT in110 ancilla.i10
+8,1 667: CNOT in118 ancilla.i18
+8,1 669: CNOT in13 ancilla.i3
+8,1 670: CNOT in117 ancilla.i17
+8,1 676: CNOT in111 ancilla.i11
+8,1 678: CNOT in115 ancilla.i15
+8,1 680: CNOT in14 ancilla.i4
+8,1 681: CNOT in114 ancilla.i14
+8,1 683: CNOT in15 ancilla.i5
+8,1 684: CNOT in113 ancilla.i13
+8,1 688: CNOT in116 ancilla.i16
+8,1 689: CNOT in17 ancilla.i7
+8,1 691: CNOT in126 ancilla.i26
+8,1 693: CNOT in10 ancilla.i0
+8,1 694: CNOT in125 ancilla.i25
+8,1 697: CNOT in124 ancilla.i24
+8,1 699: CNOT in119 ancilla.i19
+8,1 703: CNOT in120 ancilla.i20
+8,1 707: CNOT in121 ancilla.i21
+8,1 708: CNOT in16 ancilla.i6
+8,1 710: CNOT in122 ancilla.i22
+8,1 711: CNOT in18 ancilla.i8
+8,1 712: CNOT in123 ancilla.i23
+8,1 713: CNOT in11 ancilla.i1
+8,2 631: S in229
+8,2 635: S in231
+8,2 646: S in227
+8,2 647: S in228
+8,2 653: S in230
+8,2 663: S in26
+8,2 664: S in219
+8,2 665: S in210
+8,2 668: S in23
+8,2 671: S in217
+8,2 672: S in218
+8,2 673: S in220
+8,2 674: S in216
+8,2 675: S in211
+8,2 677: S in24
+8,2 679: S in215
+8,2 682: S in214
+8,2 685: S in213
+8,2 686: S in212
+8,2 687: S in25
+8,2 690: S in20
+8,2 692: S in226
+8,2 695: S in225
+8,2 696: S in27
+8,2 698: S in224
+8,2 700: S in223
+8,2 701: S in21
+8,2 702: S in28
+8,2 704: S in22
+8,2 705: S in29
+8,2 706: S in221
+8,2 709: S in222
+9,0 MOV 1 2 in20
+9,0 MOV 1 2 in21
+9,0 MOV 1 2 in210
+9,0 MOV 1 2 in211
+9,0 MOV 1 2 in212
+9,0 MOV 1 2 in213
+9,0 MOV 1 2 in214
+9,0 MOV 1 2 in215
+9,0 MOV 1 2 in216
+9,0 MOV 1 2 in217
+9,0 MOV 1 2 in218
+9,0 MOV 1 2 in219
+9,0 MOV 1 2 in22
+9,0 MOV 1 2 in220
+9,0 MOV 1 2 in221
+9,0 MOV 1 2 in222
+9,0 MOV 1 2 in223
+9,0 MOV 1 2 in224
+9,0 MOV 1 2 in225
+9,0 MOV 1 2 in226
+9,0 MOV 1 2 in227
+9,0 MOV 1 2 in228
+9,0 MOV 1 2 in229
+9,0 MOV 1 2 in23
+9,0 MOV 1 2 in230
+9,0 MOV 1 2 in231
+9,0 MOV 1 2 in24
+9,0 MOV 1 2 in25
+9,0 MOV 1 2 in26
+9,0 MOV 1 2 in27
+9,0 MOV 1 2 in28
+9,0 MOV 1 2 in29
+9,0 MOV 2 1 in10
+9,0 MOV 2 1 in11
+9,0 MOV 2 1 in110
+9,0 MOV 2 1 in111
+9,0 MOV 2 1 in112
+9,0 MOV 2 1 in113
+9,0 MOV 2 1 in114
+9,0 MOV 2 1 in115
+9,0 MOV 2 1 in116
+9,0 MOV 2 1 in117
+9,0 MOV 2 1 in118
+9,0 MOV 2 1 in119
+9,0 MOV 2 1 in12
+9,0 MOV 2 1 in120
+9,0 MOV 2 1 in121
+9,0 MOV 2 1 in122
+9,0 MOV 2 1 in123
+9,0 MOV 2 1 in124
+9,0 MOV 2 1 in125
+9,0 MOV 2 1 in126
+9,0 MOV 2 1 in127
+9,0 MOV 2 1 in128
+9,0 MOV 2 1 in129
+9,0 MOV 2 1 in13
+9,0 MOV 2 1 in130
+9,0 MOV 2 1 in131
+9,0 MOV 2 1 in14
+9,0 MOV 2 1 in15
+9,0 MOV 2 1 in16
+9,0 MOV 2 1 in17
+9,0 MOV 2 1 in18
+9,0 MOV 2 1 in19
+9,1 714: CNOT ancilla.i5 in25
+9,1 719: CNOT ancilla.i6 in26
+9,1 728: CNOT ancilla.i0 in20
+9,1 733: CNOT ancilla.i1 in21
+9,1 737: CNOT ancilla.i3 in23
+9,1 738: CNOT ancilla.i2 in22
+9,1 747: CNOT ancilla.i4 in24
+9,1 751: CNOT ancilla.i14 in214
+9,1 752: CNOT ancilla.i13 in213
+9,1 753: CNOT ancilla.i20 in220
+9,1 754: CNOT ancilla.i21 in221
+9,1 755: CNOT ancilla.i12 in212
+9,1 756: CNOT ancilla.i22 in222
+9,1 757: CNOT ancilla.i30 in230
+9,1 758: CNOT ancilla.i19 in219
+9,1 759: CNOT ancilla.i29 in229
+9,1 760: CNOT ancilla.i11 in211
+9,1 761: CNOT ancilla.i15 in215
+9,1 762: CNOT ancilla.i27 in227
+9,1 763: CNOT ancilla.i23 in223
+9,1 764: CNOT ancilla.i28 in228
+9,1 765: CNOT ancilla.i9 in29
+9,1 766: CNOT ancilla.i18 in218
+9,1 768: CNOT ancilla.i7 in27
+9,1 769: CNOT ancilla.i16 in216
+9,1 770: CNOT ancilla.i8 in28
+9,1 771: CNOT ancilla.i26 in226
+9,1 772: CNOT ancilla.i31 in231
+9,1 773: CNOT ancilla.i24 in224
+9,1 774: CNOT ancilla.i10 in210
+9,1 775: CNOT ancilla.i25 in225
+9,1 776: CNOT ancilla.i17 in217
+9,2 778: H in12
+9,2 780: H in119
+9,2 783: H in120
+9,2 784: H in128
+9,2 785: H in118
+9,2 786: H in126
+9,2 788: H in125
+9,2 790: H in124
+9,2 792: H in123
+9,2 793: H in10
+9,2 796: H in127
+9,2 797: H in122
+9,2 799: H in121
+9,2 801: H in11
+9,2 805: H in130
+9,2 807: H in110
+9,2 808: H in15
+9,2 810: H in19
+9,2 815: H in131
+9,2 816: H in16
+9,2 818: H in17
+9,2 822: H in18
+9,2 825: H in117
+9,2 827: H in116
+9,2 828: H in115
+9,2 829: H in13
+9,2 831: H in111
+9,2 832: H in129
+9,2 833: H in114
+9,2 835: H in113
+9,2 837: H in14
+9,2 839: H in112
+10,0 MOV 0 1 in20
+10,0 MOV 0 1 in21
+10,0 MOV 0 1 in210
+10,0 MOV 0 1 in211
+10,0 MOV 0 1 in212
+10,0 MOV 0 1 in213
+10,0 MOV 0 1 in214
+10,0 MOV 0 1 in215
+10,0 MOV 0 1 in216
+10,0 MOV 0 1 in217
+10,0 MOV 0 1 in218
+10,0 MOV 0 1 in219
+10,0 MOV 0 1 in22
+10,0 MOV 0 1 in220
+10,0 MOV 0 1 in221
+10,0 MOV 0 1 in222
+10,0 MOV 0 1 in223
+10,0 MOV 0 1 in224
+10,0 MOV 0 1 in225
+10,0 MOV 0 1 in226
+10,0 MOV 0 1 in227
+10,0 MOV 0 1 in228
+10,0 MOV 0 1 in229
+10,0 MOV 0 1 in23
+10,0 MOV 0 1 in230
+10,0 MOV 0 1 in231
+10,0 MOV 0 1 in24
+10,0 MOV 0 1 in25
+10,0 MOV 0 1 in26
+10,0 MOV 0 1 in27
+10,0 MOV 0 1 in28
+10,0 MOV 0 1 in29
+10,0 MOV 1 0 target0
+10,0 MOV 1 0 target1
+10,0 MOV 1 0 target10
+10,0 MOV 1 0 target11
+10,0 MOV 1 0 target12
+10,0 MOV 1 0 target13
+10,0 MOV 1 0 target14
+10,0 MOV 1 0 target15
+10,0 MOV 1 0 target16
+10,0 MOV 1 0 target17
+10,0 MOV 1 0 target18
+10,0 MOV 1 0 target19
+10,0 MOV 1 0 target2
+10,0 MOV 1 0 target20
+10,0 MOV 1 0 target21
+10,0 MOV 1 0 target22
+10,0 MOV 1 0 target23
+10,0 MOV 1 0 target24
+10,0 MOV 1 0 target25
+10,0 MOV 1 0 target26
+10,0 MOV 1 0 target27
+10,0 MOV 1 0 target28
+10,0 MOV 1 0 target29
+10,0 MOV 1 0 target3
+10,0 MOV 1 0 target30
+10,0 MOV 1 0 target31
+10,0 MOV 1 0 target4
+10,0 MOV 1 0 target5
+10,0 MOV 1 0 target6
+10,0 MOV 1 0 target7
+10,0 MOV 1 0 target8
+10,0 MOV 1 0 target9
+10,1 779: CNOT ancilla.i22 target22
+10,1 781: CNOT ancilla.i20 target20
+10,1 782: CNOT ancilla.i21 target21
+10,1 787: CNOT ancilla.i30 target30
+10,1 789: CNOT ancilla.i29 target29
+10,1 791: CNOT ancilla.i28 target28
+10,1 794: CNOT ancilla.i19 target19
+10,1 795: CNOT ancilla.i26 target26
+10,1 798: CNOT ancilla.i25 target25
+10,1 800: CNOT ancilla.i24 target24
+10,1 802: CNOT ancilla.i23 target23
+10,1 803: CNOT ancilla.i27 target27
+10,1 804: CNOT ancilla.i9 target9
+10,1 806: CNOT ancilla.i8 target8
+10,1 809: CNOT ancilla.i7 target7
+10,1 811: CNOT ancilla.i6 target6
+10,1 812: CNOT ancilla.i16 target16
+10,1 813: CNOT ancilla.i5 target5
+10,1 814: CNOT ancilla.i4 target4
+10,1 817: CNOT ancilla.i3 target3
+10,1 819: CNOT ancilla.i2 target2
+10,1 820: CNOT ancilla.i0 target0
+10,1 821: CNOT ancilla.i1 target1
+10,1 823: CNOT ancilla.i31 target31
+10,1 824: CNOT ancilla.i18 target18
+10,1 826: CNOT ancilla.i17 target17
+10,1 830: CNOT ancilla.i15 target15
+10,1 834: CNOT ancilla.i13 target13
+10,1 836: CNOT ancilla.i12 target12
+10,1 838: CNOT ancilla.i11 target11
+10,1 840: CNOT ancilla.i10 target10
+10,1 841: CNOT ancilla.i14 target14
+
+LPFS:
+Function: OR (sched: lpfs, op_cnt: 1952, k: 2, d: 1024, l: 1, opp: 1, refill: 1)
+================================================================================
+ops = 928
+moves = 1024
+total = 1952
+ots = 15
+mts = 13
+ts = 67
+SIMDs = 2
+tgates = 6
+T(1) = 1856
+T(inf) = 15
+T(2,1024) = 67
+Speedup = 27.7014925373134
+Efficiency = 13.8507462686567
+Utility = 14.5671641791045
+Quality = 14.5671641791045
+Overhead = 52.4590163934426% (reduction: 14.207650273224)
+Avg load = 78.7692307692308
+Peak load = 224
+mlist = 224 0 192 64 64 32 64 64 32 0 64 64 64 64 32
+
+0,0 MOV 1 0 ancilla_zg.i.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i.i0
+0,0 MOV 1 0 ancilla_zg.i1.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i1.i0
+0,0 MOV 1 0 ancilla_zg.i10.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i10.i0
+0,0 MOV 1 0 ancilla_zg.i11.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i11.i0
+0,0 MOV 1 0 ancilla_zg.i12.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i12.i0
+0,0 MOV 1 0 ancilla_zg.i13.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i13.i0
+0,0 MOV 1 0 ancilla_zg.i14.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i14.i0
+0,0 MOV 1 0 ancilla_zg.i15.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i15.i0
+0,0 MOV 1 0 ancilla_zg.i16.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i16.i0
+0,0 MOV 1 0 ancilla_zg.i17.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i17.i0
+0,0 MOV 1 0 ancilla_zg.i18.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i18.i0
+0,0 MOV 1 0 ancilla_zg.i19.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i19.i0
+0,0 MOV 1 0 ancilla_zg.i2.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i2.i0
+0,0 MOV 1 0 ancilla_zg.i20.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i20.i0
+0,0 MOV 1 0 ancilla_zg.i21.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i21.i0
+0,0 MOV 1 0 ancilla_zg.i22.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i22.i0
+0,0 MOV 1 0 ancilla_zg.i23.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i23.i0
+0,0 MOV 1 0 ancilla_zg.i24.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i24.i0
+0,0 MOV 1 0 ancilla_zg.i25.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i25.i0
+0,0 MOV 1 0 ancilla_zg.i26.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i26.i0
+0,0 MOV 1 0 ancilla_zg.i27.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i27.i0
+0,0 MOV 1 0 ancilla_zg.i28.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i28.i0
+0,0 MOV 1 0 ancilla_zg.i29.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i29.i0
+0,0 MOV 1 0 ancilla_zg.i3.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i3.i0
+0,0 MOV 1 0 ancilla_zg.i30.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i30.i0
+0,0 MOV 1 0 ancilla_zg.i31.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i31.i0
+0,0 MOV 1 0 ancilla_zg.i32.i0
+0,0 MOV 1 0 ancilla_zg.i33.i0
+0,0 MOV 1 0 ancilla_zg.i34.i0
+0,0 MOV 1 0 ancilla_zg.i35.i0
+0,0 MOV 1 0 ancilla_zg.i36.i0
+0,0 MOV 1 0 ancilla_zg.i37.i0
+0,0 MOV 1 0 ancilla_zg.i38.i0
+0,0 MOV 1 0 ancilla_zg.i39.i0
+0,0 MOV 1 0 ancilla_zg.i4.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i4.i0
+0,0 MOV 1 0 ancilla_zg.i40.i0
+0,0 MOV 1 0 ancilla_zg.i41.i0
+0,0 MOV 1 0 ancilla_zg.i42.i0
+0,0 MOV 1 0 ancilla_zg.i43.i0
+0,0 MOV 1 0 ancilla_zg.i44.i0
+0,0 MOV 1 0 ancilla_zg.i45.i0
+0,0 MOV 1 0 ancilla_zg.i46.i0
+0,0 MOV 1 0 ancilla_zg.i47.i0
+0,0 MOV 1 0 ancilla_zg.i48.i0
+0,0 MOV 1 0 ancilla_zg.i49.i0
+0,0 MOV 1 0 ancilla_zg.i5.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i5.i0
+0,0 MOV 1 0 ancilla_zg.i50.i0
+0,0 MOV 1 0 ancilla_zg.i51.i0
+0,0 MOV 1 0 ancilla_zg.i52.i0
+0,0 MOV 1 0 ancilla_zg.i53.i0
+0,0 MOV 1 0 ancilla_zg.i54.i0
+0,0 MOV 1 0 ancilla_zg.i55.i0
+0,0 MOV 1 0 ancilla_zg.i56.i0
+0,0 MOV 1 0 ancilla_zg.i57.i0
+0,0 MOV 1 0 ancilla_zg.i58.i0
+0,0 MOV 1 0 ancilla_zg.i59.i0
+0,0 MOV 1 0 ancilla_zg.i6.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i6.i0
+0,0 MOV 1 0 ancilla_zg.i60.i0
+0,0 MOV 1 0 ancilla_zg.i61.i0
+0,0 MOV 1 0 ancilla_zg.i62.i0
+0,0 MOV 1 0 ancilla_zg.i63.i0
+0,0 MOV 1 0 ancilla_zg.i7.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i7.i0
+0,0 MOV 1 0 ancilla_zg.i8.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i8.i0
+0,0 MOV 1 0 ancilla_zg.i9.i.i.i0
+0,0 MOV 1 0 ancilla_zg.i9.i0
+0,0 MOV 1 0 target0
+0,0 MOV 1 0 target1
+0,0 MOV 1 0 target10
+0,0 MOV 1 0 target11
+0,0 MOV 1 0 target12
+0,0 MOV 1 0 target13
+0,0 MOV 1 0 target14
+0,0 MOV 1 0 target15
+0,0 MOV 1 0 target16
+0,0 MOV 1 0 target17
+0,0 MOV 1 0 target18
+0,0 MOV 1 0 target19
+0,0 MOV 1 0 target2
+0,0 MOV 1 0 target20
+0,0 MOV 1 0 target21
+0,0 MOV 1 0 target22
+0,0 MOV 1 0 target23
+0,0 MOV 1 0 target24
+0,0 MOV 1 0 target25
+0,0 MOV 1 0 target26
+0,0 MOV 1 0 target27
+0,0 MOV 1 0 target28
+0,0 MOV 1 0 target29
+0,0 MOV 1 0 target3
+0,0 MOV 1 0 target30
+0,0 MOV 1 0 target31
+0,0 MOV 1 0 target4
+0,0 MOV 1 0 target5
+0,0 MOV 1 0 target6
+0,0 MOV 1 0 target7
+0,0 MOV 1 0 target8
+0,0 MOV 1 0 target9
+0,0 MOV 1 0 temp1.i0
+0,0 MOV 1 0 temp1.i1
+0,0 MOV 1 0 temp1.i10
+0,0 MOV 1 0 temp1.i11
+0,0 MOV 1 0 temp1.i12
+0,0 MOV 1 0 temp1.i13
+0,0 MOV 1 0 temp1.i14
+0,0 MOV 1 0 temp1.i15
+0,0 MOV 1 0 temp1.i16
+0,0 MOV 1 0 temp1.i17
+0,0 MOV 1 0 temp1.i18
+0,0 MOV 1 0 temp1.i19
+0,0 MOV 1 0 temp1.i2
+0,0 MOV 1 0 temp1.i20
+0,0 MOV 1 0 temp1.i21
+0,0 MOV 1 0 temp1.i22
+0,0 MOV 1 0 temp1.i23
+0,0 MOV 1 0 temp1.i24
+0,0 MOV 1 0 temp1.i25
+0,0 MOV 1 0 temp1.i26
+0,0 MOV 1 0 temp1.i27
+0,0 MOV 1 0 temp1.i28
+0,0 MOV 1 0 temp1.i29
+0,0 MOV 1 0 temp1.i3
+0,0 MOV 1 0 temp1.i30
+0,0 MOV 1 0 temp1.i31
+0,0 MOV 1 0 temp1.i4
+0,0 MOV 1 0 temp1.i5
+0,0 MOV 1 0 temp1.i6
+0,0 MOV 1 0 temp1.i7
+0,0 MOV 1 0 temp1.i8
+0,0 MOV 1 0 temp1.i9
+0,0 MOV 1 0 temp2.i0
+0,0 MOV 1 0 temp2.i1
+0,0 MOV 1 0 temp2.i10
+0,0 MOV 1 0 temp2.i11
+0,0 MOV 1 0 temp2.i12
+0,0 MOV 1 0 temp2.i13
+0,0 MOV 1 0 temp2.i14
+0,0 MOV 1 0 temp2.i15
+0,0 MOV 1 0 temp2.i16
+0,0 MOV 1 0 temp2.i17
+0,0 MOV 1 0 temp2.i18
+0,0 MOV 1 0 temp2.i19
+0,0 MOV 1 0 temp2.i2
+0,0 MOV 1 0 temp2.i20
+0,0 MOV 1 0 temp2.i21
+0,0 MOV 1 0 temp2.i22
+0,0 MOV 1 0 temp2.i23
+0,0 MOV 1 0 temp2.i24
+0,0 MOV 1 0 temp2.i25
+0,0 MOV 1 0 temp2.i26
+0,0 MOV 1 0 temp2.i27
+0,0 MOV 1 0 temp2.i28
+0,0 MOV 1 0 temp2.i29
+0,0 MOV 1 0 temp2.i3
+0,0 MOV 1 0 temp2.i30
+0,0 MOV 1 0 temp2.i31
+0,0 MOV 1 0 temp2.i4
+0,0 MOV 1 0 temp2.i5
+0,0 MOV 1 0 temp2.i6
+0,0 MOV 1 0 temp2.i7
+0,0 MOV 1 0 temp2.i8
+0,0 MOV 1 0 temp2.i9
+0,0 MOV 2 0 ancilla.i.i.i0
+0,0 MOV 2 0 ancilla.i.i.i1
+0,0 MOV 2 0 ancilla.i.i.i10
+0,0 MOV 2 0 ancilla.i.i.i11
+0,0 MOV 2 0 ancilla.i.i.i12
+0,0 MOV 2 0 ancilla.i.i.i13
+0,0 MOV 2 0 ancilla.i.i.i14
+0,0 MOV 2 0 ancilla.i.i.i15
+0,0 MOV 2 0 ancilla.i.i.i16
+0,0 MOV 2 0 ancilla.i.i.i17
+0,0 MOV 2 0 ancilla.i.i.i18
+0,0 MOV 2 0 ancilla.i.i.i19
+0,0 MOV 2 0 ancilla.i.i.i2
+0,0 MOV 2 0 ancilla.i.i.i20
+0,0 MOV 2 0 ancilla.i.i.i21
+0,0 MOV 2 0 ancilla.i.i.i22
+0,0 MOV 2 0 ancilla.i.i.i23
+0,0 MOV 2 0 ancilla.i.i.i24
+0,0 MOV 2 0 ancilla.i.i.i25
+0,0 MOV 2 0 ancilla.i.i.i26
+0,0 MOV 2 0 ancilla.i.i.i27
+0,0 MOV 2 0 ancilla.i.i.i28
+0,0 MOV 2 0 ancilla.i.i.i29
+0,0 MOV 2 0 ancilla.i.i.i3
+0,0 MOV 2 0 ancilla.i.i.i30
+0,0 MOV 2 0 ancilla.i.i.i31
+0,0 MOV 2 0 ancilla.i.i.i4
+0,0 MOV 2 0 ancilla.i.i.i5
+0,0 MOV 2 0 ancilla.i.i.i6
+0,0 MOV 2 0 ancilla.i.i.i7
+0,0 MOV 2 0 ancilla.i.i.i8
+0,0 MOV 2 0 ancilla.i.i.i9
+0,1 1516: CNOT target28 ancilla_zg.i3.i.i.i0
+0,1 1520: CNOT target0 ancilla_zg.i31.i.i.i0
+0,1 1525: CNOT target24 ancilla_zg.i7.i.i.i0
+0,1 1527: CNOT target6 ancilla_zg.i25.i.i.i0
+0,1 1528: CNOT target27 ancilla_zg.i4.i.i.i0
+0,1 1529: CNOT target25 ancilla_zg.i6.i.i.i0
+0,1 1534: CNOT target3 ancilla_zg.i28.i.i.i0
+0,1 1535: CNOT target4 ancilla_zg.i27.i.i.i0
+0,1 1541: CNOT target2 ancilla_zg.i29.i.i.i0
+0,1 1545: CNOT target26 ancilla_zg.i5.i.i.i0
+0,1 1549: CNOT target1 ancilla_zg.i30.i.i.i0
+0,1 1550: CNOT target5 ancilla_zg.i26.i.i.i0
+0,1 1554: CNOT target18 ancilla_zg.i13.i.i.i0
+0,1 1555: CNOT target19 ancilla_zg.i12.i.i.i0
+0,1 1559: CNOT target13 ancilla_zg.i18.i.i.i0
+0,1 1561: CNOT target20 ancilla_zg.i11.i.i.i0
+0,1 1564: CNOT target12 ancilla_zg.i19.i.i.i0
+0,1 1567: CNOT target11 ancilla_zg.i20.i.i.i0
+0,1 1570: CNOT target17 ancilla_zg.i14.i.i.i0
+0,1 1575: CNOT target16 ancilla_zg.i15.i.i.i0
+0,1 1578: CNOT target15 ancilla_zg.i16.i.i.i0
+0,1 1583: CNOT target14 ancilla_zg.i17.i.i.i0
+0,1 1586: CNOT target29 ancilla_zg.i2.i.i.i0
+0,1 1589: CNOT target22 ancilla_zg.i9.i.i.i0
+0,1 1591: CNOT target8 ancilla_zg.i23.i.i.i0
+0,1 1592: CNOT target30 ancilla_zg.i1.i.i.i0
+0,1 1595: CNOT target9 ancilla_zg.i22.i.i.i0
+0,1 1597: CNOT target7 ancilla_zg.i24.i.i.i0
+0,1 1603: CNOT target23 ancilla_zg.i8.i.i.i0
+0,1 1604: CNOT target31 ancilla_zg.i.i.i.i0
+0,1 1605: CNOT target21 ancilla_zg.i10.i.i.i0
+0,1 1606: CNOT target10 ancilla_zg.i21.i.i.i0
+0,1 842: CNOT temp2.i7 ancilla_zg.i24.i0
+0,1 843: CNOT temp2.i6 ancilla_zg.i25.i0
+0,1 844: CNOT temp2.i5 ancilla_zg.i26.i0
+0,1 845: CNOT temp2.i4 ancilla_zg.i27.i0
+0,1 846: CNOT temp2.i3 ancilla_zg.i28.i0
+0,1 847: CNOT temp2.i2 ancilla_zg.i29.i0
+0,1 848: CNOT temp2.i1 ancilla_zg.i30.i0
+0,1 849: CNOT temp2.i0 ancilla_zg.i31.i0
+0,1 850: CNOT temp1.i31 ancilla_zg.i32.i0
+0,1 851: CNOT temp1.i30 ancilla_zg.i33.i0
+0,1 852: CNOT temp1.i29 ancilla_zg.i34.i0
+0,1 853: CNOT temp1.i16 ancilla_zg.i47.i0
+0,1 854: CNOT temp1.i27 ancilla_zg.i36.i0
+0,1 855: CNOT temp1.i26 ancilla_zg.i37.i0
+0,1 856: CNOT temp1.i25 ancilla_zg.i38.i0
+0,1 857: CNOT temp1.i24 ancilla_zg.i39.i0
+0,1 858: CNOT temp1.i23 ancilla_zg.i40.i0
+0,1 859: CNOT temp1.i22 ancilla_zg.i41.i0
+0,1 860: CNOT temp1.i21 ancilla_zg.i42.i0
+0,1 861: CNOT temp1.i20 ancilla_zg.i43.i0
+0,1 862: CNOT temp1.i19 ancilla_zg.i44.i0
+0,1 863: CNOT temp1.i18 ancilla_zg.i45.i0
+0,1 864: CNOT temp1.i17 ancilla_zg.i46.i0
+0,1 865: CNOT temp1.i28 ancilla_zg.i35.i0
+0,1 866: CNOT temp2.i31 ancilla_zg.i.i0
+0,1 867: CNOT temp2.i30 ancilla_zg.i1.i0
+0,1 868: CNOT temp2.i29 ancilla_zg.i2.i0
+0,1 869: CNOT temp2.i28 ancilla_zg.i3.i0
+0,1 870: CNOT temp2.i27 ancilla_zg.i4.i0
+0,1 871: CNOT temp2.i26 ancilla_zg.i5.i0
+0,1 872: CNOT temp2.i25 ancilla_zg.i6.i0
+0,1 873: CNOT temp2.i24 ancilla_zg.i7.i0
+0,1 874: CNOT temp2.i23 ancilla_zg.i8.i0
+0,1 875: CNOT temp2.i22 ancilla_zg.i9.i0
+0,1 876: CNOT temp2.i21 ancilla_zg.i10.i0
+0,1 877: CNOT temp2.i8 ancilla_zg.i23.i0
+0,1 878: CNOT temp2.i19 ancilla_zg.i12.i0
+0,1 879: CNOT temp2.i18 ancilla_zg.i13.i0
+0,1 880: CNOT temp2.i17 ancilla_zg.i14.i0
+0,1 881: CNOT temp2.i16 ancilla_zg.i15.i0
+0,1 882: CNOT temp2.i15 ancilla_zg.i16.i0
+0,1 883: CNOT temp2.i14 ancilla_zg.i17.i0
+0,1 884: CNOT temp2.i13 ancilla_zg.i18.i0
+0,1 885: CNOT temp2.i12 ancilla_zg.i19.i0
+0,1 886: CNOT temp2.i11 ancilla_zg.i20.i0
+0,1 887: CNOT temp2.i10 ancilla_zg.i21.i0
+0,1 888: CNOT temp2.i9 ancilla_zg.i22.i0
+0,1 889: CNOT temp2.i20 ancilla_zg.i11.i0
+0,1 890: CNOT temp1.i2 ancilla_zg.i61.i0
+0,1 891: CNOT temp1.i10 ancilla_zg.i53.i0
+0,1 892: CNOT temp1.i11 ancilla_zg.i52.i0
+0,1 893: CNOT temp1.i9 ancilla_zg.i54.i0
+0,1 894: CNOT temp1.i12 ancilla_zg.i51.i0
+0,1 895: CNOT temp1.i3 ancilla_zg.i60.i0
+0,1 896: CNOT temp1.i8 ancilla_zg.i55.i0
+0,1 897: CNOT temp1.i1 ancilla_zg.i62.i0
+0,1 898: CNOT temp1.i13 ancilla_zg.i50.i0
+0,1 899: CNOT temp1.i7 ancilla_zg.i56.i0
+0,1 900: CNOT temp1.i14 ancilla_zg.i49.i0
+0,1 901: CNOT temp1.i4 ancilla_zg.i59.i0
+0,1 902: CNOT temp1.i0 ancilla_zg.i63.i0
+0,1 903: CNOT temp1.i15 ancilla_zg.i48.i0
+0,1 904: CNOT temp1.i6 ancilla_zg.i57.i0
+0,1 905: CNOT temp1.i5 ancilla_zg.i58.i0
+0,2 1098: T ancilla.i.i.i18
+0,2 1103: T ancilla.i.i.i5
+0,2 1104: T ancilla.i.i.i17
+0,2 1107: T ancilla.i.i.i16
+0,2 1111: T ancilla.i.i.i19
+0,2 1114: T ancilla.i.i.i20
+0,2 1115: T ancilla.i.i.i4
+0,2 1120: T ancilla.i.i.i21
+0,2 1124: T ancilla.i.i.i15
+0,2 1126: T ancilla.i.i.i8
+0,2 1129: T ancilla.i.i.i9
+0,2 1132: T ancilla.i.i.i10
+0,2 1135: T ancilla.i.i.i11
+0,2 1137: T ancilla.i.i.i7
+0,2 1139: T ancilla.i.i.i22
+0,2 1141: T ancilla.i.i.i12
+0,2 1144: T ancilla.i.i.i13
+0,2 1147: T ancilla.i.i.i14
+0,2 1149: T ancilla.i.i.i6
+0,2 1155: T ancilla.i.i.i2
+0,2 1158: T ancilla.i.i.i26
+0,2 1161: T ancilla.i.i.i27
+0,2 1164: T ancilla.i.i.i28
+0,2 1166: T ancilla.i.i.i1
+0,2 1170: T ancilla.i.i.i29
+0,2 1173: T ancilla.i.i.i30
+0,2 1176: T ancilla.i.i.i31
+0,2 1177: T ancilla.i.i.i0
+0,2 1185: T ancilla.i.i.i24
+0,2 1190: T ancilla.i.i.i3
+0,2 1191: T ancilla.i.i.i25
+0,2 1192: T ancilla.i.i.i23
+1,1 1610: CNOT ancilla_zg.i8.i.i.i0 target23
+1,1 1611: CNOT ancilla_zg.i30.i.i.i0 target1
+1,1 1612: CNOT ancilla_zg.i23.i.i.i0 target8
+1,1 1613: CNOT ancilla_zg.i3.i.i.i0 target28
+1,1 1614: CNOT ancilla_zg.i.i.i.i0 target31
+1,1 1615: CNOT ancilla_zg.i4.i.i.i0 target27
+1,1 1616: CNOT ancilla_zg.i24.i.i.i0 target7
+1,1 1617: CNOT ancilla_zg.i2.i.i.i0 target29
+1,1 1618: CNOT ancilla_zg.i16.i.i.i0 target15
+1,1 1619: CNOT ancilla_zg.i1.i.i.i0 target30
+1,1 1620: CNOT ancilla_zg.i25.i.i.i0 target6
+1,1 1621: CNOT ancilla_zg.i15.i.i.i0 target16
+1,1 1622: CNOT ancilla_zg.i21.i.i.i0 target10
+1,1 1623: CNOT ancilla_zg.i27.i.i.i0 target4
+1,1 1624: CNOT ancilla_zg.i28.i.i.i0 target3
+1,1 1625: CNOT ancilla_zg.i11.i.i.i0 target20
+1,1 1626: CNOT ancilla_zg.i20.i.i.i0 target11
+1,1 1627: CNOT ancilla_zg.i7.i.i.i0 target24
+1,1 1628: CNOT ancilla_zg.i12.i.i.i0 target19
+1,1 1629: CNOT ancilla_zg.i19.i.i.i0 target12
+1,1 1630: CNOT ancilla_zg.i22.i.i.i0 target9
+1,1 1631: CNOT ancilla_zg.i31.i.i.i0 target0
+1,1 1632: CNOT ancilla_zg.i26.i.i.i0 target5
+1,1 1633: CNOT ancilla_zg.i13.i.i.i0 target18
+1,1 1634: CNOT ancilla_zg.i10.i.i.i0 target21
+1,1 1635: CNOT ancilla_zg.i14.i.i.i0 target17
+1,1 1636: CNOT ancilla_zg.i9.i.i.i0 target22
+1,1 1637: CNOT ancilla_zg.i6.i.i.i0 target25
+1,1 1638: CNOT ancilla_zg.i18.i.i.i0 target13
+1,1 1639: CNOT ancilla_zg.i5.i.i.i0 target26
+1,1 1640: CNOT ancilla_zg.i17.i.i.i0 target14
+1,1 1641: CNOT ancilla_zg.i29.i.i.i0 target2
+1,1 906: CNOT ancilla_zg.i26.i0 temp2.i5
+1,1 907: CNOT ancilla_zg.i58.i0 temp1.i5
+1,1 908: CNOT ancilla_zg.i9.i0 temp2.i22
+1,1 909: CNOT ancilla_zg.i27.i0 temp2.i4
+1,1 910: CNOT ancilla_zg.i16.i0 temp2.i15
+1,1 911: CNOT ancilla_zg.i28.i0 temp2.i3
+1,1 912: CNOT ancilla_zg.i54.i0 temp1.i9
+1,1 913: CNOT ancilla_zg.i59.i0 temp1.i4
+1,1 914: CNOT ancilla_zg.i29.i0 temp2.i2
+1,1 915: CNOT ancilla_zg.i61.i0 temp1.i2
+1,1 916: CNOT ancilla_zg.i30.i0 temp2.i1
+1,1 917: CNOT ancilla_zg.i15.i0 temp2.i16
+1,1 918: CNOT ancilla_zg.i53.i0 temp1.i10
+1,1 919: CNOT ancilla_zg.i7.i0 temp2.i24
+1,1 920: CNOT ancilla_zg.i31.i0 temp2.i0
+1,1 921: CNOT ancilla_zg.i8.i0 temp2.i23
+1,1 922: CNOT ancilla_zg.i19.i0 temp2.i12
+1,1 923: CNOT ancilla_zg.i57.i0 temp1.i6
+1,1 924: CNOT ancilla_zg.i12.i0 temp2.i19
+1,1 925: CNOT ancilla_zg.i20.i0 temp2.i11
+1,1 926: CNOT ancilla_zg.i21.i0 temp2.i10
+1,1 927: CNOT ancilla_zg.i18.i0 temp2.i13
+1,1 928: CNOT ancilla_zg.i11.i0 temp2.i20
+1,1 929: CNOT ancilla_zg.i55.i0 temp1.i8
+1,1 930: CNOT ancilla_zg.i56.i0 temp1.i7
+1,1 931: CNOT ancilla_zg.i23.i0 temp2.i8
+1,1 932: CNOT ancilla_zg.i60.i0 temp1.i3
+1,1 933: CNOT ancilla_zg.i13.i0 temp2.i18
+1,1 934: CNOT ancilla_zg.i10.i0 temp2.i21
+1,1 935: CNOT ancilla_zg.i17.i0 temp2.i14
+1,1 936: CNOT ancilla_zg.i24.i0 temp2.i7
+1,1 937: CNOT ancilla_zg.i25.i0 temp2.i6
+1,1 938: CNOT ancilla_zg.i22.i0 temp2.i9
+1,1 939: CNOT ancilla_zg.i43.i0 temp1.i20
+1,1 940: CNOT ancilla_zg.i4.i0 temp2.i27
+1,1 941: CNOT ancilla_zg.i45.i0 temp1.i18
+1,1 942: CNOT ancilla_zg.i38.i0 temp1.i25
+1,1 943: CNOT ancilla_zg.i39.i0 temp1.i24
+1,1 944: CNOT ancilla_zg.i3.i0 temp2.i28
+1,1 945: CNOT ancilla_zg.i40.i0 temp1.i23
+1,1 946: CNOT ancilla_zg.i37.i0 temp1.i26
+1,1 947: CNOT ancilla_zg.i50.i0 temp1.i13
+1,1 948: CNOT ancilla_zg.i41.i0 temp1.i22
+1,1 949: CNOT ancilla_zg.i1.i0 temp2.i30
+1,1 950: CNOT ancilla_zg.i2.i0 temp2.i29
+1,1 951: CNOT ancilla_zg.i44.i0 temp1.i19
+1,1 952: CNOT ancilla_zg.i63.i0 temp1.i0
+1,1 953: CNOT ancilla_zg.i42.i0 temp1.i21
+1,1 954: CNOT ancilla_zg.i49.i0 temp1.i14
+1,1 955: CNOT ancilla_zg.i14.i0 temp2.i17
+1,1 956: CNOT ancilla_zg.i32.i0 temp1.i31
+1,1 957: CNOT ancilla_zg.i6.i0 temp2.i25
+1,1 958: CNOT ancilla_zg.i33.i0 temp1.i30
+1,1 959: CNOT ancilla_zg.i47.i0 temp1.i16
+1,1 960: CNOT ancilla_zg.i34.i0 temp1.i29
+1,1 961: CNOT ancilla_zg.i52.i0 temp1.i11
+1,1 962: CNOT ancilla_zg.i35.i0 temp1.i28
+1,1 963: CNOT ancilla_zg.i48.i0 temp1.i15
+1,1 964: CNOT ancilla_zg.i5.i0 temp2.i26
+1,1 965: CNOT ancilla_zg.i46.i0 temp1.i17
+1,1 966: CNOT ancilla_zg.i.i0 temp2.i31
+1,1 967: CNOT ancilla_zg.i36.i0 temp1.i27
+1,1 968: CNOT ancilla_zg.i51.i0 temp1.i12
+1,1 969: CNOT ancilla_zg.i62.i0 temp1.i1
+2,0 MOV 0 1 ancilla_zg.i.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i.i0
+2,0 MOV 0 1 ancilla_zg.i1.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i1.i0
+2,0 MOV 0 1 ancilla_zg.i10.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i10.i0
+2,0 MOV 0 1 ancilla_zg.i11.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i11.i0
+2,0 MOV 0 1 ancilla_zg.i12.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i12.i0
+2,0 MOV 0 1 ancilla_zg.i13.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i13.i0
+2,0 MOV 0 1 ancilla_zg.i14.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i14.i0
+2,0 MOV 0 1 ancilla_zg.i15.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i15.i0
+2,0 MOV 0 1 ancilla_zg.i16.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i16.i0
+2,0 MOV 0 1 ancilla_zg.i17.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i17.i0
+2,0 MOV 0 1 ancilla_zg.i18.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i18.i0
+2,0 MOV 0 1 ancilla_zg.i19.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i19.i0
+2,0 MOV 0 1 ancilla_zg.i2.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i2.i0
+2,0 MOV 0 1 ancilla_zg.i20.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i20.i0
+2,0 MOV 0 1 ancilla_zg.i21.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i21.i0
+2,0 MOV 0 1 ancilla_zg.i22.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i22.i0
+2,0 MOV 0 1 ancilla_zg.i23.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i23.i0
+2,0 MOV 0 1 ancilla_zg.i24.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i24.i0
+2,0 MOV 0 1 ancilla_zg.i25.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i25.i0
+2,0 MOV 0 1 ancilla_zg.i26.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i26.i0
+2,0 MOV 0 1 ancilla_zg.i27.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i27.i0
+2,0 MOV 0 1 ancilla_zg.i28.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i28.i0
+2,0 MOV 0 1 ancilla_zg.i29.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i29.i0
+2,0 MOV 0 1 ancilla_zg.i3.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i3.i0
+2,0 MOV 0 1 ancilla_zg.i30.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i30.i0
+2,0 MOV 0 1 ancilla_zg.i31.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i31.i0
+2,0 MOV 0 1 ancilla_zg.i32.i0
+2,0 MOV 0 1 ancilla_zg.i33.i0
+2,0 MOV 0 1 ancilla_zg.i34.i0
+2,0 MOV 0 1 ancilla_zg.i35.i0
+2,0 MOV 0 1 ancilla_zg.i36.i0
+2,0 MOV 0 1 ancilla_zg.i37.i0
+2,0 MOV 0 1 ancilla_zg.i38.i0
+2,0 MOV 0 1 ancilla_zg.i39.i0
+2,0 MOV 0 1 ancilla_zg.i4.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i4.i0
+2,0 MOV 0 1 ancilla_zg.i40.i0
+2,0 MOV 0 1 ancilla_zg.i41.i0
+2,0 MOV 0 1 ancilla_zg.i42.i0
+2,0 MOV 0 1 ancilla_zg.i43.i0
+2,0 MOV 0 1 ancilla_zg.i44.i0
+2,0 MOV 0 1 ancilla_zg.i45.i0
+2,0 MOV 0 1 ancilla_zg.i46.i0
+2,0 MOV 0 1 ancilla_zg.i47.i0
+2,0 MOV 0 1 ancilla_zg.i48.i0
+2,0 MOV 0 1 ancilla_zg.i49.i0
+2,0 MOV 0 1 ancilla_zg.i5.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i5.i0
+2,0 MOV 0 1 ancilla_zg.i50.i0
+2,0 MOV 0 1 ancilla_zg.i51.i0
+2,0 MOV 0 1 ancilla_zg.i52.i0
+2,0 MOV 0 1 ancilla_zg.i53.i0
+2,0 MOV 0 1 ancilla_zg.i54.i0
+2,0 MOV 0 1 ancilla_zg.i55.i0
+2,0 MOV 0 1 ancilla_zg.i56.i0
+2,0 MOV 0 1 ancilla_zg.i57.i0
+2,0 MOV 0 1 ancilla_zg.i58.i0
+2,0 MOV 0 1 ancilla_zg.i59.i0
+2,0 MOV 0 1 ancilla_zg.i6.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i6.i0
+2,0 MOV 0 1 ancilla_zg.i60.i0
+2,0 MOV 0 1 ancilla_zg.i61.i0
+2,0 MOV 0 1 ancilla_zg.i62.i0
+2,0 MOV 0 1 ancilla_zg.i63.i0
+2,0 MOV 0 1 ancilla_zg.i7.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i7.i0
+2,0 MOV 0 1 ancilla_zg.i8.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i8.i0
+2,0 MOV 0 1 ancilla_zg.i9.i.i.i0
+2,0 MOV 0 1 ancilla_zg.i9.i0
+2,0 MOV 0 1 target0
+2,0 MOV 0 1 target1
+2,0 MOV 0 1 target10
+2,0 MOV 0 1 target11
+2,0 MOV 0 1 target12
+2,0 MOV 0 1 target13
+2,0 MOV 0 1 target14
+2,0 MOV 0 1 target15
+2,0 MOV 0 1 target16
+2,0 MOV 0 1 target17
+2,0 MOV 0 1 target18
+2,0 MOV 0 1 target19
+2,0 MOV 0 1 target2
+2,0 MOV 0 1 target20
+2,0 MOV 0 1 target21
+2,0 MOV 0 1 target22
+2,0 MOV 0 1 target23
+2,0 MOV 0 1 target24
+2,0 MOV 0 1 target25
+2,0 MOV 0 1 target26
+2,0 MOV 0 1 target27
+2,0 MOV 0 1 target28
+2,0 MOV 0 1 target29
+2,0 MOV 0 1 target3
+2,0 MOV 0 1 target30
+2,0 MOV 0 1 target31
+2,0 MOV 0 1 target4
+2,0 MOV 0 1 target5
+2,0 MOV 0 1 target6
+2,0 MOV 0 1 target7
+2,0 MOV 0 1 target8
+2,0 MOV 0 1 target9
+2,0 MOV 1 0 in10
+2,0 MOV 1 0 in11
+2,0 MOV 1 0 in110
+2,0 MOV 1 0 in111
+2,0 MOV 1 0 in112
+2,0 MOV 1 0 in113
+2,0 MOV 1 0 in114
+2,0 MOV 1 0 in115
+2,0 MOV 1 0 in116
+2,0 MOV 1 0 in117
+2,0 MOV 1 0 in118
+2,0 MOV 1 0 in119
+2,0 MOV 1 0 in12
+2,0 MOV 1 0 in120
+2,0 MOV 1 0 in121
+2,0 MOV 1 0 in122
+2,0 MOV 1 0 in123
+2,0 MOV 1 0 in124
+2,0 MOV 1 0 in125
+2,0 MOV 1 0 in126
+2,0 MOV 1 0 in127
+2,0 MOV 1 0 in128
+2,0 MOV 1 0 in129
+2,0 MOV 1 0 in13
+2,0 MOV 1 0 in130
+2,0 MOV 1 0 in131
+2,0 MOV 1 0 in14
+2,0 MOV 1 0 in15
+2,0 MOV 1 0 in16
+2,0 MOV 1 0 in17
+2,0 MOV 1 0 in18
+2,0 MOV 1 0 in19
+2,0 MOV 1 0 in20
+2,0 MOV 1 0 in21
+2,0 MOV 1 0 in210
+2,0 MOV 1 0 in211
+2,0 MOV 1 0 in212
+2,0 MOV 1 0 in213
+2,0 MOV 1 0 in214
+2,0 MOV 1 0 in215
+2,0 MOV 1 0 in216
+2,0 MOV 1 0 in217
+2,0 MOV 1 0 in218
+2,0 MOV 1 0 in219
+2,0 MOV 1 0 in22
+2,0 MOV 1 0 in220
+2,0 MOV 1 0 in221
+2,0 MOV 1 0 in222
+2,0 MOV 1 0 in223
+2,0 MOV 1 0 in224
+2,0 MOV 1 0 in225
+2,0 MOV 1 0 in226
+2,0 MOV 1 0 in227
+2,0 MOV 1 0 in228
+2,0 MOV 1 0 in229
+2,0 MOV 1 0 in23
+2,0 MOV 1 0 in230
+2,0 MOV 1 0 in231
+2,0 MOV 1 0 in24
+2,0 MOV 1 0 in25
+2,0 MOV 1 0 in26
+2,0 MOV 1 0 in27
+2,0 MOV 1 0 in28
+2,0 MOV 1 0 in29
+2,1 1000: CNOT in20 temp2.i0
+2,1 1001: CNOT in123 temp1.i23
+2,1 1002: CNOT in122 temp1.i22
+2,1 1003: CNOT in113 temp1.i13
+2,1 1004: CNOT in121 temp1.i21
+2,1 1005: CNOT in120 temp1.i20
+2,1 1006: CNOT in119 temp1.i19
+2,1 1007: CNOT in114 temp1.i14
+2,1 1008: CNOT in118 temp1.i18
+2,1 1009: CNOT in117 temp1.i17
+2,1 1010: CNOT in116 temp1.i16
+2,1 1011: CNOT in124 temp1.i24
+2,1 1012: CNOT in115 temp1.i15
+2,1 1013: CNOT in215 temp2.i15
+2,1 1014: CNOT in216 temp2.i16
+2,1 1015: CNOT in214 temp2.i14
+2,1 1016: CNOT in15 temp1.i5
+2,1 1017: CNOT in213 temp2.i13
+2,1 1018: CNOT in212 temp2.i12
+2,1 1019: CNOT in211 temp2.i11
+2,1 1020: CNOT in16 temp1.i6
+2,1 1021: CNOT in210 temp2.i10
+2,1 1022: CNOT in29 temp2.i9
+2,1 1023: CNOT in21 temp2.i1
+2,1 1024: CNOT in19 temp1.i9
+2,1 1025: CNOT in22 temp2.i2
+2,1 1026: CNOT in23 temp2.i3
+2,1 1027: CNOT in24 temp2.i4
+2,1 1028: CNOT in18 temp1.i8
+2,1 1029: CNOT in25 temp2.i5
+2,1 1030: CNOT in26 temp2.i6
+2,1 1031: CNOT in27 temp2.i7
+2,1 1032: CNOT in17 temp1.i7
+2,1 1033: CNOT in28 temp2.i8
+2,1 970: CNOT in217 temp2.i17
+2,1 971: CNOT in218 temp2.i18
+2,1 972: CNOT in230 temp2.i30
+2,1 973: CNOT in231 temp2.i31
+2,1 974: CNOT in14 temp1.i4
+2,1 975: CNOT in229 temp2.i29
+2,1 976: CNOT in219 temp2.i19
+2,1 977: CNOT in13 temp1.i3
+2,1 978: CNOT in10 temp1.i0
+2,1 979: CNOT in228 temp2.i28
+2,1 980: CNOT in227 temp2.i27
+2,1 981: CNOT in221 temp2.i21
+2,1 982: CNOT in222 temp2.i22
+2,1 983: CNOT in226 temp2.i26
+2,1 984: CNOT in12 temp1.i2
+2,1 985: CNOT in11 temp1.i1
+2,1 986: CNOT in223 temp2.i23
+2,1 987: CNOT in225 temp2.i25
+2,1 988: CNOT in224 temp2.i24
+2,1 989: CNOT in220 temp2.i20
+2,1 990: CNOT in131 temp1.i31
+2,1 991: CNOT in110 temp1.i10
+2,1 992: CNOT in130 temp1.i30
+2,1 993: CNOT in129 temp1.i29
+2,1 994: CNOT in128 temp1.i28
+2,1 995: CNOT in111 temp1.i11
+2,1 996: CNOT in127 temp1.i27
+2,1 997: CNOT in126 temp1.i26
+2,1 998: CNOT in125 temp1.i25
+2,1 999: CNOT in112 temp1.i12
+3,0 MOV 0 1 in10
+3,0 MOV 0 1 in11
+3,0 MOV 0 1 in110
+3,0 MOV 0 1 in111
+3,0 MOV 0 1 in112
+3,0 MOV 0 1 in113
+3,0 MOV 0 1 in114
+3,0 MOV 0 1 in115
+3,0 MOV 0 1 in116
+3,0 MOV 0 1 in117
+3,0 MOV 0 1 in118
+3,0 MOV 0 1 in119
+3,0 MOV 0 1 in12
+3,0 MOV 0 1 in120
+3,0 MOV 0 1 in121
+3,0 MOV 0 1 in122
+3,0 MOV 0 1 in123
+3,0 MOV 0 1 in124
+3,0 MOV 0 1 in125
+3,0 MOV 0 1 in126
+3,0 MOV 0 1 in127
+3,0 MOV 0 1 in128
+3,0 MOV 0 1 in129
+3,0 MOV 0 1 in13
+3,0 MOV 0 1 in130
+3,0 MOV 0 1 in131
+3,0 MOV 0 1 in14
+3,0 MOV 0 1 in15
+3,0 MOV 0 1 in16
+3,0 MOV 0 1 in17
+3,0 MOV 0 1 in18
+3,0 MOV 0 1 in19
+3,0 MOV 0 1 in20
+3,0 MOV 0 1 in21
+3,0 MOV 0 1 in210
+3,0 MOV 0 1 in211
+3,0 MOV 0 1 in212
+3,0 MOV 0 1 in213
+3,0 MOV 0 1 in214
+3,0 MOV 0 1 in215
+3,0 MOV 0 1 in216
+3,0 MOV 0 1 in217
+3,0 MOV 0 1 in218
+3,0 MOV 0 1 in219
+3,0 MOV 0 1 in22
+3,0 MOV 0 1 in220
+3,0 MOV 0 1 in221
+3,0 MOV 0 1 in222
+3,0 MOV 0 1 in223
+3,0 MOV 0 1 in224
+3,0 MOV 0 1 in225
+3,0 MOV 0 1 in226
+3,0 MOV 0 1 in227
+3,0 MOV 0 1 in228
+3,0 MOV 0 1 in229
+3,0 MOV 0 1 in23
+3,0 MOV 0 1 in230
+3,0 MOV 0 1 in231
+3,0 MOV 0 1 in24
+3,0 MOV 0 1 in25
+3,0 MOV 0 1 in26
+3,0 MOV 0 1 in27
+3,0 MOV 0 1 in28
+3,0 MOV 0 1 in29
+3,1 1034: X temp1.i20
+3,1 1035: X temp1.i23
+3,1 1036: X temp2.i22
+3,1 1037: X temp1.i22
+3,1 1038: X temp2.i21
+3,1 1039: X temp1.i21
+3,1 1040: X temp2.i20
+3,1 1041: X temp2.i19
+3,1 1042: X temp1.i19
+3,1 1043: X temp2.i18
+3,1 1044: X temp1.i18
+3,1 1045: X temp2.i17
+3,1 1046: X temp1.i17
+3,1 1047: X temp1.i24
+3,1 1048: X temp2.i23
+3,1 1049: X temp1.i16
+3,1 1050: X temp2.i31
+3,1 1051: X temp1.i31
+3,1 1052: X temp2.i30
+3,1 1053: X temp1.i30
+3,1 1054: X temp2.i29
+3,1 1055: X temp1.i29
+3,1 1056: X temp2.i16
+3,1 1057: X temp1.i28
+3,1 1058: X temp2.i27
+3,1 1059: X temp1.i27
+3,1 1060: X temp2.i26
+3,1 1061: X temp1.i26
+3,1 1062: X temp2.i25
+3,1 1063: X temp1.i25
+3,1 1064: X temp2.i24
+3,1 1065: X temp2.i28
+3,1 1066: X temp1.i0
+3,1 1067: X temp2.i0
+3,1 1068: X temp1.i1
+3,1 1069: X temp2.i1
+3,1 1070: X temp1.i2
+3,1 1071: X temp2.i2
+3,1 1072: X temp1.i3
+3,1 1073: X temp2.i3
+3,1 1074: X temp1.i4
+3,1 1075: X temp2.i4
+3,1 1076: X temp1.i5
+3,1 1077: X temp2.i5
+3,1 1078: X temp1.i6
+3,1 1079: X temp2.i6
+3,1 1080: X temp1.i7
+3,1 1081: X temp2.i7
+3,1 1082: X temp2.i15
+3,1 1083: X temp1.i15
+3,1 1084: X temp2.i14
+3,1 1085: X temp1.i14
+3,1 1086: X temp2.i13
+3,1 1087: X temp1.i13
+3,1 1088: X temp2.i12
+3,1 1089: X temp1.i12
+3,1 1090: X temp2.i11
+3,1 1091: X temp1.i11
+3,1 1092: X temp2.i10
+3,1 1093: X temp1.i10
+3,1 1094: X temp2.i9
+3,1 1095: X temp1.i9
+3,1 1096: X temp2.i8
+3,1 1097: X temp1.i8
+4,0 MOV 0 2 ancilla.i.i.i0
+4,0 MOV 0 2 ancilla.i.i.i1
+4,0 MOV 0 2 ancilla.i.i.i10
+4,0 MOV 0 2 ancilla.i.i.i11
+4,0 MOV 0 2 ancilla.i.i.i12
+4,0 MOV 0 2 ancilla.i.i.i13
+4,0 MOV 0 2 ancilla.i.i.i14
+4,0 MOV 0 2 ancilla.i.i.i15
+4,0 MOV 0 2 ancilla.i.i.i16
+4,0 MOV 0 2 ancilla.i.i.i17
+4,0 MOV 0 2 ancilla.i.i.i18
+4,0 MOV 0 2 ancilla.i.i.i19
+4,0 MOV 0 2 ancilla.i.i.i2
+4,0 MOV 0 2 ancilla.i.i.i20
+4,0 MOV 0 2 ancilla.i.i.i21
+4,0 MOV 0 2 ancilla.i.i.i22
+4,0 MOV 0 2 ancilla.i.i.i23
+4,0 MOV 0 2 ancilla.i.i.i24
+4,0 MOV 0 2 ancilla.i.i.i25
+4,0 MOV 0 2 ancilla.i.i.i26
+4,0 MOV 0 2 ancilla.i.i.i27
+4,0 MOV 0 2 ancilla.i.i.i28
+4,0 MOV 0 2 ancilla.i.i.i29
+4,0 MOV 0 2 ancilla.i.i.i3
+4,0 MOV 0 2 ancilla.i.i.i30
+4,0 MOV 0 2 ancilla.i.i.i31
+4,0 MOV 0 2 ancilla.i.i.i4
+4,0 MOV 0 2 ancilla.i.i.i5
+4,0 MOV 0 2 ancilla.i.i.i6
+4,0 MOV 0 2 ancilla.i.i.i7
+4,0 MOV 0 2 ancilla.i.i.i8
+4,0 MOV 0 2 ancilla.i.i.i9
+4,0 MOV 2 1 temp1.i0
+4,0 MOV 2 1 temp1.i1
+4,0 MOV 2 1 temp1.i10
+4,0 MOV 2 1 temp1.i11
+4,0 MOV 2 1 temp1.i12
+4,0 MOV 2 1 temp1.i13
+4,0 MOV 2 1 temp1.i14
+4,0 MOV 2 1 temp1.i15
+4,0 MOV 2 1 temp1.i16
+4,0 MOV 2 1 temp1.i17
+4,0 MOV 2 1 temp1.i18
+4,0 MOV 2 1 temp1.i19
+4,0 MOV 2 1 temp1.i2
+4,0 MOV 2 1 temp1.i20
+4,0 MOV 2 1 temp1.i21
+4,0 MOV 2 1 temp1.i22
+4,0 MOV 2 1 temp1.i23
+4,0 MOV 2 1 temp1.i24
+4,0 MOV 2 1 temp1.i25
+4,0 MOV 2 1 temp1.i26
+4,0 MOV 2 1 temp1.i27
+4,0 MOV 2 1 temp1.i28
+4,0 MOV 2 1 temp1.i29
+4,0 MOV 2 1 temp1.i3
+4,0 MOV 2 1 temp1.i30
+4,0 MOV 2 1 temp1.i31
+4,0 MOV 2 1 temp1.i4
+4,0 MOV 2 1 temp1.i5
+4,0 MOV 2 1 temp1.i6
+4,0 MOV 2 1 temp1.i7
+4,0 MOV 2 1 temp1.i8
+4,0 MOV 2 1 temp1.i9
+4,1 1099: Tdag temp2.i18
+4,1 1102: Tdag temp2.i5
+4,1 1105: Tdag temp2.i17
+4,1 1108: Tdag temp2.i16
+4,1 1109: Tdag temp2.i19
+4,1 1113: Tdag temp2.i20
+4,1 1116: Tdag temp2.i4
+4,1 1119: Tdag temp2.i21
+4,1 1122: Tdag temp2.i22
+4,1 1127: Tdag temp2.i8
+4,1 1131: Tdag temp2.i10
+4,1 1134: Tdag temp2.i11
+4,1 1138: Tdag temp2.i7
+4,1 1140: Tdag temp2.i12
+4,1 1143: Tdag temp2.i13
+4,1 1146: Tdag temp2.i14
+4,1 1150: Tdag temp2.i6
+4,1 1152: Tdag temp2.i15
+4,1 1154: Tdag temp2.i26
+4,1 1156: Tdag temp2.i2
+4,1 1160: Tdag temp2.i27
+4,1 1163: Tdag temp2.i28
+4,1 1169: Tdag temp2.i29
+4,1 1172: Tdag temp2.i30
+4,1 1175: Tdag temp2.i31
+4,1 1178: Tdag temp2.i0
+4,1 1181: Tdag temp2.i1
+4,1 1183: Tdag temp2.i24
+4,1 1184: Tdag temp2.i23
+4,1 1188: Tdag temp2.i25
+4,1 1189: Tdag temp2.i3
+4,1 1193: Tdag temp2.i9
+4,2 1100: H temp1.i18
+4,2 1101: H temp1.i5
+4,2 1106: H temp1.i17
+4,2 1110: H temp1.i19
+4,2 1112: H temp1.i20
+4,2 1117: H temp1.i4
+4,2 1118: H temp1.i21
+4,2 1121: H temp1.i22
+4,2 1123: H temp1.i23
+4,2 1125: H temp1.i16
+4,2 1128: H temp1.i8
+4,2 1130: H temp1.i10
+4,2 1133: H temp1.i11
+4,2 1136: H temp1.i12
+4,2 1142: H temp1.i13
+4,2 1145: H temp1.i14
+4,2 1148: H temp1.i15
+4,2 1151: H temp1.i6
+4,2 1153: H temp1.i7
+4,2 1157: H temp1.i2
+4,2 1159: H temp1.i27
+4,2 1162: H temp1.i28
+4,2 1165: H temp1.i29
+4,2 1167: H temp1.i26
+4,2 1168: H temp1.i1
+4,2 1171: H temp1.i30
+4,2 1174: H temp1.i31
+4,2 1179: H temp1.i0
+4,2 1180: H temp1.i9
+4,2 1182: H temp1.i24
+4,2 1186: H temp1.i3
+4,2 1187: H temp1.i25
+5,0 MOV 1 0 ancilla.i.i.i0
+5,0 MOV 1 0 ancilla.i.i.i1
+5,0 MOV 1 0 ancilla.i.i.i10
+5,0 MOV 1 0 ancilla.i.i.i11
+5,0 MOV 1 0 ancilla.i.i.i12
+5,0 MOV 1 0 ancilla.i.i.i13
+5,0 MOV 1 0 ancilla.i.i.i14
+5,0 MOV 1 0 ancilla.i.i.i15
+5,0 MOV 1 0 ancilla.i.i.i16
+5,0 MOV 1 0 ancilla.i.i.i17
+5,0 MOV 1 0 ancilla.i.i.i18
+5,0 MOV 1 0 ancilla.i.i.i19
+5,0 MOV 1 0 ancilla.i.i.i2
+5,0 MOV 1 0 ancilla.i.i.i20
+5,0 MOV 1 0 ancilla.i.i.i21
+5,0 MOV 1 0 ancilla.i.i.i22
+5,0 MOV 1 0 ancilla.i.i.i23
+5,0 MOV 1 0 ancilla.i.i.i24
+5,0 MOV 1 0 ancilla.i.i.i25
+5,0 MOV 1 0 ancilla.i.i.i26
+5,0 MOV 1 0 ancilla.i.i.i27
+5,0 MOV 1 0 ancilla.i.i.i28
+5,0 MOV 1 0 ancilla.i.i.i29
+5,0 MOV 1 0 ancilla.i.i.i3
+5,0 MOV 1 0 ancilla.i.i.i30
+5,0 MOV 1 0 ancilla.i.i.i31
+5,0 MOV 1 0 ancilla.i.i.i4
+5,0 MOV 1 0 ancilla.i.i.i5
+5,0 MOV 1 0 ancilla.i.i.i6
+5,0 MOV 1 0 ancilla.i.i.i7
+5,0 MOV 1 0 ancilla.i.i.i8
+5,0 MOV 1 0 ancilla.i.i.i9
+5,1 1194: CNOT ancilla.i.i.i20 temp2.i20
+5,1 1195: CNOT ancilla.i.i.i22 temp2.i22
+5,1 1197: CNOT ancilla.i.i.i12 temp2.i12
+5,1 1198: CNOT ancilla.i.i.i23 temp2.i23
+5,1 1200: CNOT ancilla.i.i.i29 temp2.i29
+5,1 1202: CNOT ancilla.i.i.i31 temp2.i31
+5,1 1203: CNOT ancilla.i.i.i11 temp2.i11
+5,1 1207: CNOT ancilla.i.i.i30 temp2.i30
+5,1 1208: CNOT ancilla.i.i.i21 temp2.i21
+5,1 1209: CNOT ancilla.i.i.i10 temp2.i10
+5,1 1211: CNOT ancilla.i.i.i9 temp2.i9
+5,1 1214: CNOT ancilla.i.i.i25 temp2.i25
+5,1 1216: CNOT ancilla.i.i.i18 temp2.i18
+5,1 1218: CNOT ancilla.i.i.i17 temp2.i17
+5,1 1221: CNOT ancilla.i.i.i26 temp2.i26
+5,1 1222: CNOT ancilla.i.i.i16 temp2.i16
+5,1 1226: CNOT ancilla.i.i.i15 temp2.i15
+5,1 1229: CNOT ancilla.i.i.i27 temp2.i27
+5,1 1230: CNOT ancilla.i.i.i24 temp2.i24
+5,1 1233: CNOT ancilla.i.i.i14 temp2.i14
+5,1 1235: CNOT ancilla.i.i.i28 temp2.i28
+5,1 1237: CNOT ancilla.i.i.i13 temp2.i13
+5,1 1238: CNOT ancilla.i.i.i19 temp2.i19
+5,1 1239: CNOT ancilla.i.i.i4 temp2.i4
+5,1 1242: CNOT ancilla.i.i.i5 temp2.i5
+5,1 1243: CNOT ancilla.i.i.i3 temp2.i3
+5,1 1247: CNOT ancilla.i.i.i2 temp2.i2
+5,1 1249: CNOT ancilla.i.i.i8 temp2.i8
+5,1 1250: CNOT ancilla.i.i.i7 temp2.i7
+5,1 1251: CNOT ancilla.i.i.i6 temp2.i6
+5,1 1253: CNOT ancilla.i.i.i1 temp2.i1
+5,1 1254: CNOT ancilla.i.i.i0 temp2.i0
+5,2 1196: T temp1.i22
+5,2 1199: T temp1.i29
+5,2 1201: T temp1.i23
+5,2 1204: T temp1.i9
+5,2 1205: T temp1.i11
+5,2 1206: T temp1.i30
+5,2 1210: T temp1.i10
+5,2 1212: T temp1.i31
+5,2 1213: T temp1.i21
+5,2 1215: T temp1.i18
+5,2 1217: T temp1.i25
+5,2 1219: T temp1.i17
+5,2 1220: T temp1.i26
+5,2 1223: T temp1.i16
+5,2 1224: T temp1.i19
+5,2 1225: T temp1.i13
+5,2 1227: T temp1.i15
+5,2 1228: T temp1.i27
+5,2 1231: T temp1.i24
+5,2 1232: T temp1.i28
+5,2 1234: T temp1.i14
+5,2 1236: T temp1.i20
+5,2 1240: T temp1.i4
+5,2 1241: T temp1.i5
+5,2 1244: T temp1.i3
+5,2 1245: T temp1.i12
+5,2 1246: T temp1.i6
+5,2 1248: T temp1.i8
+5,2 1252: T temp1.i0
+5,2 1255: T temp1.i1
+5,2 1256: T temp1.i2
+5,2 1257: T temp1.i7
+6,0 MOV 0 1 ancilla.i.i.i0
+6,0 MOV 0 1 ancilla.i.i.i1
+6,0 MOV 0 1 ancilla.i.i.i10
+6,0 MOV 0 1 ancilla.i.i.i11
+6,0 MOV 0 1 ancilla.i.i.i12
+6,0 MOV 0 1 ancilla.i.i.i13
+6,0 MOV 0 1 ancilla.i.i.i14
+6,0 MOV 0 1 ancilla.i.i.i15
+6,0 MOV 0 1 ancilla.i.i.i16
+6,0 MOV 0 1 ancilla.i.i.i17
+6,0 MOV 0 1 ancilla.i.i.i18
+6,0 MOV 0 1 ancilla.i.i.i19
+6,0 MOV 0 1 ancilla.i.i.i2
+6,0 MOV 0 1 ancilla.i.i.i20
+6,0 MOV 0 1 ancilla.i.i.i21
+6,0 MOV 0 1 ancilla.i.i.i22
+6,0 MOV 0 1 ancilla.i.i.i23
+6,0 MOV 0 1 ancilla.i.i.i24
+6,0 MOV 0 1 ancilla.i.i.i25
+6,0 MOV 0 1 ancilla.i.i.i26
+6,0 MOV 0 1 ancilla.i.i.i27
+6,0 MOV 0 1 ancilla.i.i.i28
+6,0 MOV 0 1 ancilla.i.i.i29
+6,0 MOV 0 1 ancilla.i.i.i3
+6,0 MOV 0 1 ancilla.i.i.i30
+6,0 MOV 0 1 ancilla.i.i.i31
+6,0 MOV 0 1 ancilla.i.i.i4
+6,0 MOV 0 1 ancilla.i.i.i5
+6,0 MOV 0 1 ancilla.i.i.i6
+6,0 MOV 0 1 ancilla.i.i.i7
+6,0 MOV 0 1 ancilla.i.i.i8
+6,0 MOV 0 1 ancilla.i.i.i9
+6,0 MOV 1 2 temp1.i0
+6,0 MOV 1 2 temp1.i1
+6,0 MOV 1 2 temp1.i10
+6,0 MOV 1 2 temp1.i11
+6,0 MOV 1 2 temp1.i12
+6,0 MOV 1 2 temp1.i13
+6,0 MOV 1 2 temp1.i14
+6,0 MOV 1 2 temp1.i15
+6,0 MOV 1 2 temp1.i16
+6,0 MOV 1 2 temp1.i17
+6,0 MOV 1 2 temp1.i18
+6,0 MOV 1 2 temp1.i19
+6,0 MOV 1 2 temp1.i2
+6,0 MOV 1 2 temp1.i20
+6,0 MOV 1 2 temp1.i21
+6,0 MOV 1 2 temp1.i22
+6,0 MOV 1 2 temp1.i23
+6,0 MOV 1 2 temp1.i24
+6,0 MOV 1 2 temp1.i25
+6,0 MOV 1 2 temp1.i26
+6,0 MOV 1 2 temp1.i27
+6,0 MOV 1 2 temp1.i28
+6,0 MOV 1 2 temp1.i29
+6,0 MOV 1 2 temp1.i3
+6,0 MOV 1 2 temp1.i30
+6,0 MOV 1 2 temp1.i31
+6,0 MOV 1 2 temp1.i4
+6,0 MOV 1 2 temp1.i5
+6,0 MOV 1 2 temp1.i6
+6,0 MOV 1 2 temp1.i7
+6,0 MOV 1 2 temp1.i8
+6,0 MOV 1 2 temp1.i9
+6,1 1258: CNOT temp2.i18 temp1.i18
+6,1 1259: CNOT temp2.i17 temp1.i17
+6,1 1260: CNOT temp2.i11 temp1.i11
+6,1 1261: CNOT temp2.i12 temp1.i12
+6,1 1262: CNOT temp2.i16 temp1.i16
+6,1 1263: CNOT temp2.i15 temp1.i15
+6,1 1264: CNOT temp2.i13 temp1.i13
+6,1 1265: CNOT temp2.i19 temp1.i19
+6,1 1266: CNOT temp2.i6 temp1.i6
+6,1 1267: CNOT temp2.i14 temp1.i14
+6,1 1268: CNOT temp2.i5 temp1.i5
+6,1 1269: CNOT temp2.i31 temp1.i31
+6,1 1270: CNOT temp2.i0 temp1.i0
+6,1 1271: CNOT temp2.i30 temp1.i30
+6,1 1272: CNOT temp2.i29 temp1.i29
+6,1 1273: CNOT temp2.i28 temp1.i28
+6,1 1274: CNOT temp2.i1 temp1.i1
+6,1 1275: CNOT temp2.i27 temp1.i27
+6,1 1276: CNOT temp2.i26 temp1.i26
+6,1 1277: CNOT temp2.i3 temp1.i3
+6,1 1278: CNOT temp2.i2 temp1.i2
+6,1 1279: CNOT temp2.i24 temp1.i24
+6,1 1280: CNOT temp2.i23 temp1.i23
+6,1 1281: CNOT temp2.i7 temp1.i7
+6,1 1282: CNOT temp2.i22 temp1.i22
+6,1 1283: CNOT temp2.i21 temp1.i21
+6,1 1284: CNOT temp2.i20 temp1.i20
+6,1 1285: CNOT temp2.i4 temp1.i4
+6,1 1286: CNOT temp2.i25 temp1.i25
+6,1 1287: CNOT temp2.i10 temp1.i10
+6,1 1288: CNOT temp2.i9 temp1.i9
+6,1 1289: CNOT temp2.i8 temp1.i8
+7,0 MOV 2 0 ancilla.i.i.i0
+7,0 MOV 2 0 ancilla.i.i.i1
+7,0 MOV 2 0 ancilla.i.i.i10
+7,0 MOV 2 0 ancilla.i.i.i11
+7,0 MOV 2 0 ancilla.i.i.i12
+7,0 MOV 2 0 ancilla.i.i.i13
+7,0 MOV 2 0 ancilla.i.i.i14
+7,0 MOV 2 0 ancilla.i.i.i15
+7,0 MOV 2 0 ancilla.i.i.i16
+7,0 MOV 2 0 ancilla.i.i.i17
+7,0 MOV 2 0 ancilla.i.i.i18
+7,0 MOV 2 0 ancilla.i.i.i19
+7,0 MOV 2 0 ancilla.i.i.i2
+7,0 MOV 2 0 ancilla.i.i.i20
+7,0 MOV 2 0 ancilla.i.i.i21
+7,0 MOV 2 0 ancilla.i.i.i22
+7,0 MOV 2 0 ancilla.i.i.i23
+7,0 MOV 2 0 ancilla.i.i.i24
+7,0 MOV 2 0 ancilla.i.i.i25
+7,0 MOV 2 0 ancilla.i.i.i26
+7,0 MOV 2 0 ancilla.i.i.i27
+7,0 MOV 2 0 ancilla.i.i.i28
+7,0 MOV 2 0 ancilla.i.i.i29
+7,0 MOV 2 0 ancilla.i.i.i3
+7,0 MOV 2 0 ancilla.i.i.i30
+7,0 MOV 2 0 ancilla.i.i.i31
+7,0 MOV 2 0 ancilla.i.i.i4
+7,0 MOV 2 0 ancilla.i.i.i5
+7,0 MOV 2 0 ancilla.i.i.i6
+7,0 MOV 2 0 ancilla.i.i.i7
+7,0 MOV 2 0 ancilla.i.i.i8
+7,0 MOV 2 0 ancilla.i.i.i9
+7,0 MOV 2 1 temp1.i0
+7,0 MOV 2 1 temp1.i1
+7,0 MOV 2 1 temp1.i10
+7,0 MOV 2 1 temp1.i11
+7,0 MOV 2 1 temp1.i12
+7,0 MOV 2 1 temp1.i13
+7,0 MOV 2 1 temp1.i14
+7,0 MOV 2 1 temp1.i15
+7,0 MOV 2 1 temp1.i16
+7,0 MOV 2 1 temp1.i17
+7,0 MOV 2 1 temp1.i18
+7,0 MOV 2 1 temp1.i19
+7,0 MOV 2 1 temp1.i2
+7,0 MOV 2 1 temp1.i20
+7,0 MOV 2 1 temp1.i21
+7,0 MOV 2 1 temp1.i22
+7,0 MOV 2 1 temp1.i23
+7,0 MOV 2 1 temp1.i24
+7,0 MOV 2 1 temp1.i25
+7,0 MOV 2 1 temp1.i26
+7,0 MOV 2 1 temp1.i27
+7,0 MOV 2 1 temp1.i28
+7,0 MOV 2 1 temp1.i29
+7,0 MOV 2 1 temp1.i3
+7,0 MOV 2 1 temp1.i30
+7,0 MOV 2 1 temp1.i31
+7,0 MOV 2 1 temp1.i4
+7,0 MOV 2 1 temp1.i5
+7,0 MOV 2 1 temp1.i6
+7,0 MOV 2 1 temp1.i7
+7,0 MOV 2 1 temp1.i8
+7,0 MOV 2 1 temp1.i9
+7,1 1290: Tdag temp2.i16
+7,1 1293: Tdag temp2.i9
+7,1 1294: Tdag temp2.i24
+7,1 1297: Tdag temp2.i15
+7,1 1300: Tdag temp2.i25
+7,1 1302: Tdag temp2.i26
+7,1 1305: Tdag temp2.i14
+7,1 1306: Tdag temp2.i27
+7,1 1307: Tdag temp2.i6
+7,1 1309: Tdag temp2.i2
+7,1 1311: Tdag temp2.i19
+7,1 1313: Tdag temp2.i4
+7,1 1314: Tdag temp2.i20
+7,1 1317: Tdag temp2.i18
+7,1 1318: Tdag temp2.i21
+7,1 1321: Tdag temp2.i3
+7,1 1322: Tdag temp2.i22
+7,1 1324: Tdag temp2.i17
+7,1 1326: Tdag temp2.i10
+7,1 1327: Tdag temp2.i5
+7,1 1329: Tdag temp2.i23
+7,1 1333: Tdag temp2.i8
+7,1 1335: Tdag temp2.i31
+7,1 1337: Tdag temp2.i13
+7,1 1338: Tdag temp2.i30
+7,1 1341: Tdag temp2.i12
+7,1 1343: Tdag temp2.i0
+7,1 1345: Tdag temp2.i28
+7,1 1346: Tdag temp2.i1
+7,1 1348: Tdag temp2.i11
+7,1 1349: Tdag temp2.i29
+7,1 1350: Tdag temp2.i7
+7,2 1291: CNOT temp1.i10 ancilla.i.i.i10
+7,2 1292: CNOT temp1.i9 ancilla.i.i.i9
+7,2 1295: CNOT temp1.i24 ancilla.i.i.i24
+7,2 1296: CNOT temp1.i15 ancilla.i.i.i15
+7,2 1298: CNOT temp1.i2 ancilla.i.i.i2
+7,2 1299: CNOT temp1.i16 ancilla.i.i.i16
+7,2 1301: CNOT temp1.i25 ancilla.i.i.i25
+7,2 1303: CNOT temp1.i26 ancilla.i.i.i26
+7,2 1304: CNOT temp1.i14 ancilla.i.i.i14
+7,2 1308: CNOT temp1.i6 ancilla.i.i.i6
+7,2 1310: CNOT temp1.i4 ancilla.i.i.i4
+7,2 1312: CNOT temp1.i19 ancilla.i.i.i19
+7,2 1315: CNOT temp1.i20 ancilla.i.i.i20
+7,2 1316: CNOT temp1.i18 ancilla.i.i.i18
+7,2 1319: CNOT temp1.i21 ancilla.i.i.i21
+7,2 1320: CNOT temp1.i23 ancilla.i.i.i23
+7,2 1323: CNOT temp1.i17 ancilla.i.i.i17
+7,2 1325: CNOT temp1.i22 ancilla.i.i.i22
+7,2 1328: CNOT temp1.i5 ancilla.i.i.i5
+7,2 1330: CNOT temp1.i27 ancilla.i.i.i27
+7,2 1331: CNOT temp1.i3 ancilla.i.i.i3
+7,2 1332: CNOT temp1.i8 ancilla.i.i.i8
+7,2 1334: CNOT temp1.i30 ancilla.i.i.i30
+7,2 1336: CNOT temp1.i28 ancilla.i.i.i28
+7,2 1339: CNOT temp1.i31 ancilla.i.i.i31
+7,2 1340: CNOT temp1.i29 ancilla.i.i.i29
+7,2 1342: CNOT temp1.i12 ancilla.i.i.i12
+7,2 1344: CNOT temp1.i11 ancilla.i.i.i11
+7,2 1347: CNOT temp1.i1 ancilla.i.i.i1
+7,2 1351: CNOT temp1.i7 ancilla.i.i.i7
+7,2 1352: CNOT temp1.i0 ancilla.i.i.i0
+7,2 1353: CNOT temp1.i13 ancilla.i.i.i13
+8,0 MOV 1 2 ancilla.i.i.i0
+8,0 MOV 1 2 ancilla.i.i.i1
+8,0 MOV 1 2 ancilla.i.i.i10
+8,0 MOV 1 2 ancilla.i.i.i11
+8,0 MOV 1 2 ancilla.i.i.i12
+8,0 MOV 1 2 ancilla.i.i.i13
+8,0 MOV 1 2 ancilla.i.i.i14
+8,0 MOV 1 2 ancilla.i.i.i15
+8,0 MOV 1 2 ancilla.i.i.i16
+8,0 MOV 1 2 ancilla.i.i.i17
+8,0 MOV 1 2 ancilla.i.i.i18
+8,0 MOV 1 2 ancilla.i.i.i19
+8,0 MOV 1 2 ancilla.i.i.i2
+8,0 MOV 1 2 ancilla.i.i.i20
+8,0 MOV 1 2 ancilla.i.i.i21
+8,0 MOV 1 2 ancilla.i.i.i22
+8,0 MOV 1 2 ancilla.i.i.i23
+8,0 MOV 1 2 ancilla.i.i.i24
+8,0 MOV 1 2 ancilla.i.i.i25
+8,0 MOV 1 2 ancilla.i.i.i26
+8,0 MOV 1 2 ancilla.i.i.i27
+8,0 MOV 1 2 ancilla.i.i.i28
+8,0 MOV 1 2 ancilla.i.i.i29
+8,0 MOV 1 2 ancilla.i.i.i3
+8,0 MOV 1 2 ancilla.i.i.i30
+8,0 MOV 1 2 ancilla.i.i.i31
+8,0 MOV 1 2 ancilla.i.i.i4
+8,0 MOV 1 2 ancilla.i.i.i5
+8,0 MOV 1 2 ancilla.i.i.i6
+8,0 MOV 1 2 ancilla.i.i.i7
+8,0 MOV 1 2 ancilla.i.i.i8
+8,0 MOV 1 2 ancilla.i.i.i9
+8,1 1354: CNOT temp2.i22 ancilla.i.i.i22
+8,1 1355: CNOT temp2.i30 ancilla.i.i.i30
+8,1 1356: CNOT temp2.i23 ancilla.i.i.i23
+8,1 1357: CNOT temp2.i16 ancilla.i.i.i16
+8,1 1358: CNOT temp2.i0 ancilla.i.i.i0
+8,1 1359: CNOT temp2.i9 ancilla.i.i.i9
+8,1 1360: CNOT temp2.i17 ancilla.i.i.i17
+8,1 1361: CNOT temp2.i8 ancilla.i.i.i8
+8,1 1362: CNOT temp2.i5 ancilla.i.i.i5
+8,1 1363: CNOT temp2.i21 ancilla.i.i.i21
+8,1 1364: CNOT temp2.i31 ancilla.i.i.i31
+8,1 1365: CNOT temp2.i20 ancilla.i.i.i20
+8,1 1366: CNOT temp2.i11 ancilla.i.i.i11
+8,1 1367: CNOT temp2.i18 ancilla.i.i.i18
+8,1 1368: CNOT temp2.i19 ancilla.i.i.i19
+8,1 1369: CNOT temp2.i7 ancilla.i.i.i7
+8,1 1370: CNOT temp2.i4 ancilla.i.i.i4
+8,1 1371: CNOT temp2.i3 ancilla.i.i.i3
+8,1 1372: CNOT temp2.i25 ancilla.i.i.i25
+8,1 1373: CNOT temp2.i28 ancilla.i.i.i28
+8,1 1374: CNOT temp2.i26 ancilla.i.i.i26
+8,1 1375: CNOT temp2.i10 ancilla.i.i.i10
+8,1 1376: CNOT temp2.i29 ancilla.i.i.i29
+8,1 1377: CNOT temp2.i15 ancilla.i.i.i15
+8,1 1378: CNOT temp2.i2 ancilla.i.i.i2
+8,1 1379: CNOT temp2.i14 ancilla.i.i.i14
+8,1 1380: CNOT temp2.i13 ancilla.i.i.i13
+8,1 1381: CNOT temp2.i6 ancilla.i.i.i6
+8,1 1382: CNOT temp2.i12 ancilla.i.i.i12
+8,1 1383: CNOT temp2.i24 ancilla.i.i.i24
+8,1 1384: CNOT temp2.i27 ancilla.i.i.i27
+8,1 1385: CNOT temp2.i1 ancilla.i.i.i1
+8,2 1386: T temp1.i21
+8,2 1390: T temp1.i26
+8,2 1391: T temp1.i3
+8,2 1392: T temp1.i20
+8,2 1394: T temp1.i19
+8,2 1396: T temp1.i31
+8,2 1398: T temp1.i1
+8,2 1400: T temp1.i25
+8,2 1401: T temp1.i23
+8,2 1404: T temp1.i2
+8,2 1406: T temp1.i0
+8,2 1407: T temp1.i29
+8,2 1410: T temp1.i24
+8,2 1411: T temp1.i27
+8,2 1412: T temp1.i9
+8,2 1413: T temp1.i22
+8,2 1417: T temp1.i30
+8,2 1418: T temp1.i8
+8,2 1419: T temp1.i28
+8,2 1427: T temp1.i6
+8,2 1428: T temp1.i5
+8,2 1429: T temp1.i15
+8,2 1430: T temp1.i13
+8,2 1432: T temp1.i7
+8,2 1438: T temp1.i18
+8,2 1439: T temp1.i11
+8,2 1440: T temp1.i16
+8,2 1442: T temp1.i17
+8,2 1443: T temp1.i12
+8,2 1444: T temp1.i10
+8,2 1445: T temp1.i4
+8,2 1449: T temp1.i14
+9,1 1387: Tdag temp2.i4
+9,1 1388: Tdag temp2.i27
+9,1 1389: Tdag temp2.i26
+9,1 1393: Tdag temp2.i19
+9,1 1395: Tdag temp2.i20
+9,1 1397: Tdag temp2.i31
+9,1 1399: Tdag temp2.i1
+9,1 1402: Tdag temp2.i23
+9,1 1403: Tdag temp2.i0
+9,1 1405: Tdag temp2.i8
+9,1 1408: Tdag temp2.i29
+9,1 1409: Tdag temp2.i24
+9,1 1414: Tdag temp2.i22
+9,1 1415: Tdag temp2.i2
+9,1 1416: Tdag temp2.i30
+9,1 1420: Tdag temp2.i28
+9,1 1421: Tdag temp2.i25
+9,1 1422: Tdag temp2.i3
+9,1 1423: Tdag temp2.i9
+9,1 1424: Tdag temp2.i12
+9,1 1425: Tdag temp2.i6
+9,1 1426: Tdag temp2.i13
+9,1 1431: Tdag temp2.i15
+9,1 1433: Tdag temp2.i18
+9,1 1434: Tdag temp2.i5
+9,1 1435: Tdag temp2.i10
+9,1 1436: Tdag temp2.i21
+9,1 1437: Tdag temp2.i16
+9,1 1441: Tdag temp2.i11
+9,1 1446: Tdag temp2.i17
+9,1 1447: Tdag temp2.i14
+9,1 1448: Tdag temp2.i7
+9,1 1451: Tdag ancilla.i.i.i6
+9,1 1453: Tdag ancilla.i.i.i28
+9,1 1454: Tdag ancilla.i.i.i9
+9,1 1456: Tdag ancilla.i.i.i5
+9,1 1459: Tdag ancilla.i.i.i23
+9,1 1460: Tdag ancilla.i.i.i16
+9,1 1462: Tdag ancilla.i.i.i26
+9,1 1463: Tdag ancilla.i.i.i14
+9,1 1466: Tdag ancilla.i.i.i10
+9,1 1467: Tdag ancilla.i.i.i1
+9,1 1470: Tdag ancilla.i.i.i27
+9,1 1471: Tdag ancilla.i.i.i8
+9,1 1474: Tdag ancilla.i.i.i15
+9,1 1475: Tdag ancilla.i.i.i13
+9,1 1477: Tdag ancilla.i.i.i24
+9,1 1480: Tdag ancilla.i.i.i2
+9,1 1482: Tdag ancilla.i.i.i25
+9,1 1485: Tdag ancilla.i.i.i21
+9,1 1488: Tdag ancilla.i.i.i0
+9,1 1489: Tdag ancilla.i.i.i12
+9,1 1492: Tdag ancilla.i.i.i11
+9,1 1493: Tdag ancilla.i.i.i30
+9,1 1495: Tdag ancilla.i.i.i4
+9,1 1498: Tdag ancilla.i.i.i20
+9,1 1500: Tdag ancilla.i.i.i18
+9,1 1501: Tdag ancilla.i.i.i31
+9,1 1502: Tdag ancilla.i.i.i22
+9,1 1505: Tdag ancilla.i.i.i7
+9,1 1507: Tdag ancilla.i.i.i17
+9,1 1509: Tdag ancilla.i.i.i29
+9,1 1510: Tdag ancilla.i.i.i19
+9,1 1512: Tdag ancilla.i.i.i3
+10,0 MOV 0 1 ancilla.i.i.i0
+10,0 MOV 0 1 ancilla.i.i.i1
+10,0 MOV 0 1 ancilla.i.i.i10
+10,0 MOV 0 1 ancilla.i.i.i11
+10,0 MOV 0 1 ancilla.i.i.i12
+10,0 MOV 0 1 ancilla.i.i.i13
+10,0 MOV 0 1 ancilla.i.i.i14
+10,0 MOV 0 1 ancilla.i.i.i15
+10,0 MOV 0 1 ancilla.i.i.i16
+10,0 MOV 0 1 ancilla.i.i.i17
+10,0 MOV 0 1 ancilla.i.i.i18
+10,0 MOV 0 1 ancilla.i.i.i19
+10,0 MOV 0 1 ancilla.i.i.i2
+10,0 MOV 0 1 ancilla.i.i.i20
+10,0 MOV 0 1 ancilla.i.i.i21
+10,0 MOV 0 1 ancilla.i.i.i22
+10,0 MOV 0 1 ancilla.i.i.i23
+10,0 MOV 0 1 ancilla.i.i.i24
+10,0 MOV 0 1 ancilla.i.i.i25
+10,0 MOV 0 1 ancilla.i.i.i26
+10,0 MOV 0 1 ancilla.i.i.i27
+10,0 MOV 0 1 ancilla.i.i.i28
+10,0 MOV 0 1 ancilla.i.i.i29
+10,0 MOV 0 1 ancilla.i.i.i3
+10,0 MOV 0 1 ancilla.i.i.i30
+10,0 MOV 0 1 ancilla.i.i.i31
+10,0 MOV 0 1 ancilla.i.i.i4
+10,0 MOV 0 1 ancilla.i.i.i5
+10,0 MOV 0 1 ancilla.i.i.i6
+10,0 MOV 0 1 ancilla.i.i.i7
+10,0 MOV 0 1 ancilla.i.i.i8
+10,0 MOV 0 1 ancilla.i.i.i9
+10,0 MOV 1 2 temp1.i0
+10,0 MOV 1 2 temp1.i1
+10,0 MOV 1 2 temp1.i10
+10,0 MOV 1 2 temp1.i11
+10,0 MOV 1 2 temp1.i12
+10,0 MOV 1 2 temp1.i13
+10,0 MOV 1 2 temp1.i14
+10,0 MOV 1 2 temp1.i15
+10,0 MOV 1 2 temp1.i16
+10,0 MOV 1 2 temp1.i17
+10,0 MOV 1 2 temp1.i18
+10,0 MOV 1 2 temp1.i19
+10,0 MOV 1 2 temp1.i2
+10,0 MOV 1 2 temp1.i20
+10,0 MOV 1 2 temp1.i21
+10,0 MOV 1 2 temp1.i22
+10,0 MOV 1 2 temp1.i23
+10,0 MOV 1 2 temp1.i24
+10,0 MOV 1 2 temp1.i25
+10,0 MOV 1 2 temp1.i26
+10,0 MOV 1 2 temp1.i27
+10,0 MOV 1 2 temp1.i28
+10,0 MOV 1 2 temp1.i29
+10,0 MOV 1 2 temp1.i3
+10,0 MOV 1 2 temp1.i30
+10,0 MOV 1 2 temp1.i31
+10,0 MOV 1 2 temp1.i4
+10,0 MOV 1 2 temp1.i5
+10,0 MOV 1 2 temp1.i6
+10,0 MOV 1 2 temp1.i7
+10,0 MOV 1 2 temp1.i8
+10,0 MOV 1 2 temp1.i9
+10,1 1450: CNOT temp2.i2 temp1.i2
+10,1 1452: CNOT temp2.i22 temp1.i22
+10,1 1455: CNOT temp2.i28 temp1.i28
+10,1 1457: CNOT temp2.i6 temp1.i6
+10,1 1458: CNOT temp2.i16 temp1.i16
+10,1 1461: CNOT temp2.i23 temp1.i23
+10,1 1464: CNOT temp2.i14 temp1.i14
+10,1 1465: CNOT temp2.i1 temp1.i1
+10,1 1468: CNOT temp2.i10 temp1.i10
+10,1 1469: CNOT temp2.i25 temp1.i25
+10,1 1472: CNOT temp2.i27 temp1.i27
+10,1 1473: CNOT temp2.i13 temp1.i13
+10,1 1476: CNOT temp2.i24 temp1.i24
+10,1 1478: CNOT temp2.i15 temp1.i15
+10,1 1479: CNOT temp2.i8 temp1.i8
+10,1 1481: CNOT temp2.i5 temp1.i5
+10,1 1483: CNOT temp2.i21 temp1.i21
+10,1 1484: CNOT temp2.i19 temp1.i19
+10,1 1486: CNOT temp2.i0 temp1.i0
+10,1 1487: CNOT temp2.i12 temp1.i12
+10,1 1490: CNOT temp2.i3 temp1.i3
+10,1 1491: CNOT temp2.i18 temp1.i18
+10,1 1494: CNOT temp2.i30 temp1.i30
+10,1 1496: CNOT temp2.i11 temp1.i11
+10,1 1497: CNOT temp2.i20 temp1.i20
+10,1 1499: CNOT temp2.i4 temp1.i4
+10,1 1503: CNOT temp2.i7 temp1.i7
+10,1 1504: CNOT temp2.i31 temp1.i31
+10,1 1506: CNOT temp2.i9 temp1.i9
+10,1 1508: CNOT temp2.i17 temp1.i17
+10,1 1511: CNOT temp2.i26 temp1.i26
+10,1 1513: CNOT temp2.i29 temp1.i29
+11,0 MOV 1 0 ancilla.i.i.i0
+11,0 MOV 1 0 ancilla.i.i.i1
+11,0 MOV 1 0 ancilla.i.i.i10
+11,0 MOV 1 0 ancilla.i.i.i11
+11,0 MOV 1 0 ancilla.i.i.i12
+11,0 MOV 1 0 ancilla.i.i.i13
+11,0 MOV 1 0 ancilla.i.i.i14
+11,0 MOV 1 0 ancilla.i.i.i15
+11,0 MOV 1 0 ancilla.i.i.i16
+11,0 MOV 1 0 ancilla.i.i.i17
+11,0 MOV 1 0 ancilla.i.i.i18
+11,0 MOV 1 0 ancilla.i.i.i19
+11,0 MOV 1 0 ancilla.i.i.i2
+11,0 MOV 1 0 ancilla.i.i.i20
+11,0 MOV 1 0 ancilla.i.i.i21
+11,0 MOV 1 0 ancilla.i.i.i22
+11,0 MOV 1 0 ancilla.i.i.i23
+11,0 MOV 1 0 ancilla.i.i.i24
+11,0 MOV 1 0 ancilla.i.i.i25
+11,0 MOV 1 0 ancilla.i.i.i26
+11,0 MOV 1 0 ancilla.i.i.i27
+11,0 MOV 1 0 ancilla.i.i.i28
+11,0 MOV 1 0 ancilla.i.i.i29
+11,0 MOV 1 0 ancilla.i.i.i3
+11,0 MOV 1 0 ancilla.i.i.i30
+11,0 MOV 1 0 ancilla.i.i.i31
+11,0 MOV 1 0 ancilla.i.i.i4
+11,0 MOV 1 0 ancilla.i.i.i5
+11,0 MOV 1 0 ancilla.i.i.i6
+11,0 MOV 1 0 ancilla.i.i.i7
+11,0 MOV 1 0 ancilla.i.i.i8
+11,0 MOV 1 0 ancilla.i.i.i9
+11,0 MOV 2 1 temp2.i0
+11,0 MOV 2 1 temp2.i1
+11,0 MOV 2 1 temp2.i10
+11,0 MOV 2 1 temp2.i11
+11,0 MOV 2 1 temp2.i12
+11,0 MOV 2 1 temp2.i13
+11,0 MOV 2 1 temp2.i14
+11,0 MOV 2 1 temp2.i15
+11,0 MOV 2 1 temp2.i16
+11,0 MOV 2 1 temp2.i17
+11,0 MOV 2 1 temp2.i18
+11,0 MOV 2 1 temp2.i19
+11,0 MOV 2 1 temp2.i2
+11,0 MOV 2 1 temp2.i20
+11,0 MOV 2 1 temp2.i21
+11,0 MOV 2 1 temp2.i22
+11,0 MOV 2 1 temp2.i23
+11,0 MOV 2 1 temp2.i24
+11,0 MOV 2 1 temp2.i25
+11,0 MOV 2 1 temp2.i26
+11,0 MOV 2 1 temp2.i27
+11,0 MOV 2 1 temp2.i28
+11,0 MOV 2 1 temp2.i29
+11,0 MOV 2 1 temp2.i3
+11,0 MOV 2 1 temp2.i30
+11,0 MOV 2 1 temp2.i31
+11,0 MOV 2 1 temp2.i4
+11,0 MOV 2 1 temp2.i5
+11,0 MOV 2 1 temp2.i6
+11,0 MOV 2 1 temp2.i7
+11,0 MOV 2 1 temp2.i8
+11,0 MOV 2 1 temp2.i9
+11,1 1514: CNOT temp1.i11 ancilla.i.i.i11
+11,1 1518: CNOT temp1.i31 ancilla.i.i.i31
+11,1 1524: CNOT temp1.i13 ancilla.i.i.i13
+11,1 1526: CNOT temp1.i26 ancilla.i.i.i26
+11,1 1531: CNOT temp1.i12 ancilla.i.i.i12
+11,1 1533: CNOT temp1.i0 ancilla.i.i.i0
+11,1 1536: CNOT temp1.i28 ancilla.i.i.i28
+11,1 1539: CNOT temp1.i29 ancilla.i.i.i29
+11,1 1542: CNOT temp1.i10 ancilla.i.i.i10
+11,1 1544: CNOT temp1.i6 ancilla.i.i.i6
+11,1 1546: CNOT temp1.i30 ancilla.i.i.i30
+11,1 1548: CNOT temp1.i8 ancilla.i.i.i8
+11,1 1551: CNOT temp1.i27 ancilla.i.i.i27
+11,1 1556: CNOT temp1.i17 ancilla.i.i.i17
+11,1 1558: CNOT temp1.i21 ancilla.i.i.i21
+11,1 1560: CNOT temp1.i23 ancilla.i.i.i23
+11,1 1563: CNOT temp1.i22 ancilla.i.i.i22
+11,1 1565: CNOT temp1.i16 ancilla.i.i.i16
+11,1 1571: CNOT temp1.i18 ancilla.i.i.i18
+11,1 1574: CNOT temp1.i19 ancilla.i.i.i19
+11,1 1577: CNOT temp1.i4 ancilla.i.i.i4
+11,1 1579: CNOT temp1.i9 ancilla.i.i.i9
+11,1 1582: CNOT temp1.i20 ancilla.i.i.i20
+11,1 1584: CNOT temp1.i3 ancilla.i.i.i3
+11,1 1588: CNOT temp1.i14 ancilla.i.i.i14
+11,1 1590: CNOT temp1.i7 ancilla.i.i.i7
+11,1 1593: CNOT temp1.i5 ancilla.i.i.i5
+11,1 1596: CNOT temp1.i24 ancilla.i.i.i24
+11,1 1599: CNOT temp1.i25 ancilla.i.i.i25
+11,1 1601: CNOT temp1.i2 ancilla.i.i.i2
+11,1 1608: CNOT temp1.i15 ancilla.i.i.i15
+11,1 1609: CNOT temp1.i1 ancilla.i.i.i1
+11,2 1515: S temp2.i27
+11,2 1517: S temp2.i13
+11,2 1519: S temp2.i11
+11,2 1521: S temp2.i31
+11,2 1522: S temp2.i26
+11,2 1523: S temp2.i1
+11,2 1530: S temp2.i6
+11,2 1532: S temp2.i0
+11,2 1537: S temp2.i12
+11,2 1538: S temp2.i29
+11,2 1540: S temp2.i30
+11,2 1543: S temp2.i10
+11,2 1547: S temp2.i8
+11,2 1552: S temp2.i28
+11,2 1553: S temp2.i9
+11,2 1557: S temp2.i21
+11,2 1562: S temp2.i22
+11,2 1566: S temp2.i16
+11,2 1568: S temp2.i23
+11,2 1569: S temp2.i17
+11,2 1572: S temp2.i18
+11,2 1573: S temp2.i19
+11,2 1576: S temp2.i7
+11,2 1580: S temp2.i4
+11,2 1581: S temp2.i20
+11,2 1585: S temp2.i3
+11,2 1587: S temp2.i25
+11,2 1594: S temp2.i5
+11,2 1598: S temp2.i24
+11,2 1600: S temp2.i14
+11,2 1602: S temp2.i2
+11,2 1607: S temp2.i15
+12,0 MOV 1 2 temp2.i0
+12,0 MOV 1 2 temp2.i1
+12,0 MOV 1 2 temp2.i10
+12,0 MOV 1 2 temp2.i11
+12,0 MOV 1 2 temp2.i12
+12,0 MOV 1 2 temp2.i13
+12,0 MOV 1 2 temp2.i14
+12,0 MOV 1 2 temp2.i15
+12,0 MOV 1 2 temp2.i16
+12,0 MOV 1 2 temp2.i17
+12,0 MOV 1 2 temp2.i18
+12,0 MOV 1 2 temp2.i19
+12,0 MOV 1 2 temp2.i2
+12,0 MOV 1 2 temp2.i20
+12,0 MOV 1 2 temp2.i21
+12,0 MOV 1 2 temp2.i22
+12,0 MOV 1 2 temp2.i23
+12,0 MOV 1 2 temp2.i24
+12,0 MOV 1 2 temp2.i25
+12,0 MOV 1 2 temp2.i26
+12,0 MOV 1 2 temp2.i27
+12,0 MOV 1 2 temp2.i28
+12,0 MOV 1 2 temp2.i29
+12,0 MOV 1 2 temp2.i3
+12,0 MOV 1 2 temp2.i30
+12,0 MOV 1 2 temp2.i31
+12,0 MOV 1 2 temp2.i4
+12,0 MOV 1 2 temp2.i5
+12,0 MOV 1 2 temp2.i6
+12,0 MOV 1 2 temp2.i7
+12,0 MOV 1 2 temp2.i8
+12,0 MOV 1 2 temp2.i9
+12,0 MOV 2 1 temp1.i0
+12,0 MOV 2 1 temp1.i1
+12,0 MOV 2 1 temp1.i10
+12,0 MOV 2 1 temp1.i11
+12,0 MOV 2 1 temp1.i12
+12,0 MOV 2 1 temp1.i13
+12,0 MOV 2 1 temp1.i14
+12,0 MOV 2 1 temp1.i15
+12,0 MOV 2 1 temp1.i16
+12,0 MOV 2 1 temp1.i17
+12,0 MOV 2 1 temp1.i18
+12,0 MOV 2 1 temp1.i19
+12,0 MOV 2 1 temp1.i2
+12,0 MOV 2 1 temp1.i20
+12,0 MOV 2 1 temp1.i21
+12,0 MOV 2 1 temp1.i22
+12,0 MOV 2 1 temp1.i23
+12,0 MOV 2 1 temp1.i24
+12,0 MOV 2 1 temp1.i25
+12,0 MOV 2 1 temp1.i26
+12,0 MOV 2 1 temp1.i27
+12,0 MOV 2 1 temp1.i28
+12,0 MOV 2 1 temp1.i29
+12,0 MOV 2 1 temp1.i3
+12,0 MOV 2 1 temp1.i30
+12,0 MOV 2 1 temp1.i31
+12,0 MOV 2 1 temp1.i4
+12,0 MOV 2 1 temp1.i5
+12,0 MOV 2 1 temp1.i6
+12,0 MOV 2 1 temp1.i7
+12,0 MOV 2 1 temp1.i8
+12,0 MOV 2 1 temp1.i9
+12,1 1642: CNOT ancilla.i.i.i12 temp2.i12
+12,1 1643: CNOT ancilla.i.i.i1 temp2.i1
+12,1 1644: CNOT ancilla.i.i.i25 temp2.i25
+12,1 1645: CNOT ancilla.i.i.i14 temp2.i14
+12,1 1646: CNOT ancilla.i.i.i24 temp2.i24
+12,1 1647: CNOT ancilla.i.i.i5 temp2.i5
+12,1 1648: CNOT ancilla.i.i.i2 temp2.i2
+12,1 1649: CNOT ancilla.i.i.i15 temp2.i15
+12,1 1650: CNOT ancilla.i.i.i26 temp2.i26
+12,1 1651: CNOT ancilla.i.i.i22 temp2.i22
+12,1 1652: CNOT ancilla.i.i.i17 temp2.i17
+12,1 1653: CNOT ancilla.i.i.i21 temp2.i21
+12,1 1654: CNOT ancilla.i.i.i3 temp2.i3
+12,1 1655: CNOT ancilla.i.i.i4 temp2.i4
+12,1 1656: CNOT ancilla.i.i.i20 temp2.i20
+12,1 1657: CNOT ancilla.i.i.i18 temp2.i18
+12,1 1658: CNOT ancilla.i.i.i19 temp2.i19
+12,1 1659: CNOT ancilla.i.i.i16 temp2.i16
+12,1 1660: CNOT ancilla.i.i.i23 temp2.i23
+12,1 1661: CNOT ancilla.i.i.i31 temp2.i31
+12,1 1662: CNOT ancilla.i.i.i8 temp2.i8
+12,1 1663: CNOT ancilla.i.i.i30 temp2.i30
+12,1 1664: CNOT ancilla.i.i.i7 temp2.i7
+12,1 1665: CNOT ancilla.i.i.i29 temp2.i29
+12,1 1666: CNOT ancilla.i.i.i9 temp2.i9
+12,1 1667: CNOT ancilla.i.i.i13 temp2.i13
+12,1 1668: CNOT ancilla.i.i.i10 temp2.i10
+12,1 1669: CNOT ancilla.i.i.i6 temp2.i6
+12,1 1670: CNOT ancilla.i.i.i28 temp2.i28
+12,1 1671: CNOT ancilla.i.i.i27 temp2.i27
+12,1 1672: CNOT ancilla.i.i.i11 temp2.i11
+12,1 1673: CNOT ancilla.i.i.i0 temp2.i0
+12,2 1736: H temp1.i3
+12,2 1737: H temp1.i20
+12,2 1738: H temp1.i21
+12,2 1739: H temp1.i22
+12,2 1740: H temp1.i2
+12,2 1741: H temp1.i23
+12,2 1742: H temp1.i24
+12,2 1744: H temp1.i1
+12,2 1745: H temp1.i26
+12,2 1746: H temp1.i27
+12,2 1747: H temp1.i28
+12,2 1748: H temp1.i0
+12,2 1749: H temp1.i29
+12,2 1750: H temp1.i30
+12,2 1751: H temp1.i31
+12,2 1752: H temp1.i25
+12,2 1753: H temp1.i8
+12,2 1754: H temp1.i7
+12,2 1755: H temp1.i9
+12,2 1756: H temp1.i10
+12,2 1757: H temp1.i11
+12,2 1758: H temp1.i6
+12,2 1760: H temp1.i19
+12,2 1761: H temp1.i13
+12,2 1762: H temp1.i14
+12,2 1763: H temp1.i5
+12,2 1764: H temp1.i15
+12,2 1765: H temp1.i16
+12,2 1766: H temp1.i17
+12,2 1767: H temp1.i4
+12,2 1768: H temp1.i18
+12,2 1769: H temp1.i12
+13,0 MOV 0 1 temp2.i0
+13,0 MOV 0 1 temp2.i1
+13,0 MOV 0 1 temp2.i10
+13,0 MOV 0 1 temp2.i11
+13,0 MOV 0 1 temp2.i12
+13,0 MOV 0 1 temp2.i13
+13,0 MOV 0 1 temp2.i14
+13,0 MOV 0 1 temp2.i15
+13,0 MOV 0 1 temp2.i16
+13,0 MOV 0 1 temp2.i17
+13,0 MOV 0 1 temp2.i18
+13,0 MOV 0 1 temp2.i19
+13,0 MOV 0 1 temp2.i2
+13,0 MOV 0 1 temp2.i20
+13,0 MOV 0 1 temp2.i21
+13,0 MOV 0 1 temp2.i22
+13,0 MOV 0 1 temp2.i23
+13,0 MOV 0 1 temp2.i24
+13,0 MOV 0 1 temp2.i25
+13,0 MOV 0 1 temp2.i26
+13,0 MOV 0 1 temp2.i27
+13,0 MOV 0 1 temp2.i28
+13,0 MOV 0 1 temp2.i29
+13,0 MOV 0 1 temp2.i3
+13,0 MOV 0 1 temp2.i30
+13,0 MOV 0 1 temp2.i31
+13,0 MOV 0 1 temp2.i4
+13,0 MOV 0 1 temp2.i5
+13,0 MOV 0 1 temp2.i6
+13,0 MOV 0 1 temp2.i7
+13,0 MOV 0 1 temp2.i8
+13,0 MOV 0 1 temp2.i9
+13,0 MOV 1 0 target0
+13,0 MOV 1 0 target1
+13,0 MOV 1 0 target10
+13,0 MOV 1 0 target11
+13,0 MOV 1 0 target12
+13,0 MOV 1 0 target13
+13,0 MOV 1 0 target14
+13,0 MOV 1 0 target15
+13,0 MOV 1 0 target16
+13,0 MOV 1 0 target17
+13,0 MOV 1 0 target18
+13,0 MOV 1 0 target19
+13,0 MOV 1 0 target2
+13,0 MOV 1 0 target20
+13,0 MOV 1 0 target21
+13,0 MOV 1 0 target22
+13,0 MOV 1 0 target23
+13,0 MOV 1 0 target24
+13,0 MOV 1 0 target25
+13,0 MOV 1 0 target26
+13,0 MOV 1 0 target27
+13,0 MOV 1 0 target28
+13,0 MOV 1 0 target29
+13,0 MOV 1 0 target3
+13,0 MOV 1 0 target30
+13,0 MOV 1 0 target31
+13,0 MOV 1 0 target4
+13,0 MOV 1 0 target5
+13,0 MOV 1 0 target6
+13,0 MOV 1 0 target7
+13,0 MOV 1 0 target8
+13,0 MOV 1 0 target9
+13,1 1674: CNOT ancilla.i.i.i25 target25
+13,1 1675: CNOT ancilla.i.i.i16 target16
+13,1 1676: CNOT ancilla.i.i.i31 target31
+13,1 1677: CNOT ancilla.i.i.i17 target17
+13,1 1678: CNOT ancilla.i.i.i26 target26
+13,1 1679: CNOT ancilla.i.i.i24 target24
+13,1 1680: CNOT ancilla.i.i.i18 target18
+13,1 1681: CNOT ancilla.i.i.i15 target15
+13,1 1682: CNOT ancilla.i.i.i19 target19
+13,1 1683: CNOT ancilla.i.i.i23 target23
+13,1 1684: CNOT ancilla.i.i.i20 target20
+13,1 1685: CNOT ancilla.i.i.i28 target28
+13,1 1686: CNOT ancilla.i.i.i21 target21
+13,1 1687: CNOT ancilla.i.i.i27 target27
+13,1 1688: CNOT ancilla.i.i.i22 target22
+13,1 1689: CNOT ancilla.i.i.i29 target29
+13,1 1690: CNOT ancilla.i.i.i9 target9
+13,1 1691: CNOT ancilla.i.i.i10 target10
+13,1 1692: CNOT ancilla.i.i.i4 target4
+13,1 1693: CNOT ancilla.i.i.i5 target5
+13,1 1694: CNOT ancilla.i.i.i8 target8
+13,1 1695: CNOT ancilla.i.i.i11 target11
+13,1 1696: CNOT ancilla.i.i.i3 target3
+13,1 1697: CNOT ancilla.i.i.i12 target12
+13,1 1698: CNOT ancilla.i.i.i2 target2
+13,1 1699: CNOT ancilla.i.i.i13 target13
+13,1 1700: CNOT ancilla.i.i.i7 target7
+13,1 1701: CNOT ancilla.i.i.i14 target14
+13,1 1702: CNOT ancilla.i.i.i1 target1
+13,1 1703: CNOT ancilla.i.i.i6 target6
+13,1 1704: CNOT ancilla.i.i.i0 target0
+13,1 1705: CNOT ancilla.i.i.i30 target30
+14,0 MOV 0 1 ancilla.i.i.i0
+14,0 MOV 0 1 ancilla.i.i.i1
+14,0 MOV 0 1 ancilla.i.i.i10
+14,0 MOV 0 1 ancilla.i.i.i11
+14,0 MOV 0 1 ancilla.i.i.i12
+14,0 MOV 0 1 ancilla.i.i.i13
+14,0 MOV 0 1 ancilla.i.i.i14
+14,0 MOV 0 1 ancilla.i.i.i15
+14,0 MOV 0 1 ancilla.i.i.i16
+14,0 MOV 0 1 ancilla.i.i.i17
+14,0 MOV 0 1 ancilla.i.i.i18
+14,0 MOV 0 1 ancilla.i.i.i19
+14,0 MOV 0 1 ancilla.i.i.i2
+14,0 MOV 0 1 ancilla.i.i.i20
+14,0 MOV 0 1 ancilla.i.i.i21
+14,0 MOV 0 1 ancilla.i.i.i22
+14,0 MOV 0 1 ancilla.i.i.i23
+14,0 MOV 0 1 ancilla.i.i.i24
+14,0 MOV 0 1 ancilla.i.i.i25
+14,0 MOV 0 1 ancilla.i.i.i26
+14,0 MOV 0 1 ancilla.i.i.i27
+14,0 MOV 0 1 ancilla.i.i.i28
+14,0 MOV 0 1 ancilla.i.i.i29
+14,0 MOV 0 1 ancilla.i.i.i3
+14,0 MOV 0 1 ancilla.i.i.i30
+14,0 MOV 0 1 ancilla.i.i.i31
+14,0 MOV 0 1 ancilla.i.i.i4
+14,0 MOV 0 1 ancilla.i.i.i5
+14,0 MOV 0 1 ancilla.i.i.i6
+14,0 MOV 0 1 ancilla.i.i.i7
+14,0 MOV 0 1 ancilla.i.i.i8
+14,0 MOV 0 1 ancilla.i.i.i9
+14,1 1706: X target24
+14,1 1707: X target25
+14,1 1708: X target3
+14,1 1709: X target2
+14,1 1710: X target26
+14,1 1711: X target1
+14,1 1712: X target27
+14,1 1713: X target0
+14,1 1714: X target28
+14,1 1715: X target29
+14,1 1716: X target4
+14,1 1717: X target14
+14,1 1718: X target13
+14,1 1719: X target15
+14,1 1720: X target16
+14,1 1721: X target12
+14,1 1722: X target11
+14,1 1723: X target17
+14,1 1724: X target10
+14,1 1725: X target6
+14,1 1726: X target9
+14,1 1727: X target19
+14,1 1728: X target20
+14,1 1729: X target8
+14,1 1730: X target7
+14,1 1731: X target21
+14,1 1732: X target22
+14,1 1733: X target5
+14,1 1734: X target23
+14,1 1735: X target18
+14,1 1743: X target30
+14,1 1759: X target31
+
+LPFS:
+Function: leftRotate (sched: lpfs, op_cnt: 291, k: 2, d: 1024, l: 1, opp: 1, refill: 1)
+=======================================================================================
+ops = 99
+moves = 192
+total = 291
+ots = 33
+mts = 32
+ts = 161
+SIMDs = 1
+tgates = 0
+T(1) = 198
+T(inf) = 33
+T(2,1024) = 161
+Speedup = 1.22981366459627
+Efficiency = 0.614906832298137
+Utility = 0.903726708074534
+Quality = 0.903726708074534
+Overhead = 65.979381443299% (reduction: 0.687285223367709)
+Avg load = 6
+Peak load = 62
+mlist = 62 0 62 4 2 6 4 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2 2
+
+0,0 MOV 1 0 a1
+0,0 MOV 1 0 a10
+0,0 MOV 1 0 a11
+0,0 MOV 1 0 a12
+0,0 MOV 1 0 a13
+0,0 MOV 1 0 a14
+0,0 MOV 1 0 a15
+0,0 MOV 1 0 a16
+0,0 MOV 1 0 a17
+0,0 MOV 1 0 a18
+0,0 MOV 1 0 a19
+0,0 MOV 1 0 a2
+0,0 MOV 1 0 a20
+0,0 MOV 1 0 a21
+0,0 MOV 1 0 a22
+0,0 MOV 1 0 a23
+0,0 MOV 1 0 a24
+0,0 MOV 1 0 a25
+0,0 MOV 1 0 a26
+0,0 MOV 1 0 a27
+0,0 MOV 1 0 a28
+0,0 MOV 1 0 a29
+0,0 MOV 1 0 a3
+0,0 MOV 1 0 a30
+0,0 MOV 1 0 a4
+0,0 MOV 1 0 a5
+0,0 MOV 1 0 a6
+0,0 MOV 1 0 a7
+0,0 MOV 1 0 a8
+0,0 MOV 1 0 a9
+0,0 MOV 1 0 ancilla_zg.i100
+0,0 MOV 1 0 ancilla_zg.i110
+0,0 MOV 1 0 ancilla_zg.i120
+0,0 MOV 1 0 ancilla_zg.i130
+0,0 MOV 1 0 ancilla_zg.i140
+0,0 MOV 1 0 ancilla_zg.i150
+0,0 MOV 1 0 ancilla_zg.i160
+0,0 MOV 1 0 ancilla_zg.i170
+0,0 MOV 1 0 ancilla_zg.i180
+0,0 MOV 1 0 ancilla_zg.i190
+0,0 MOV 1 0 ancilla_zg.i20
+0,0 MOV 1 0 ancilla_zg.i200
+0,0 MOV 1 0 ancilla_zg.i210
+0,0 MOV 1 0 ancilla_zg.i220
+0,0 MOV 1 0 ancilla_zg.i230
+0,0 MOV 1 0 ancilla_zg.i240
+0,0 MOV 1 0 ancilla_zg.i250
+0,0 MOV 1 0 ancilla_zg.i260
+0,0 MOV 1 0 ancilla_zg.i270
+0,0 MOV 1 0 ancilla_zg.i280
+0,0 MOV 1 0 ancilla_zg.i290
+0,0 MOV 1 0 ancilla_zg.i30
+0,0 MOV 1 0 ancilla_zg.i300
+0,0 MOV 1 0 ancilla_zg.i310
+0,0 MOV 1 0 ancilla_zg.i320
+0,0 MOV 1 0 ancilla_zg.i40
+0,0 MOV 1 0 ancilla_zg.i50
+0,0 MOV 1 0 ancilla_zg.i60
+0,0 MOV 1 0 ancilla_zg.i70
+0,0 MOV 1 0 ancilla_zg.i80
+0,0 MOV 1 0 ancilla_zg.i90
+0,0 MOV 1 0 temp0
+0,1 1770: CNOT a1 ancilla_zg.i310
+0,1 1772: CNOT a2 ancilla_zg.i300
+0,1 1775: CNOT a3 ancilla_zg.i290
+0,1 1778: CNOT a4 ancilla_zg.i280
+0,1 1781: CNOT a5 ancilla_zg.i270
+0,1 1783: CNOT a6 ancilla_zg.i260
+0,1 1787: CNOT a7 ancilla_zg.i250
+0,1 1788: CNOT a8 ancilla_zg.i240
+0,1 1792: CNOT a9 ancilla_zg.i230
+0,1 1796: CNOT a10 ancilla_zg.i220
+0,1 1798: CNOT a11 ancilla_zg.i210
+0,1 1801: CNOT a12 ancilla_zg.i200
+0,1 1804: CNOT a13 ancilla_zg.i190
+0,1 1807: CNOT a14 ancilla_zg.i180
+0,1 1810: CNOT a15 ancilla_zg.i170
+0,1 1813: CNOT a16 ancilla_zg.i160
+0,1 1816: CNOT a17 ancilla_zg.i150
+0,1 1819: CNOT a18 ancilla_zg.i140
+0,1 1822: CNOT a19 ancilla_zg.i130
+0,1 1825: CNOT a20 ancilla_zg.i120
+0,1 1828: CNOT a21 ancilla_zg.i110
+0,1 1831: CNOT a22 ancilla_zg.i100
+0,1 1834: CNOT a23 ancilla_zg.i90
+0,1 1837: CNOT a24 ancilla_zg.i80
+0,1 1840: CNOT a25 ancilla_zg.i70
+0,1 1843: CNOT a26 ancilla_zg.i60
+0,1 1846: CNOT a27 ancilla_zg.i50
+0,1 1849: CNOT a28 ancilla_zg.i40
+0,1 1851: CNOT temp0 ancilla_zg.i320
+0,1 1855: CNOT a29 ancilla_zg.i30
+0,1 1859: CNOT a30 ancilla_zg.i20
+1,1 1771: CNOT ancilla_zg.i310 a1
+1,1 1774: CNOT ancilla_zg.i300 a2
+1,1 1777: CNOT ancilla_zg.i290 a3
+1,1 1780: CNOT ancilla_zg.i280 a4
+1,1 1782: CNOT ancilla_zg.i270 a5
+1,1 1786: CNOT ancilla_zg.i260 a6
+1,1 1790: CNOT ancilla_zg.i250 a7
+1,1 1791: CNOT ancilla_zg.i240 a8
+1,1 1794: CNOT ancilla_zg.i230 a9
+1,1 1799: CNOT ancilla_zg.i220 a10
+1,1 1802: CNOT ancilla_zg.i210 a11
+1,1 1803: CNOT ancilla_zg.i200 a12
+1,1 1806: CNOT ancilla_zg.i190 a13
+1,1 1811: CNOT ancilla_zg.i180 a14
+1,1 1812: CNOT ancilla_zg.i170 a15
+1,1 1815: CNOT ancilla_zg.i160 a16
+1,1 1820: CNOT ancilla_zg.i150 a17
+1,1 1821: CNOT ancilla_zg.i140 a18
+1,1 1824: CNOT ancilla_zg.i130 a19
+1,1 1829: CNOT ancilla_zg.i120 a20
+1,1 1830: CNOT ancilla_zg.i110 a21
+1,1 1833: CNOT ancilla_zg.i100 a22
+1,1 1838: CNOT ancilla_zg.i90 a23
+1,1 1839: CNOT ancilla_zg.i80 a24
+1,1 1842: CNOT ancilla_zg.i70 a25
+1,1 1847: CNOT ancilla_zg.i60 a26
+1,1 1848: CNOT ancilla_zg.i50 a27
+1,1 1852: CNOT ancilla_zg.i320 temp0
+1,1 1854: CNOT ancilla_zg.i40 a28
+1,1 1858: CNOT ancilla_zg.i30 a29
+1,1 1862: CNOT ancilla_zg.i20 a30
+2,0 MOV 0 1 a10
+2,0 MOV 0 1 a11
+2,0 MOV 0 1 a12
+2,0 MOV 0 1 a13
+2,0 MOV 0 1 a14
+2,0 MOV 0 1 a15
+2,0 MOV 0 1 a16
+2,0 MOV 0 1 a17
+2,0 MOV 0 1 a18
+2,0 MOV 0 1 a19
+2,0 MOV 0 1 a2
+2,0 MOV 0 1 a20
+2,0 MOV 0 1 a21
+2,0 MOV 0 1 a22
+2,0 MOV 0 1 a23
+2,0 MOV 0 1 a24
+2,0 MOV 0 1 a25
+2,0 MOV 0 1 a26
+2,0 MOV 0 1 a27
+2,0 MOV 0 1 a28
+2,0 MOV 0 1 a29
+2,0 MOV 0 1 a3
+2,0 MOV 0 1 a30
+2,0 MOV 0 1 a4
+2,0 MOV 0 1 a5
+2,0 MOV 0 1 a6
+2,0 MOV 0 1 a7
+2,0 MOV 0 1 a8
+2,0 MOV 0 1 a9
+2,0 MOV 0 1 ancilla_zg.i100
+2,0 MOV 0 1 ancilla_zg.i110
+2,0 MOV 0 1 ancilla_zg.i120
+2,0 MOV 0 1 ancilla_zg.i130
+2,0 MOV 0 1 ancilla_zg.i140
+2,0 MOV 0 1 ancilla_zg.i150
+2,0 MOV 0 1 ancilla_zg.i160
+2,0 MOV 0 1 ancilla_zg.i170
+2,0 MOV 0 1 ancilla_zg.i180
+2,0 MOV 0 1 ancilla_zg.i190
+2,0 MOV 0 1 ancilla_zg.i20
+2,0 MOV 0 1 ancilla_zg.i200
+2,0 MOV 0 1 ancilla_zg.i210
+2,0 MOV 0 1 ancilla_zg.i220
+2,0 MOV 0 1 ancilla_zg.i230
+2,0 MOV 0 1 ancilla_zg.i240
+2,0 MOV 0 1 ancilla_zg.i250
+2,0 MOV 0 1 ancilla_zg.i260
+2,0 MOV 0 1 ancilla_zg.i270
+2,0 MOV 0 1 ancilla_zg.i280
+2,0 MOV 0 1 ancilla_zg.i290
+2,0 MOV 0 1 ancilla_zg.i30
+2,0 MOV 0 1 ancilla_zg.i300
+2,0 MOV 0 1 ancilla_zg.i310
+2,0 MOV 0 1 ancilla_zg.i320
+2,0 MOV 0 1 ancilla_zg.i40
+2,0 MOV 0 1 ancilla_zg.i50
+2,0 MOV 0 1 ancilla_zg.i60
+2,0 MOV 0 1 ancilla_zg.i70
+2,0 MOV 0 1 ancilla_zg.i80
+2,0 MOV 0 1 ancilla_zg.i90
+2,0 MOV 1 0 a0
+2,0 MOV 1 0 a31
+2,1 1773: CNOT a0 a1
+2,1 1856: CNOT a31 temp0
+3,0 MOV 0 1 temp0
+3,0 MOV 1 0 a2
+3,0 MOV 1 0 ancilla_zg.i0
+3,0 MOV 1 0 ancilla_zg.i10
+3,1 1776: CNOT a1 a2
+3,1 1860: CNOT a0 ancilla_zg.i0
+3,1 1861: CNOT a31 ancilla_zg.i10
+4,0 MOV 0 1 a1
+4,0 MOV 1 0 a3
+4,1 1779: CNOT a2 a3
+4,1 1865: CNOT ancilla_zg.i10 a31
+4,1 1866: CNOT ancilla_zg.i0 a0
+5,0 MOV 0 1 a2
+5,0 MOV 0 1 a31
+5,0 MOV 0 1 ancilla_zg.i0
+5,0 MOV 0 1 ancilla_zg.i10
+5,0 MOV 1 0 a4
+5,0 MOV 1 0 temp0
+5,1 1784: CNOT a3 a4
+5,1 1868: CNOT temp0 a0
+6,0 MOV 0 1 a0
+6,0 MOV 0 1 a3
+6,0 MOV 0 1 temp0
+6,0 MOV 1 0 a5
+6,1 1785: CNOT a4 a5
+7,0 MOV 0 1 a4
+7,0 MOV 1 0 a6
+7,1 1789: CNOT a5 a6
+8,0 MOV 0 1 a5
+8,0 MOV 1 0 a7
+8,1 1793: CNOT a6 a7
+9,0 MOV 0 1 a6
+9,0 MOV 1 0 a8
+9,1 1795: CNOT a7 a8
+10,0 MOV 0 1 a7
+10,0 MOV 1 0 a9
+10,1 1797: CNOT a8 a9
+11,0 MOV 0 1 a8
+11,0 MOV 1 0 a10
+11,1 1800: CNOT a9 a10
+12,0 MOV 0 1 a9
+12,0 MOV 1 0 a11
+12,1 1805: CNOT a10 a11
+13,0 MOV 0 1 a10
+13,0 MOV 1 0 a12
+13,1 1808: CNOT a11 a12
+14,0 MOV 0 1 a11
+14,0 MOV 1 0 a13
+14,1 1809: CNOT a12 a13
+15,0 MOV 0 1 a12
+15,0 MOV 1 0 a14
+15,1 1814: CNOT a13 a14
+16,0 MOV 0 1 a13
+16,0 MOV 1 0 a15
+16,1 1817: CNOT a14 a15
+17,0 MOV 0 1 a14
+17,0 MOV 1 0 a16
+17,1 1818: CNOT a15 a16
+18,0 MOV 0 1 a15
+18,0 MOV 1 0 a17
+18,1 1823: CNOT a16 a17
+19,0 MOV 0 1 a16
+19,0 MOV 1 0 a18
+19,1 1826: CNOT a17 a18
+20,0 MOV 0 1 a17
+20,0 MOV 1 0 a19
+20,1 1827: CNOT a18 a19
+21,0 MOV 0 1 a18
+21,0 MOV 1 0 a20
+21,1 1832: CNOT a19 a20
+22,0 MOV 0 1 a19
+22,0 MOV 1 0 a21
+22,1 1835: CNOT a20 a21
+23,0 MOV 0 1 a20
+23,0 MOV 1 0 a22
+23,1 1836: CNOT a21 a22
+24,0 MOV 0 1 a21
+24,0 MOV 1 0 a23
+24,1 1841: CNOT a22 a23
+25,0 MOV 0 1 a22
+25,0 MOV 1 0 a24
+25,1 1844: CNOT a23 a24
+26,0 MOV 0 1 a23
+26,0 MOV 1 0 a25
+26,1 1845: CNOT a24 a25
+27,0 MOV 0 1 a24
+27,0 MOV 1 0 a26
+27,1 1850: CNOT a25 a26
+28,0 MOV 0 1 a25
+28,0 MOV 1 0 a27
+28,1 1853: CNOT a26 a27
+29,0 MOV 0 1 a26
+29,0 MOV 1 0 a28
+29,1 1857: CNOT a27 a28
+30,0 MOV 0 1 a27
+30,0 MOV 1 0 a29
+30,1 1863: CNOT a28 a29
+31,0 MOV 0 1 a28
+31,0 MOV 1 0 a30
+31,1 1864: CNOT a29 a30
+32,0 MOV 0 1 a29
+32,0 MOV 1 0 a31
+32,1 1867: CNOT a30 a31
+
+LPFS:
+Function: a_eq_a_plus_b (sched: lpfs, op_cnt: 49, k: 2, d: 1024, l: 1, opp: 1, refill: 1)
+=========================================================================================
+ops = 28
+moves = 21
+total = 49
+ots = 15
+mts = 12
+ts = 63
+SIMDs = 2
+tgates = 6
+T(1) = 56
+T(inf) = 15
+T(2,1024) = 63
+Speedup = 0.888888888888889
+Efficiency = 0.444444444444444
+Utility = 0.388888888888889
+Quality = 0.388888888888889
+Overhead = 42.8571428571429% (reduction: 23.8095238095238)
+Avg load = 1.75
+Peak load = 3
+mlist = 3 1 2 1 2 2 1 0 2 2 2 2 1 0 0
+
+0,0 MOV 1 0 ancilla_zg0
+0,0 MOV 1 0 control0
+0,0 MOV 1 0 target0
+0,1 1869: CNOT target0 ancilla_zg0
+0,1 1870: CNOT control0
+1,0 MOV 2 1 ancilla_zg0
+1,1 1871: CNOT target0 control0
+1,2 1873: Tdag ancilla_zg0
+2,0 MOV 0 2 ancilla_zg0
+2,0 MOV 2 1 control0
+2,1 1874: T target0
+2,2 1872: H control0
+3,0 MOV 1 0 ancilla_zg0
+3,1 1876: CNOT target0 ancilla_zg0
+3,2 1875: T control0
+4,0 MOV 0 1 target0
+4,0 MOV 1 2 control0
+4,1 1877: CNOT ancilla_zg0 control0
+5,0 MOV 2 0 target0
+5,0 MOV 2 1 control0
+5,1 1878: Tdag ancilla_zg0
+5,2 1879: CNOT control0 target0
+6,0 MOV 1 2 target0
+6,1 1880: CNOT ancilla_zg0 target0
+6,2 1882: T control0
+7,1 1881: Tdag ancilla_zg0
+7,1 1884: Tdag target0
+8,0 MOV 0 1 target0
+8,0 MOV 1 2 control0
+8,1 1883: CNOT ancilla_zg0 control0
+9,0 MOV 1 0 target0
+9,0 MOV 2 1 ancilla_zg0
+9,1 1886: CNOT control0 target0
+9,2 1885: S ancilla_zg0
+10,0 MOV 1 2 ancilla_zg0
+10,0 MOV 2 1 control0
+10,1 1887: CNOT target0 ancilla_zg0
+10,2 1888: H control0
+11,0 MOV 0 1 target0
+11,0 MOV 1 2 control0
+11,1 1889: CNOT ancilla_zg0
+11,1 1890: CNOT control0
+12,0 MOV 1 0 target0
+12,1 1891: CNOT control0
+12,1 1892: CNOT ancilla_zg0 target0
+13,1 1893: CNOT control0
+13,1 1894: CNOT target0 ancilla_zg0
+14,1 1895: CNOT ancilla_zg0 target0
+14,1 1896: CNOT control0
+
+LPFS:
+Function: finalHash (sched: lpfs, op_cnt: 1120, k: 2, d: 1024, l: 1, opp: 1, refill: 1)
+=======================================================================================
+ops = 480
+moves = 640
+total = 1120
+ots = 3
+mts = 2
+ts = 11
+SIMDs = 1
+tgates = 0
+T(1) = 960
+T(inf) = 3
+T(2,1024) = 11
+Speedup = 87.2727272727273
+Efficiency = 43.6363636363636
+Utility = 50.9090909090909
+Quality = 50.9090909090909
+Overhead = 57.1428571428571% (reduction: 9.52380952380953)
+Avg load = 320
+Peak load = 320
+mlist = 320 0 320
+
+0,0 MOV 1 0 a0
+0,0 MOV 1 0 a1
+0,0 MOV 1 0 a10
+0,0 MOV 1 0 a100
+0,0 MOV 1 0 a101
+0,0 MOV 1 0 a102
+0,0 MOV 1 0 a103
+0,0 MOV 1 0 a104
+0,0 MOV 1 0 a105
+0,0 MOV 1 0 a106
+0,0 MOV 1 0 a107
+0,0 MOV 1 0 a108
+0,0 MOV 1 0 a109
+0,0 MOV 1 0 a11
+0,0 MOV 1 0 a110
+0,0 MOV 1 0 a111
+0,0 MOV 1 0 a112
+0,0 MOV 1 0 a113
+0,0 MOV 1 0 a114
+0,0 MOV 1 0 a115
+0,0 MOV 1 0 a116
+0,0 MOV 1 0 a117
+0,0 MOV 1 0 a118
+0,0 MOV 1 0 a119
+0,0 MOV 1 0 a12
+0,0 MOV 1 0 a120
+0,0 MOV 1 0 a121
+0,0 MOV 1 0 a122
+0,0 MOV 1 0 a123
+0,0 MOV 1 0 a124
+0,0 MOV 1 0 a125
+0,0 MOV 1 0 a126
+0,0 MOV 1 0 a127
+0,0 MOV 1 0 a128
+0,0 MOV 1 0 a129
+0,0 MOV 1 0 a13
+0,0 MOV 1 0 a130
+0,0 MOV 1 0 a131
+0,0 MOV 1 0 a132
+0,0 MOV 1 0 a133
+0,0 MOV 1 0 a134
+0,0 MOV 1 0 a135
+0,0 MOV 1 0 a136
+0,0 MOV 1 0 a137
+0,0 MOV 1 0 a138
+0,0 MOV 1 0 a139
+0,0 MOV 1 0 a14
+0,0 MOV 1 0 a140
+0,0 MOV 1 0 a141
+0,0 MOV 1 0 a142
+0,0 MOV 1 0 a143
+0,0 MOV 1 0 a144
+0,0 MOV 1 0 a145
+0,0 MOV 1 0 a146
+0,0 MOV 1 0 a147
+0,0 MOV 1 0 a148
+0,0 MOV 1 0 a149
+0,0 MOV 1 0 a15
+0,0 MOV 1 0 a150
+0,0 MOV 1 0 a151
+0,0 MOV 1 0 a152
+0,0 MOV 1 0 a153
+0,0 MOV 1 0 a154
+0,0 MOV 1 0 a155
+0,0 MOV 1 0 a156
+0,0 MOV 1 0 a157
+0,0 MOV 1 0 a158
+0,0 MOV 1 0 a159
+0,0 MOV 1 0 a16
+0,0 MOV 1 0 a17
+0,0 MOV 1 0 a18
+0,0 MOV 1 0 a19
+0,0 MOV 1 0 a2
+0,0 MOV 1 0 a20
+0,0 MOV 1 0 a21
+0,0 MOV 1 0 a22
+0,0 MOV 1 0 a23
+0,0 MOV 1 0 a24
+0,0 MOV 1 0 a25
+0,0 MOV 1 0 a26
+0,0 MOV 1 0 a27
+0,0 MOV 1 0 a28
+0,0 MOV 1 0 a29
+0,0 MOV 1 0 a3
+0,0 MOV 1 0 a30
+0,0 MOV 1 0 a31
+0,0 MOV 1 0 a32
+0,0 MOV 1 0 a33
+0,0 MOV 1 0 a34
+0,0 MOV 1 0 a35
+0,0 MOV 1 0 a36
+0,0 MOV 1 0 a37
+0,0 MOV 1 0 a38
+0,0 MOV 1 0 a39
+0,0 MOV 1 0 a4
+0,0 MOV 1 0 a40
+0,0 MOV 1 0 a41
+0,0 MOV 1 0 a42
+0,0 MOV 1 0 a43
+0,0 MOV 1 0 a44
+0,0 MOV 1 0 a45
+0,0 MOV 1 0 a46
+0,0 MOV 1 0 a47
+0,0 MOV 1 0 a48
+0,0 MOV 1 0 a49
+0,0 MOV 1 0 a5
+0,0 MOV 1 0 a50
+0,0 MOV 1 0 a51
+0,0 MOV 1 0 a52
+0,0 MOV 1 0 a53
+0,0 MOV 1 0 a54
+0,0 MOV 1 0 a55
+0,0 MOV 1 0 a56
+0,0 MOV 1 0 a57
+0,0 MOV 1 0 a58
+0,0 MOV 1 0 a59
+0,0 MOV 1 0 a6
+0,0 MOV 1 0 a60
+0,0 MOV 1 0 a61
+0,0 MOV 1 0 a62
+0,0 MOV 1 0 a63
+0,0 MOV 1 0 a64
+0,0 MOV 1 0 a65
+0,0 MOV 1 0 a66
+0,0 MOV 1 0 a67
+0,0 MOV 1 0 a68
+0,0 MOV 1 0 a69
+0,0 MOV 1 0 a7
+0,0 MOV 1 0 a70
+0,0 MOV 1 0 a71
+0,0 MOV 1 0 a72
+0,0 MOV 1 0 a73
+0,0 MOV 1 0 a74
+0,0 MOV 1 0 a75
+0,0 MOV 1 0 a76
+0,0 MOV 1 0 a77
+0,0 MOV 1 0 a78
+0,0 MOV 1 0 a79
+0,0 MOV 1 0 a8
+0,0 MOV 1 0 a80
+0,0 MOV 1 0 a81
+0,0 MOV 1 0 a82
+0,0 MOV 1 0 a83
+0,0 MOV 1 0 a84
+0,0 MOV 1 0 a85
+0,0 MOV 1 0 a86
+0,0 MOV 1 0 a87
+0,0 MOV 1 0 a88
+0,0 MOV 1 0 a89
+0,0 MOV 1 0 a9
+0,0 MOV 1 0 a90
+0,0 MOV 1 0 a91
+0,0 MOV 1 0 a92
+0,0 MOV 1 0 a93
+0,0 MOV 1 0 a94
+0,0 MOV 1 0 a95
+0,0 MOV 1 0 a96
+0,0 MOV 1 0 a97
+0,0 MOV 1 0 a98
+0,0 MOV 1 0 a99
+0,0 MOV 1 0 ancilla_zg.i0
+0,0 MOV 1 0 ancilla_zg.i10
+0,0 MOV 1 0 ancilla_zg.i100
+0,0 MOV 1 0 ancilla_zg.i1000
+0,0 MOV 1 0 ancilla_zg.i1010
+0,0 MOV 1 0 ancilla_zg.i1020
+0,0 MOV 1 0 ancilla_zg.i1030
+0,0 MOV 1 0 ancilla_zg.i1040
+0,0 MOV 1 0 ancilla_zg.i1050
+0,0 MOV 1 0 ancilla_zg.i1060
+0,0 MOV 1 0 ancilla_zg.i1070
+0,0 MOV 1 0 ancilla_zg.i1080
+0,0 MOV 1 0 ancilla_zg.i1090
+0,0 MOV 1 0 ancilla_zg.i110
+0,0 MOV 1 0 ancilla_zg.i1100
+0,0 MOV 1 0 ancilla_zg.i1110
+0,0 MOV 1 0 ancilla_zg.i1120
+0,0 MOV 1 0 ancilla_zg.i1130
+0,0 MOV 1 0 ancilla_zg.i1140
+0,0 MOV 1 0 ancilla_zg.i1150
+0,0 MOV 1 0 ancilla_zg.i1160
+0,0 MOV 1 0 ancilla_zg.i1170
+0,0 MOV 1 0 ancilla_zg.i1180
+0,0 MOV 1 0 ancilla_zg.i1190
+0,0 MOV 1 0 ancilla_zg.i120
+0,0 MOV 1 0 ancilla_zg.i1200
+0,0 MOV 1 0 ancilla_zg.i1210
+0,0 MOV 1 0 ancilla_zg.i1220
+0,0 MOV 1 0 ancilla_zg.i1230
+0,0 MOV 1 0 ancilla_zg.i1240
+0,0 MOV 1 0 ancilla_zg.i1250
+0,0 MOV 1 0 ancilla_zg.i1260
+0,0 MOV 1 0 ancilla_zg.i1270
+0,0 MOV 1 0 ancilla_zg.i1280
+0,0 MOV 1 0 ancilla_zg.i1290
+0,0 MOV 1 0 ancilla_zg.i130
+0,0 MOV 1 0 ancilla_zg.i1300
+0,0 MOV 1 0 ancilla_zg.i1310
+0,0 MOV 1 0 ancilla_zg.i1320
+0,0 MOV 1 0 ancilla_zg.i1330
+0,0 MOV 1 0 ancilla_zg.i1340
+0,0 MOV 1 0 ancilla_zg.i1350
+0,0 MOV 1 0 ancilla_zg.i1360
+0,0 MOV 1 0 ancilla_zg.i1370
+0,0 MOV 1 0 ancilla_zg.i1380
+0,0 MOV 1 0 ancilla_zg.i1390
+0,0 MOV 1 0 ancilla_zg.i140
+0,0 MOV 1 0 ancilla_zg.i1400
+0,0 MOV 1 0 ancilla_zg.i1410
+0,0 MOV 1 0 ancilla_zg.i1420
+0,0 MOV 1 0 ancilla_zg.i1430
+0,0 MOV 1 0 ancilla_zg.i1440
+0,0 MOV 1 0 ancilla_zg.i1450
+0,0 MOV 1 0 ancilla_zg.i1460
+0,0 MOV 1 0 ancilla_zg.i1470
+0,0 MOV 1 0 ancilla_zg.i1480
+0,0 MOV 1 0 ancilla_zg.i1490
+0,0 MOV 1 0 ancilla_zg.i150
+0,0 MOV 1 0 ancilla_zg.i1500
+0,0 MOV 1 0 ancilla_zg.i1510
+0,0 MOV 1 0 ancilla_zg.i1520
+0,0 MOV 1 0 ancilla_zg.i1530
+0,0 MOV 1 0 ancilla_zg.i1540
+0,0 MOV 1 0 ancilla_zg.i1550
+0,0 MOV 1 0 ancilla_zg.i1560
+0,0 MOV 1 0 ancilla_zg.i1570
+0,0 MOV 1 0 ancilla_zg.i1580
+0,0 MOV 1 0 ancilla_zg.i1590
+0,0 MOV 1 0 ancilla_zg.i160
+0,0 MOV 1 0 ancilla_zg.i170
+0,0 MOV 1 0 ancilla_zg.i180
+0,0 MOV 1 0 ancilla_zg.i190
+0,0 MOV 1 0 ancilla_zg.i20
+0,0 MOV 1 0 ancilla_zg.i200
+0,0 MOV 1 0 ancilla_zg.i210
+0,0 MOV 1 0 ancilla_zg.i220
+0,0 MOV 1 0 ancilla_zg.i230
+0,0 MOV 1 0 ancilla_zg.i240
+0,0 MOV 1 0 ancilla_zg.i250
+0,0 MOV 1 0 ancilla_zg.i260
+0,0 MOV 1 0 ancilla_zg.i270
+0,0 MOV 1 0 ancilla_zg.i280
+0,0 MOV 1 0 ancilla_zg.i290
+0,0 MOV 1 0 ancilla_zg.i30
+0,0 MOV 1 0 ancilla_zg.i300
+0,0 MOV 1 0 ancilla_zg.i310
+0,0 MOV 1 0 ancilla_zg.i320
+0,0 MOV 1 0 ancilla_zg.i330
+0,0 MOV 1 0 ancilla_zg.i340
+0,0 MOV 1 0 ancilla_zg.i350
+0,0 MOV 1 0 ancilla_zg.i360
+0,0 MOV 1 0 ancilla_zg.i370
+0,0 MOV 1 0 ancilla_zg.i380
+0,0 MOV 1 0 ancilla_zg.i390
+0,0 MOV 1 0 ancilla_zg.i40
+0,0 MOV 1 0 ancilla_zg.i400
+0,0 MOV 1 0 ancilla_zg.i410
+0,0 MOV 1 0 ancilla_zg.i420
+0,0 MOV 1 0 ancilla_zg.i430
+0,0 MOV 1 0 ancilla_zg.i440
+0,0 MOV 1 0 ancilla_zg.i450
+0,0 MOV 1 0 ancilla_zg.i460
+0,0 MOV 1 0 ancilla_zg.i470
+0,0 MOV 1 0 ancilla_zg.i480
+0,0 MOV 1 0 ancilla_zg.i490
+0,0 MOV 1 0 ancilla_zg.i50
+0,0 MOV 1 0 ancilla_zg.i500
+0,0 MOV 1 0 ancilla_zg.i510
+0,0 MOV 1 0 ancilla_zg.i520
+0,0 MOV 1 0 ancilla_zg.i530
+0,0 MOV 1 0 ancilla_zg.i540
+0,0 MOV 1 0 ancilla_zg.i550
+0,0 MOV 1 0 ancilla_zg.i560
+0,0 MOV 1 0 ancilla_zg.i570
+0,0 MOV 1 0 ancilla_zg.i580
+0,0 MOV 1 0 ancilla_zg.i590
+0,0 MOV 1 0 ancilla_zg.i60
+0,0 MOV 1 0 ancilla_zg.i600
+0,0 MOV 1 0 ancilla_zg.i610
+0,0 MOV 1 0 ancilla_zg.i620
+0,0 MOV 1 0 ancilla_zg.i630
+0,0 MOV 1 0 ancilla_zg.i640
+0,0 MOV 1 0 ancilla_zg.i650
+0,0 MOV 1 0 ancilla_zg.i660
+0,0 MOV 1 0 ancilla_zg.i670
+0,0 MOV 1 0 ancilla_zg.i680
+0,0 MOV 1 0 ancilla_zg.i690
+0,0 MOV 1 0 ancilla_zg.i70
+0,0 MOV 1 0 ancilla_zg.i700
+0,0 MOV 1 0 ancilla_zg.i710
+0,0 MOV 1 0 ancilla_zg.i720
+0,0 MOV 1 0 ancilla_zg.i730
+0,0 MOV 1 0 ancilla_zg.i740
+0,0 MOV 1 0 ancilla_zg.i750
+0,0 MOV 1 0 ancilla_zg.i760
+0,0 MOV 1 0 ancilla_zg.i770
+0,0 MOV 1 0 ancilla_zg.i780
+0,0 MOV 1 0 ancilla_zg.i790
+0,0 MOV 1 0 ancilla_zg.i80
+0,0 MOV 1 0 ancilla_zg.i800
+0,0 MOV 1 0 ancilla_zg.i810
+0,0 MOV 1 0 ancilla_zg.i820
+0,0 MOV 1 0 ancilla_zg.i830
+0,0 MOV 1 0 ancilla_zg.i840
+0,0 MOV 1 0 ancilla_zg.i850
+0,0 MOV 1 0 ancilla_zg.i860
+0,0 MOV 1 0 ancilla_zg.i870
+0,0 MOV 1 0 ancilla_zg.i880
+0,0 MOV 1 0 ancilla_zg.i890
+0,0 MOV 1 0 ancilla_zg.i90
+0,0 MOV 1 0 ancilla_zg.i900
+0,0 MOV 1 0 ancilla_zg.i910
+0,0 MOV 1 0 ancilla_zg.i920
+0,0 MOV 1 0 ancilla_zg.i930
+0,0 MOV 1 0 ancilla_zg.i940
+0,0 MOV 1 0 ancilla_zg.i950
+0,0 MOV 1 0 ancilla_zg.i960
+0,0 MOV 1 0 ancilla_zg.i970
+0,0 MOV 1 0 ancilla_zg.i980
+0,0 MOV 1 0 ancilla_zg.i990
+0,1 1897: CNOT a115 ancilla_zg.i440
+0,1 1898: CNOT a45 ancilla_zg.i1140
+0,1 1899: CNOT a114 ancilla_zg.i450
+0,1 1900: CNOT a46 ancilla_zg.i1130
+0,1 1901: CNOT a113 ancilla_zg.i460
+0,1 1902: CNOT a47 ancilla_zg.i1120
+0,1 1903: CNOT a112 ancilla_zg.i470
+0,1 1904: CNOT a48 ancilla_zg.i1110
+0,1 1905: CNOT a111 ancilla_zg.i480
+0,1 1906: CNOT a49 ancilla_zg.i1100
+0,1 1907: CNOT a32 ancilla_zg.i1270
+0,1 1908: CNOT a50 ancilla_zg.i1090
+0,1 1909: CNOT a109 ancilla_zg.i500
+0,1 1910: CNOT a51 ancilla_zg.i1080
+0,1 1911: CNOT a108 ancilla_zg.i510
+0,1 1912: CNOT a52 ancilla_zg.i1070
+0,1 1913: CNOT a107 ancilla_zg.i520
+0,1 1914: CNOT a53 ancilla_zg.i1060
+0,1 1915: CNOT a106 ancilla_zg.i530
+0,1 1916: CNOT a54 ancilla_zg.i1050
+0,1 1917: CNOT a105 ancilla_zg.i540
+0,1 1918: CNOT a55 ancilla_zg.i1040
+0,1 1919: CNOT a110 ancilla_zg.i490
+0,1 1920: CNOT a127 ancilla_zg.i320
+0,1 1921: CNOT a33 ancilla_zg.i1260
+0,1 1922: CNOT a126 ancilla_zg.i330
+0,1 1923: CNOT a34 ancilla_zg.i1250
+0,1 1924: CNOT a125 ancilla_zg.i340
+0,1 1925: CNOT a35 ancilla_zg.i1240
+0,1 1926: CNOT a124 ancilla_zg.i350
+0,1 1927: CNOT a36 ancilla_zg.i1230
+0,1 1928: CNOT a123 ancilla_zg.i360
+0,1 1929: CNOT a37 ancilla_zg.i1220
+0,1 1930: CNOT a122 ancilla_zg.i370
+0,1 1931: CNOT a44 ancilla_zg.i1150
+0,1 1932: CNOT a121 ancilla_zg.i380
+0,1 1933: CNOT a39 ancilla_zg.i1200
+0,1 1934: CNOT a120 ancilla_zg.i390
+0,1 1935: CNOT a40 ancilla_zg.i1190
+0,1 1936: CNOT a119 ancilla_zg.i400
+0,1 1937: CNOT a41 ancilla_zg.i1180
+0,1 1938: CNOT a118 ancilla_zg.i410
+0,1 1939: CNOT a42 ancilla_zg.i1170
+0,1 1940: CNOT a117 ancilla_zg.i420
+0,1 1941: CNOT a43 ancilla_zg.i1160
+0,1 1942: CNOT a116 ancilla_zg.i430
+0,1 1943: CNOT a38 ancilla_zg.i1210
+0,1 1944: CNOT a68 ancilla_zg.i910
+0,1 1945: CNOT a91 ancilla_zg.i680
+0,1 1946: CNOT a69 ancilla_zg.i900
+0,1 1947: CNOT a90 ancilla_zg.i690
+0,1 1948: CNOT a70 ancilla_zg.i890
+0,1 1949: CNOT a89 ancilla_zg.i700
+0,1 1950: CNOT a71 ancilla_zg.i880
+0,1 1951: CNOT a88 ancilla_zg.i710
+0,1 1952: CNOT a72 ancilla_zg.i870
+0,1 1953: CNOT a87 ancilla_zg.i720
+0,1 1954: CNOT a73 ancilla_zg.i860
+0,1 1955: CNOT a104 ancilla_zg.i550
+0,1 1956: CNOT a74 ancilla_zg.i850
+0,1 1957: CNOT a85 ancilla_zg.i740
+0,1 1958: CNOT a75 ancilla_zg.i840
+0,1 1959: CNOT a84 ancilla_zg.i750
+0,1 1960: CNOT a76 ancilla_zg.i830
+0,1 1961: CNOT a83 ancilla_zg.i760
+0,1 1962: CNOT a77 ancilla_zg.i820
+0,1 1963: CNOT a82 ancilla_zg.i770
+0,1 1964: CNOT a78 ancilla_zg.i810
+0,1 1965: CNOT a81 ancilla_zg.i780
+0,1 1966: CNOT a79 ancilla_zg.i800
+0,1 1967: CNOT a86 ancilla_zg.i730
+0,1 1968: CNOT a56 ancilla_zg.i1030
+0,1 1969: CNOT a103 ancilla_zg.i560
+0,1 1970: CNOT a57 ancilla_zg.i1020
+0,1 1971: CNOT a102 ancilla_zg.i570
+0,1 1972: CNOT a58 ancilla_zg.i1010
+0,1 1973: CNOT a101 ancilla_zg.i580
+0,1 1974: CNOT a59 ancilla_zg.i1000
+0,1 1975: CNOT a100 ancilla_zg.i590
+0,1 1976: CNOT a60 ancilla_zg.i990
+0,1 1977: CNOT a99 ancilla_zg.i600
+0,1 1978: CNOT a61 ancilla_zg.i980
+0,1 1979: CNOT a92 ancilla_zg.i670
+0,1 1980: CNOT a62 ancilla_zg.i970
+0,1 1981: CNOT a97 ancilla_zg.i620
+0,1 1982: CNOT a63 ancilla_zg.i960
+0,1 1983: CNOT a96 ancilla_zg.i630
+0,1 1984: CNOT a64 ancilla_zg.i950
+0,1 1985: CNOT a95 ancilla_zg.i640
+0,1 1986: CNOT a65 ancilla_zg.i940
+0,1 1987: CNOT a94 ancilla_zg.i650
+0,1 1988: CNOT a66 ancilla_zg.i930
+0,1 1989: CNOT a93 ancilla_zg.i660
+0,1 1990: CNOT a67 ancilla_zg.i920
+0,1 1991: CNOT a98 ancilla_zg.i610
+0,1 1992: CNOT a142 ancilla_zg.i170
+0,1 1993: CNOT a18 ancilla_zg.i1410
+0,1 1994: CNOT a152 ancilla_zg.i70
+0,1 1995: CNOT a141 ancilla_zg.i180
+0,1 1996: CNOT a7 ancilla_zg.i1520
+0,1 1997: CNOT a19 ancilla_zg.i1400
+0,1 1998: CNOT a140 ancilla_zg.i190
+0,1 1999: CNOT a153 ancilla_zg.i60
+0,1 2000: CNOT a136 ancilla_zg.i230
+0,1 2001: CNOT a139 ancilla_zg.i200
+0,1 2002: CNOT a6 ancilla_zg.i1530
+0,1 2003: CNOT a21 ancilla_zg.i1380
+0,1 2004: CNOT a11 ancilla_zg.i1480
+0,1 2005: CNOT a154 ancilla_zg.i50
+0,1 2006: CNOT a22 ancilla_zg.i1370
+0,1 2007: CNOT a5 ancilla_zg.i1540
+0,1 2008: CNOT a137 ancilla_zg.i220
+0,1 2009: CNOT a23 ancilla_zg.i1360
+0,1 2010: CNOT a20 ancilla_zg.i1390
+0,1 2011: CNOT a148 ancilla_zg.i110
+0,1 2012: CNOT a12 ancilla_zg.i1470
+0,1 2013: CNOT a149 ancilla_zg.i100
+0,1 2014: CNOT a147 ancilla_zg.i120
+0,1 2015: CNOT a10 ancilla_zg.i1490
+0,1 2016: CNOT a13 ancilla_zg.i1460
+0,1 2017: CNOT a146 ancilla_zg.i130
+0,1 2018: CNOT a14 ancilla_zg.i1450
+0,1 2019: CNOT a17 ancilla_zg.i1420
+0,1 2020: CNOT a145 ancilla_zg.i140
+0,1 2021: CNOT a9 ancilla_zg.i1500
+0,1 2022: CNOT a15 ancilla_zg.i1440
+0,1 2023: CNOT a144 ancilla_zg.i150
+0,1 2024: CNOT a0 ancilla_zg.i1590
+0,1 2025: CNOT a16 ancilla_zg.i1430
+0,1 2026: CNOT a151 ancilla_zg.i80
+0,1 2027: CNOT a143 ancilla_zg.i160
+0,1 2028: CNOT a8 ancilla_zg.i1510
+0,1 2029: CNOT a150 ancilla_zg.i90
+0,1 2030: CNOT a133 ancilla_zg.i260
+0,1 2031: CNOT a157 ancilla_zg.i20
+0,1 2032: CNOT a27 ancilla_zg.i1320
+0,1 2033: CNOT a132 ancilla_zg.i270
+0,1 2034: CNOT a2 ancilla_zg.i1570
+0,1 2035: CNOT a28 ancilla_zg.i1310
+0,1 2036: CNOT a131 ancilla_zg.i280
+0,1 2037: CNOT a158 ancilla_zg.i10
+0,1 2038: CNOT a26 ancilla_zg.i1330
+0,1 2039: CNOT a130 ancilla_zg.i290
+0,1 2040: CNOT a1 ancilla_zg.i1580
+0,1 2041: CNOT a30 ancilla_zg.i1290
+0,1 2042: CNOT a129 ancilla_zg.i300
+0,1 2043: CNOT a159 ancilla_zg.i0
+0,1 2044: CNOT a31 ancilla_zg.i1280
+0,1 2045: CNOT a128 ancilla_zg.i310
+0,1 2046: CNOT a80 ancilla_zg.i790
+0,1 2047: CNOT a29 ancilla_zg.i1300
+0,1 2048: CNOT a135 ancilla_zg.i240
+0,1 2049: CNOT a155 ancilla_zg.i40
+0,1 2050: CNOT a4 ancilla_zg.i1550
+0,1 2051: CNOT a25 ancilla_zg.i1340
+0,1 2052: CNOT a24 ancilla_zg.i1350
+0,1 2053: CNOT a156 ancilla_zg.i30
+0,1 2054: CNOT a3 ancilla_zg.i1560
+0,1 2055: CNOT a138 ancilla_zg.i210
+0,1 2056: CNOT a134 ancilla_zg.i250
+1,1 2057: CNOT ancilla_zg.i720 a87
+1,1 2058: CNOT ancilla_zg.i790 a80
+1,1 2059: CNOT ancilla_zg.i640 a95
+1,1 2060: CNOT ancilla_zg.i730 a86
+1,1 2061: CNOT ancilla_zg.i710 a88
+1,1 2062: CNOT ancilla_zg.i50 a154
+1,1 2063: CNOT ancilla_zg.i10 a158
+1,1 2064: CNOT ancilla_zg.i100 a149
+1,1 2065: CNOT ancilla_zg.i650 a94
+1,1 2066: CNOT ancilla_zg.i110 a148
+1,1 2067: CNOT ancilla_zg.i780 a81
+1,1 2068: CNOT ancilla_zg.i630 a96
+1,1 2069: CNOT ancilla_zg.i660 a93
+1,1 2070: CNOT ancilla_zg.i740 a85
+1,1 2071: CNOT ancilla_zg.i90 a150
+1,1 2072: CNOT ancilla_zg.i770 a82
+1,1 2073: CNOT ancilla_zg.i60 a153
+1,1 2074: CNOT ancilla_zg.i20 a157
+1,1 2075: CNOT ancilla_zg.i670 a92
+1,1 2076: CNOT ancilla_zg.i760 a83
+1,1 2077: CNOT ancilla_zg.i700 a89
+1,1 2078: CNOT ancilla_zg.i80 a151
+1,1 2079: CNOT ancilla_zg.i680 a91
+1,1 2080: CNOT ancilla_zg.i30 a156
+1,1 2081: CNOT ancilla_zg.i70 a152
+1,1 2082: CNOT ancilla_zg.i690 a90
+1,1 2083: CNOT ancilla_zg.i750 a84
+1,1 2084: CNOT ancilla_zg.i40 a155
+1,1 2085: CNOT ancilla_zg.i460 a113
+1,1 2086: CNOT ancilla_zg.i230 a136
+1,1 2087: CNOT ancilla_zg.i450 a114
+1,1 2088: CNOT ancilla_zg.i440 a115
+1,1 2089: CNOT ancilla_zg.i240 a135
+1,1 2090: CNOT ancilla_zg.i430 a116
+1,1 2091: CNOT ancilla_zg.i250 a134
+1,1 2092: CNOT ancilla_zg.i420 a117
+1,1 2093: CNOT ancilla_zg.i410 a118
+1,1 2094: CNOT ancilla_zg.i260 a133
+1,1 2095: CNOT ancilla_zg.i400 a119
+1,1 2096: CNOT ancilla_zg.i160 a143
+1,1 2097: CNOT ancilla_zg.i390 a120
+1,1 2098: CNOT ancilla_zg.i380 a121
+1,1 2099: CNOT ancilla_zg.i280 a131
+1,1 2100: CNOT ancilla_zg.i370 a122
+1,1 2101: CNOT ancilla_zg.i290 a130
+1,1 2102: CNOT ancilla_zg.i360 a123
+1,1 2103: CNOT ancilla_zg.i350 a124
+1,1 2104: CNOT ancilla_zg.i300 a129
+1,1 2105: CNOT ancilla_zg.i340 a125
+1,1 2106: CNOT ancilla_zg.i310 a128
+1,1 2107: CNOT ancilla_zg.i330 a126
+1,1 2108: CNOT ancilla_zg.i320 a127
+1,1 2109: CNOT ancilla_zg.i270 a132
+1,1 2110: CNOT ancilla_zg.i620 a97
+1,1 2111: CNOT ancilla_zg.i120 a147
+1,1 2112: CNOT ancilla_zg.i610 a98
+1,1 2113: CNOT ancilla_zg.i130 a146
+1,1 2114: CNOT ancilla_zg.i600 a99
+1,1 2115: CNOT ancilla_zg.i590 a100
+1,1 2116: CNOT ancilla_zg.i140 a145
+1,1 2117: CNOT ancilla_zg.i580 a101
+1,1 2118: CNOT ancilla_zg.i150 a144
+1,1 2119: CNOT ancilla_zg.i570 a102
+1,1 2120: CNOT ancilla_zg.i560 a103
+1,1 2121: CNOT ancilla_zg.i550 a104
+1,1 2122: CNOT ancilla_zg.i220 a137
+1,1 2123: CNOT ancilla_zg.i540 a105
+1,1 2124: CNOT ancilla_zg.i530 a106
+1,1 2125: CNOT ancilla_zg.i180 a141
+1,1 2126: CNOT ancilla_zg.i520 a107
+1,1 2127: CNOT ancilla_zg.i190 a140
+1,1 2128: CNOT ancilla_zg.i510 a108
+1,1 2129: CNOT ancilla_zg.i500 a109
+1,1 2130: CNOT ancilla_zg.i200 a139
+1,1 2131: CNOT ancilla_zg.i490 a110
+1,1 2132: CNOT ancilla_zg.i210 a138
+1,1 2133: CNOT ancilla_zg.i480 a111
+1,1 2134: CNOT ancilla_zg.i470 a112
+1,1 2135: CNOT ancilla_zg.i170 a142
+1,1 2136: CNOT ancilla_zg.i1170 a42
+1,1 2137: CNOT ancilla_zg.i1030 a56
+1,1 2138: CNOT ancilla_zg.i1440 a15
+1,1 2139: CNOT ancilla_zg.i1020 a57
+1,1 2140: CNOT ancilla_zg.i1340 a25
+1,1 2141: CNOT ancilla_zg.i1450 a14
+1,1 2142: CNOT ancilla_zg.i1010 a58
+1,1 2143: CNOT ancilla_zg.i1180 a41
+1,1 2144: CNOT ancilla_zg.i1000 a59
+1,1 2145: CNOT ancilla_zg.i1460 a13
+1,1 2146: CNOT ancilla_zg.i1210 a38
+1,1 2147: CNOT ancilla_zg.i1190 a40
+1,1 2148: CNOT ancilla_zg.i1470 a12
+1,1 2149: CNOT ancilla_zg.i980 a61
+1,1 2150: CNOT ancilla_zg.i1330 a26
+1,1 2151: CNOT ancilla_zg.i0 a159
+1,1 2152: CNOT ancilla_zg.i970 a62
+1,1 2153: CNOT ancilla_zg.i1480 a11
+1,1 2154: CNOT ancilla_zg.i1200 a39
+1,1 2155: CNOT ancilla_zg.i1490 a10
+1,1 2156: CNOT ancilla_zg.i950 a64
+1,1 2157: CNOT ancilla_zg.i990 a60
+1,1 2158: CNOT ancilla_zg.i1130 a46
+1,1 2159: CNOT ancilla_zg.i1120 a47
+1,1 2160: CNOT ancilla_zg.i1380 a21
+1,1 2161: CNOT ancilla_zg.i1370 a22
+1,1 2162: CNOT ancilla_zg.i1110 a48
+1,1 2163: CNOT ancilla_zg.i1390 a20
+1,1 2164: CNOT ancilla_zg.i1100 a49
+1,1 2165: CNOT ancilla_zg.i1140 a45
+1,1 2166: CNOT ancilla_zg.i1090 a50
+1,1 2167: CNOT ancilla_zg.i1400 a19
+1,1 2168: CNOT ancilla_zg.i1040 a55
+1,1 2169: CNOT ancilla_zg.i1080 a51
+1,1 2170: CNOT ancilla_zg.i1150 a44
+1,1 2171: CNOT ancilla_zg.i1410 a18
+1,1 2172: CNOT ancilla_zg.i1070 a52
+1,1 2173: CNOT ancilla_zg.i1060 a53
+1,1 2174: CNOT ancilla_zg.i1420 a17
+1,1 2175: CNOT ancilla_zg.i1160 a43
+1,1 2176: CNOT ancilla_zg.i1050 a54
+1,1 2177: CNOT ancilla_zg.i1350 a24
+1,1 2178: CNOT ancilla_zg.i1430 a16
+1,1 2179: CNOT ancilla_zg.i1360 a23
+1,1 2180: CNOT ancilla_zg.i1540 a5
+1,1 2181: CNOT ancilla_zg.i1240 a35
+1,1 2182: CNOT ancilla_zg.i960 a63
+1,1 2183: CNOT ancilla_zg.i1300 a29
+1,1 2184: CNOT ancilla_zg.i1550 a4
+1,1 2185: CNOT ancilla_zg.i860 a73
+1,1 2186: CNOT ancilla_zg.i1250 a34
+1,1 2187: CNOT ancilla_zg.i850 a74
+1,1 2188: CNOT ancilla_zg.i1560 a3
+1,1 2189: CNOT ancilla_zg.i840 a75
+1,1 2190: CNOT ancilla_zg.i880 a71
+1,1 2191: CNOT ancilla_zg.i1570 a2
+1,1 2192: CNOT ancilla_zg.i830 a76
+1,1 2193: CNOT ancilla_zg.i1260 a33
+1,1 2194: CNOT ancilla_zg.i820 a77
+1,1 2195: CNOT ancilla_zg.i1580 a1
+1,1 2196: CNOT ancilla_zg.i810 a78
+1,1 2197: CNOT ancilla_zg.i1270 a32
+1,1 2198: CNOT ancilla_zg.i1590 a0
+1,1 2199: CNOT ancilla_zg.i800 a79
+1,1 2200: CNOT ancilla_zg.i1280 a31
+1,1 2201: CNOT ancilla_zg.i1290 a30
+1,1 2202: CNOT ancilla_zg.i1510 a8
+1,1 2203: CNOT ancilla_zg.i920 a67
+1,1 2204: CNOT ancilla_zg.i1220 a37
+1,1 2205: CNOT ancilla_zg.i870 a72
+1,1 2206: CNOT ancilla_zg.i930 a66
+1,1 2207: CNOT ancilla_zg.i910 a68
+1,1 2208: CNOT ancilla_zg.i1520 a7
+1,1 2209: CNOT ancilla_zg.i1310 a28
+1,1 2210: CNOT ancilla_zg.i900 a69
+1,1 2211: CNOT ancilla_zg.i1230 a36
+1,1 2212: CNOT ancilla_zg.i1320 a27
+1,1 2213: CNOT ancilla_zg.i1530 a6
+1,1 2214: CNOT ancilla_zg.i890 a70
+1,1 2215: CNOT ancilla_zg.i1500 a9
+1,1 2216: CNOT ancilla_zg.i940 a65
+2,0 MOV 0 1 ancilla_zg.i0
+2,0 MOV 0 1 ancilla_zg.i10
+2,0 MOV 0 1 ancilla_zg.i100
+2,0 MOV 0 1 ancilla_zg.i1000
+2,0 MOV 0 1 ancilla_zg.i1010
+2,0 MOV 0 1 ancilla_zg.i1020
+2,0 MOV 0 1 ancilla_zg.i1030
+2,0 MOV 0 1 ancilla_zg.i1040
+2,0 MOV 0 1 ancilla_zg.i1050
+2,0 MOV 0 1 ancilla_zg.i1060
+2,0 MOV 0 1 ancilla_zg.i1070
+2,0 MOV 0 1 ancilla_zg.i1080
+2,0 MOV 0 1 ancilla_zg.i1090
+2,0 MOV 0 1 ancilla_zg.i110
+2,0 MOV 0 1 ancilla_zg.i1100
+2,0 MOV 0 1 ancilla_zg.i1110
+2,0 MOV 0 1 ancilla_zg.i1120
+2,0 MOV 0 1 ancilla_zg.i1130
+2,0 MOV 0 1 ancilla_zg.i1140
+2,0 MOV 0 1 ancilla_zg.i1150
+2,0 MOV 0 1 ancilla_zg.i1160
+2,0 MOV 0 1 ancilla_zg.i1170
+2,0 MOV 0 1 ancilla_zg.i1180
+2,0 MOV 0 1 ancilla_zg.i1190
+2,0 MOV 0 1 ancilla_zg.i120
+2,0 MOV 0 1 ancilla_zg.i1200
+2,0 MOV 0 1 ancilla_zg.i1210
+2,0 MOV 0 1 ancilla_zg.i1220
+2,0 MOV 0 1 ancilla_zg.i1230
+2,0 MOV 0 1 ancilla_zg.i1240
+2,0 MOV 0 1 ancilla_zg.i1250
+2,0 MOV 0 1 ancilla_zg.i1260
+2,0 MOV 0 1 ancilla_zg.i1270
+2,0 MOV 0 1 ancilla_zg.i1280
+2,0 MOV 0 1 ancilla_zg.i1290
+2,0 MOV 0 1 ancilla_zg.i130
+2,0 MOV 0 1 ancilla_zg.i1300
+2,0 MOV 0 1 ancilla_zg.i1310
+2,0 MOV 0 1 ancilla_zg.i1320
+2,0 MOV 0 1 ancilla_zg.i1330
+2,0 MOV 0 1 ancilla_zg.i1340
+2,0 MOV 0 1 ancilla_zg.i1350
+2,0 MOV 0 1 ancilla_zg.i1360
+2,0 MOV 0 1 ancilla_zg.i1370
+2,0 MOV 0 1 ancilla_zg.i1380
+2,0 MOV 0 1 ancilla_zg.i1390
+2,0 MOV 0 1 ancilla_zg.i140
+2,0 MOV 0 1 ancilla_zg.i1400
+2,0 MOV 0 1 ancilla_zg.i1410
+2,0 MOV 0 1 ancilla_zg.i1420
+2,0 MOV 0 1 ancilla_zg.i1430
+2,0 MOV 0 1 ancilla_zg.i1440
+2,0 MOV 0 1 ancilla_zg.i1450
+2,0 MOV 0 1 ancilla_zg.i1460
+2,0 MOV 0 1 ancilla_zg.i1470
+2,0 MOV 0 1 ancilla_zg.i1480
+2,0 MOV 0 1 ancilla_zg.i1490
+2,0 MOV 0 1 ancilla_zg.i150
+2,0 MOV 0 1 ancilla_zg.i1500
+2,0 MOV 0 1 ancilla_zg.i1510
+2,0 MOV 0 1 ancilla_zg.i1520
+2,0 MOV 0 1 ancilla_zg.i1530
+2,0 MOV 0 1 ancilla_zg.i1540
+2,0 MOV 0 1 ancilla_zg.i1550
+2,0 MOV 0 1 ancilla_zg.i1560
+2,0 MOV 0 1 ancilla_zg.i1570
+2,0 MOV 0 1 ancilla_zg.i1580
+2,0 MOV 0 1 ancilla_zg.i1590
+2,0 MOV 0 1 ancilla_zg.i160
+2,0 MOV 0 1 ancilla_zg.i170
+2,0 MOV 0 1 ancilla_zg.i180
+2,0 MOV 0 1 ancilla_zg.i190
+2,0 MOV 0 1 ancilla_zg.i20
+2,0 MOV 0 1 ancilla_zg.i200
+2,0 MOV 0 1 ancilla_zg.i210
+2,0 MOV 0 1 ancilla_zg.i220
+2,0 MOV 0 1 ancilla_zg.i230
+2,0 MOV 0 1 ancilla_zg.i240
+2,0 MOV 0 1 ancilla_zg.i250
+2,0 MOV 0 1 ancilla_zg.i260
+2,0 MOV 0 1 ancilla_zg.i270
+2,0 MOV 0 1 ancilla_zg.i280
+2,0 MOV 0 1 ancilla_zg.i290
+2,0 MOV 0 1 ancilla_zg.i30
+2,0 MOV 0 1 ancilla_zg.i300
+2,0 MOV 0 1 ancilla_zg.i310
+2,0 MOV 0 1 ancilla_zg.i320
+2,0 MOV 0 1 ancilla_zg.i330
+2,0 MOV 0 1 ancilla_zg.i340
+2,0 MOV 0 1 ancilla_zg.i350
+2,0 MOV 0 1 ancilla_zg.i360
+2,0 MOV 0 1 ancilla_zg.i370
+2,0 MOV 0 1 ancilla_zg.i380
+2,0 MOV 0 1 ancilla_zg.i390
+2,0 MOV 0 1 ancilla_zg.i40
+2,0 MOV 0 1 ancilla_zg.i400
+2,0 MOV 0 1 ancilla_zg.i410
+2,0 MOV 0 1 ancilla_zg.i420
+2,0 MOV 0 1 ancilla_zg.i430
+2,0 MOV 0 1 ancilla_zg.i440
+2,0 MOV 0 1 ancilla_zg.i450
+2,0 MOV 0 1 ancilla_zg.i460
+2,0 MOV 0 1 ancilla_zg.i470
+2,0 MOV 0 1 ancilla_zg.i480
+2,0 MOV 0 1 ancilla_zg.i490
+2,0 MOV 0 1 ancilla_zg.i50
+2,0 MOV 0 1 ancilla_zg.i500
+2,0 MOV 0 1 ancilla_zg.i510
+2,0 MOV 0 1 ancilla_zg.i520
+2,0 MOV 0 1 ancilla_zg.i530
+2,0 MOV 0 1 ancilla_zg.i540
+2,0 MOV 0 1 ancilla_zg.i550
+2,0 MOV 0 1 ancilla_zg.i560
+2,0 MOV 0 1 ancilla_zg.i570
+2,0 MOV 0 1 ancilla_zg.i580
+2,0 MOV 0 1 ancilla_zg.i590
+2,0 MOV 0 1 ancilla_zg.i60
+2,0 MOV 0 1 ancilla_zg.i600
+2,0 MOV 0 1 ancilla_zg.i610
+2,0 MOV 0 1 ancilla_zg.i620
+2,0 MOV 0 1 ancilla_zg.i630
+2,0 MOV 0 1 ancilla_zg.i640
+2,0 MOV 0 1 ancilla_zg.i650
+2,0 MOV 0 1 ancilla_zg.i660
+2,0 MOV 0 1 ancilla_zg.i670
+2,0 MOV 0 1 ancilla_zg.i680
+2,0 MOV 0 1 ancilla_zg.i690
+2,0 MOV 0 1 ancilla_zg.i70
+2,0 MOV 0 1 ancilla_zg.i700
+2,0 MOV 0 1 ancilla_zg.i710
+2,0 MOV 0 1 ancilla_zg.i720
+2,0 MOV 0 1 ancilla_zg.i730
+2,0 MOV 0 1 ancilla_zg.i740
+2,0 MOV 0 1 ancilla_zg.i750
+2,0 MOV 0 1 ancilla_zg.i760
+2,0 MOV 0 1 ancilla_zg.i770
+2,0 MOV 0 1 ancilla_zg.i780
+2,0 MOV 0 1 ancilla_zg.i790
+2,0 MOV 0 1 ancilla_zg.i80
+2,0 MOV 0 1 ancilla_zg.i800
+2,0 MOV 0 1 ancilla_zg.i810
+2,0 MOV 0 1 ancilla_zg.i820
+2,0 MOV 0 1 ancilla_zg.i830
+2,0 MOV 0 1 ancilla_zg.i840
+2,0 MOV 0 1 ancilla_zg.i850
+2,0 MOV 0 1 ancilla_zg.i860
+2,0 MOV 0 1 ancilla_zg.i870
+2,0 MOV 0 1 ancilla_zg.i880
+2,0 MOV 0 1 ancilla_zg.i890
+2,0 MOV 0 1 ancilla_zg.i90
+2,0 MOV 0 1 ancilla_zg.i900
+2,0 MOV 0 1 ancilla_zg.i910
+2,0 MOV 0 1 ancilla_zg.i920
+2,0 MOV 0 1 ancilla_zg.i930
+2,0 MOV 0 1 ancilla_zg.i940
+2,0 MOV 0 1 ancilla_zg.i950
+2,0 MOV 0 1 ancilla_zg.i960
+2,0 MOV 0 1 ancilla_zg.i970
+2,0 MOV 0 1 ancilla_zg.i980
+2,0 MOV 0 1 ancilla_zg.i990
+2,0 MOV 1 0 h00
+2,0 MOV 1 0 h01
+2,0 MOV 1 0 h010
+2,0 MOV 1 0 h011
+2,0 MOV 1 0 h012
+2,0 MOV 1 0 h013
+2,0 MOV 1 0 h014
+2,0 MOV 1 0 h015
+2,0 MOV 1 0 h016
+2,0 MOV 1 0 h017
+2,0 MOV 1 0 h018
+2,0 MOV 1 0 h019
+2,0 MOV 1 0 h02
+2,0 MOV 1 0 h020
+2,0 MOV 1 0 h021
+2,0 MOV 1 0 h022
+2,0 MOV 1 0 h023
+2,0 MOV 1 0 h024
+2,0 MOV 1 0 h025
+2,0 MOV 1 0 h026
+2,0 MOV 1 0 h027
+2,0 MOV 1 0 h028
+2,0 MOV 1 0 h029
+2,0 MOV 1 0 h03
+2,0 MOV 1 0 h030
+2,0 MOV 1 0 h031
+2,0 MOV 1 0 h04
+2,0 MOV 1 0 h05
+2,0 MOV 1 0 h06
+2,0 MOV 1 0 h07
+2,0 MOV 1 0 h08
+2,0 MOV 1 0 h09
+2,0 MOV 1 0 h10
+2,0 MOV 1 0 h11
+2,0 MOV 1 0 h110
+2,0 MOV 1 0 h111
+2,0 MOV 1 0 h112
+2,0 MOV 1 0 h113
+2,0 MOV 1 0 h114
+2,0 MOV 1 0 h115
+2,0 MOV 1 0 h116
+2,0 MOV 1 0 h117
+2,0 MOV 1 0 h118
+2,0 MOV 1 0 h119
+2,0 MOV 1 0 h12
+2,0 MOV 1 0 h120
+2,0 MOV 1 0 h121
+2,0 MOV 1 0 h122
+2,0 MOV 1 0 h123
+2,0 MOV 1 0 h124
+2,0 MOV 1 0 h125
+2,0 MOV 1 0 h126
+2,0 MOV 1 0 h127
+2,0 MOV 1 0 h128
+2,0 MOV 1 0 h129
+2,0 MOV 1 0 h13
+2,0 MOV 1 0 h130
+2,0 MOV 1 0 h131
+2,0 MOV 1 0 h14
+2,0 MOV 1 0 h15
+2,0 MOV 1 0 h16
+2,0 MOV 1 0 h17
+2,0 MOV 1 0 h18
+2,0 MOV 1 0 h19
+2,0 MOV 1 0 h20
+2,0 MOV 1 0 h21
+2,0 MOV 1 0 h210
+2,0 MOV 1 0 h211
+2,0 MOV 1 0 h212
+2,0 MOV 1 0 h213
+2,0 MOV 1 0 h214
+2,0 MOV 1 0 h215
+2,0 MOV 1 0 h216
+2,0 MOV 1 0 h217
+2,0 MOV 1 0 h218
+2,0 MOV 1 0 h219
+2,0 MOV 1 0 h22
+2,0 MOV 1 0 h220
+2,0 MOV 1 0 h221
+2,0 MOV 1 0 h222
+2,0 MOV 1 0 h223
+2,0 MOV 1 0 h224
+2,0 MOV 1 0 h225
+2,0 MOV 1 0 h226
+2,0 MOV 1 0 h227
+2,0 MOV 1 0 h228
+2,0 MOV 1 0 h229
+2,0 MOV 1 0 h23
+2,0 MOV 1 0 h230
+2,0 MOV 1 0 h231
+2,0 MOV 1 0 h24
+2,0 MOV 1 0 h25
+2,0 MOV 1 0 h26
+2,0 MOV 1 0 h27
+2,0 MOV 1 0 h28
+2,0 MOV 1 0 h29
+2,0 MOV 1 0 h30
+2,0 MOV 1 0 h31
+2,0 MOV 1 0 h310
+2,0 MOV 1 0 h311
+2,0 MOV 1 0 h312
+2,0 MOV 1 0 h313
+2,0 MOV 1 0 h314
+2,0 MOV 1 0 h315
+2,0 MOV 1 0 h316
+2,0 MOV 1 0 h317
+2,0 MOV 1 0 h318
+2,0 MOV 1 0 h319
+2,0 MOV 1 0 h32
+2,0 MOV 1 0 h320
+2,0 MOV 1 0 h321
+2,0 MOV 1 0 h322
+2,0 MOV 1 0 h323
+2,0 MOV 1 0 h324
+2,0 MOV 1 0 h325
+2,0 MOV 1 0 h326
+2,0 MOV 1 0 h327
+2,0 MOV 1 0 h328
+2,0 MOV 1 0 h329
+2,0 MOV 1 0 h33
+2,0 MOV 1 0 h330
+2,0 MOV 1 0 h331
+2,0 MOV 1 0 h34
+2,0 MOV 1 0 h35
+2,0 MOV 1 0 h36
+2,0 MOV 1 0 h37
+2,0 MOV 1 0 h38
+2,0 MOV 1 0 h39
+2,0 MOV 1 0 h40
+2,0 MOV 1 0 h41
+2,0 MOV 1 0 h410
+2,0 MOV 1 0 h411
+2,0 MOV 1 0 h412
+2,0 MOV 1 0 h413
+2,0 MOV 1 0 h414
+2,0 MOV 1 0 h415
+2,0 MOV 1 0 h416
+2,0 MOV 1 0 h417
+2,0 MOV 1 0 h418
+2,0 MOV 1 0 h419
+2,0 MOV 1 0 h42
+2,0 MOV 1 0 h420
+2,0 MOV 1 0 h421
+2,0 MOV 1 0 h422
+2,0 MOV 1 0 h423
+2,0 MOV 1 0 h424
+2,0 MOV 1 0 h425
+2,0 MOV 1 0 h426
+2,0 MOV 1 0 h427
+2,0 MOV 1 0 h428
+2,0 MOV 1 0 h429
+2,0 MOV 1 0 h43
+2,0 MOV 1 0 h430
+2,0 MOV 1 0 h431
+2,0 MOV 1 0 h44
+2,0 MOV 1 0 h45
+2,0 MOV 1 0 h46
+2,0 MOV 1 0 h47
+2,0 MOV 1 0 h48
+2,0 MOV 1 0 h49
+2,1 2217: CNOT h08 a136
+2,1 2218: CNOT h430 a30
+2,1 2219: CNOT h04 a132
+2,1 2220: CNOT h421 a21
+2,1 2221: CNOT h422 a22
+2,1 2222: CNOT h426 a26
+2,1 2223: CNOT h00 a128
+2,1 2224: CNOT h03 a131
+2,1 2225: CNOT h427 a27
+2,1 2226: CNOT h07 a135
+2,1 2227: CNOT h423 a23
+2,1 2228: CNOT h01 a129
+2,1 2229: CNOT h425 a25
+2,1 2230: CNOT h06 a134
+2,1 2231: CNOT h05 a133
+2,1 2232: CNOT h424 a24
+2,1 2233: CNOT h02 a130
+2,1 2234: CNOT h428 a28
+2,1 2235: CNOT h429 a29
+2,1 2236: CNOT h49 a9
+2,1 2237: CNOT h021 a149
+2,1 2238: CNOT h48 a8
+2,1 2239: CNOT h022 a150
+2,1 2240: CNOT h47 a7
+2,1 2241: CNOT h023 a151
+2,1 2242: CNOT h46 a6
+2,1 2243: CNOT h024 a152
+2,1 2244: CNOT h45 a5
+2,1 2245: CNOT h025 a153
+2,1 2246: CNOT h415 a15
+2,1 2247: CNOT h026 a154
+2,1 2248: CNOT h43 a3
+2,1 2249: CNOT h027 a155
+2,1 2250: CNOT h42 a2
+2,1 2251: CNOT h028 a156
+2,1 2252: CNOT h41 a1
+2,1 2253: CNOT h029 a157
+2,1 2254: CNOT h40 a0
+2,1 2255: CNOT h030 a158
+2,1 2256: CNOT h031 a159
+2,1 2257: CNOT h44 a4
+2,1 2258: CNOT h09 a137
+2,1 2259: CNOT h420 a20
+2,1 2260: CNOT h010 a138
+2,1 2261: CNOT h419 a19
+2,1 2262: CNOT h011 a139
+2,1 2263: CNOT h418 a18
+2,1 2264: CNOT h012 a140
+2,1 2265: CNOT h417 a17
+2,1 2266: CNOT h013 a141
+2,1 2267: CNOT h416 a16
+2,1 2268: CNOT h020 a148
+2,1 2269: CNOT h131 a127
+2,1 2270: CNOT h015 a143
+2,1 2271: CNOT h414 a14
+2,1 2272: CNOT h016 a144
+2,1 2273: CNOT h413 a13
+2,1 2274: CNOT h017 a145
+2,1 2275: CNOT h412 a12
+2,1 2276: CNOT h018 a146
+2,1 2277: CNOT h411 a11
+2,1 2278: CNOT h019 a147
+2,1 2279: CNOT h410 a10
+2,1 2280: CNOT h014 a142
+2,1 2281: CNOT h227 a91
+2,1 2282: CNOT h22 a66
+2,1 2283: CNOT h228 a92
+2,1 2284: CNOT h21 a65
+2,1 2285: CNOT h229 a93
+2,1 2286: CNOT h20 a64
+2,1 2287: CNOT h230 a94
+2,1 2288: CNOT h331 a63
+2,1 2289: CNOT h231 a95
+2,1 2290: CNOT h330 a62
+2,1 2291: CNOT h10 a96
+2,1 2292: CNOT h123 a119
+2,1 2293: CNOT h11 a97
+2,1 2294: CNOT h328 a60
+2,1 2295: CNOT h12 a98
+2,1 2296: CNOT h327 a59
+2,1 2297: CNOT h13 a99
+2,1 2298: CNOT h326 a58
+2,1 2299: CNOT h14 a100
+2,1 2300: CNOT h325 a57
+2,1 2301: CNOT h15 a101
+2,1 2302: CNOT h324 a56
+2,1 2303: CNOT h16 a102
+2,1 2304: CNOT h329 a61
+2,1 2305: CNOT h215 a79
+2,1 2306: CNOT h214 a78
+2,1 2307: CNOT h216 a80
+2,1 2308: CNOT h213 a77
+2,1 2309: CNOT h217 a81
+2,1 2310: CNOT h212 a76
+2,1 2311: CNOT h218 a82
+2,1 2312: CNOT h211 a75
+2,1 2313: CNOT h219 a83
+2,1 2314: CNOT h210 a74
+2,1 2315: CNOT h220 a84
+2,1 2316: CNOT h23 a67
+2,1 2317: CNOT h221 a85
+2,1 2318: CNOT h28 a72
+2,1 2319: CNOT h222 a86
+2,1 2320: CNOT h27 a71
+2,1 2321: CNOT h223 a87
+2,1 2322: CNOT h26 a70
+2,1 2323: CNOT h224 a88
+2,1 2324: CNOT h25 a69
+2,1 2325: CNOT h225 a89
+2,1 2326: CNOT h24 a68
+2,1 2327: CNOT h226 a90
+2,1 2328: CNOT h29 a73
+2,1 2329: CNOT h119 a115
+2,1 2330: CNOT h310 a42
+2,1 2331: CNOT h120 a116
+2,1 2332: CNOT h39 a41
+2,1 2333: CNOT h121 a117
+2,1 2334: CNOT h38 a40
+2,1 2335: CNOT h122 a118
+2,1 2336: CNOT h37 a39
+2,1 2337: CNOT h36 a38
+2,1 2338: CNOT h124 a120
+2,1 2339: CNOT h35 a37
+2,1 2340: CNOT h323 a55
+2,1 2341: CNOT h34 a36
+2,1 2342: CNOT h126 a122
+2,1 2343: CNOT h33 a35
+2,1 2344: CNOT h127 a123
+2,1 2345: CNOT h32 a34
+2,1 2346: CNOT h128 a124
+2,1 2347: CNOT h31 a33
+2,1 2348: CNOT h129 a125
+2,1 2349: CNOT h30 a32
+2,1 2350: CNOT h130 a126
+2,1 2351: CNOT h431 a31
+2,1 2352: CNOT h125 a121
+2,1 2353: CNOT h17 a103
+2,1 2354: CNOT h322 a54
+2,1 2355: CNOT h18 a104
+2,1 2356: CNOT h321 a53
+2,1 2357: CNOT h19 a105
+2,1 2358: CNOT h320 a52
+2,1 2359: CNOT h110 a106
+2,1 2360: CNOT h319 a51
+2,1 2361: CNOT h111 a107
+2,1 2362: CNOT h318 a50
+2,1 2363: CNOT h112 a108
+2,1 2364: CNOT h311 a43
+2,1 2365: CNOT h113 a109
+2,1 2366: CNOT h316 a48
+2,1 2367: CNOT h114 a110
+2,1 2368: CNOT h315 a47
+2,1 2369: CNOT h115 a111
+2,1 2370: CNOT h314 a46
+2,1 2371: CNOT h116 a112
+2,1 2372: CNOT h313 a45
+2,1 2373: CNOT h117 a113
+2,1 2374: CNOT h312 a44
+2,1 2375: CNOT h118 a114
+2,1 2376: CNOT h317 a49
+

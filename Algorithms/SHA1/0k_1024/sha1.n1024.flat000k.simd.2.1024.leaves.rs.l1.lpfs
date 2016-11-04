@@ -1,0 +1,204 @@
+M: $::SIMD_K=2; $::SIMD_D=1024; $::SIMD_L=1
+LPFS:
+Function: assign_value_of_1_to_a (sched: lpfs, op_cnt: 5, k: 2, d: 1024, l: 1, opp: 1, refill: 1)
+=================================================================================================
+ops = 3
+moves = 2
+total = 5
+ots = 3
+mts = 1
+ts = 7
+SIMDs = 1
+tgates = 0
+T(1) = 6
+T(inf) = 3
+T(2,1024) = 7
+Speedup = 0.857142857142857
+Efficiency = 0.428571428571429
+Utility = 0.357142857142857
+Quality = 0.357142857142857
+Overhead = 40% (reduction: 26.6666666666667)
+Avg load = 2
+Peak load = 2
+mlist = 2 0 0
+
+0,0 MOV 1 0 ancilla_one_g0
+0,0 MOV 1 0 target0
+0,1 1: CNOT target0 ancilla_one_g0
+1,1 2: CNOT ancilla_one_g0 target0
+2,1 3: CNOT target0 ancilla_one_g0
+
+LPFS:
+Function: assign_value_of_0_to_a (sched: lpfs, op_cnt: 5, k: 2, d: 1024, l: 1, opp: 1, refill: 1)
+=================================================================================================
+ops = 3
+moves = 2
+total = 5
+ots = 3
+mts = 1
+ts = 7
+SIMDs = 1
+tgates = 0
+T(1) = 6
+T(inf) = 3
+T(2,1024) = 7
+Speedup = 0.857142857142857
+Efficiency = 0.428571428571429
+Utility = 0.357142857142857
+Quality = 0.357142857142857
+Overhead = 40% (reduction: 26.6666666666667)
+Avg load = 2
+Peak load = 2
+mlist = 2 0 0
+
+0,0 MOV 1 0 ancilla_zero_g0
+0,0 MOV 1 0 target0
+0,1 4: CNOT target0 ancilla_zero_g0
+1,1 5: CNOT ancilla_zero_g0 target0
+2,1 6: CNOT target0 ancilla_zero_g0
+
+LPFS:
+Function: assign_value_of_b_to_a (sched: lpfs, op_cnt: 7, k: 2, d: 1024, l: 1, opp: 1, refill: 1)
+=================================================================================================
+ops = 3
+moves = 4
+total = 7
+ots = 3
+mts = 2
+ts = 11
+SIMDs = 1
+tgates = 0
+T(1) = 6
+T(inf) = 3
+T(2,1024) = 11
+Speedup = 0.545454545454545
+Efficiency = 0.272727272727273
+Utility = 0.318181818181818
+Quality = 0.318181818181818
+Overhead = 57.1428571428571% (reduction: 9.52380952380953)
+Avg load = 2
+Peak load = 2
+mlist = 2 0 2
+
+0,0 MOV 1 0 ancilla_zg0
+0,0 MOV 1 0 target0
+0,1 7: CNOT target0 ancilla_zg0
+1,1 8: CNOT ancilla_zg0 target0
+2,0 MOV 0 1 ancilla_zg0
+2,0 MOV 1 0 control0
+2,1 9: CNOT control0 target0
+
+LPFS:
+Function: ToffoliImpl_Q_Q_Q (sched: lpfs, op_cnt: 33, k: 2, d: 1024, l: 1, opp: 1, refill: 1)
+=============================================================================================
+ops = 17
+moves = 16
+total = 33
+ots = 10
+mts = 9
+ts = 46
+SIMDs = 2
+tgates = 6
+T(1) = 34
+T(inf) = 9
+T(2,1024) = 46
+Speedup = 0.739130434782609
+Efficiency = 0.369565217391304
+Utility = 0.358695652173913
+Quality = 0.358695652173913
+Overhead = 48.4848484848485% (reduction: 18.1818181818182)
+Avg load = 1.77777777777778
+Peak load = 2
+mlist = 2 2 2 2 2 1 0 2 2 1
+
+0,0 MOV 1 0 control20
+0,0 MOV 2 0 target0
+0,1 12: T control20
+0,2 10: H target0
+1,0 MOV 0 2 target0
+1,0 MOV 2 0 control10
+1,2 11: Tdag control10
+2,0 MOV 1 2 control10
+2,0 MOV 2 0 target0
+2,1 14: CNOT control20 control10
+2,2 13: T target0
+3,0 MOV 0 1 control20
+3,0 MOV 1 2 target0
+3,1 15: CNOT control10 target0
+4,0 MOV 2 0 control20
+4,0 MOV 2 1 target0
+4,1 16: Tdag control10
+4,2 17: CNOT target0 control20
+5,0 MOV 1 2 control20
+5,1 18: CNOT control10 control20
+5,2 20: T target0
+6,1 19: Tdag control10
+6,1 21: Tdag control20
+7,0 MOV 0 1 control20
+7,0 MOV 1 2 target0
+7,1 22: CNOT control10 target0
+8,0 MOV 1 0 control20
+8,0 MOV 2 1 control10
+8,1 24: CNOT target0 control20
+8,2 23: S control10
+9,0 MOV 2 1 control20
+9,1 25: H target0
+9,2 26: CNOT control20 control10
+
+LPFS:
+Function: ToffoliImpl_Q_A_Q (sched: lpfs, op_cnt: 33, k: 2, d: 1024, l: 1, opp: 1, refill: 1)
+=============================================================================================
+ops = 17
+moves = 16
+total = 33
+ots = 10
+mts = 9
+ts = 46
+SIMDs = 2
+tgates = 6
+T(1) = 34
+T(inf) = 9
+T(2,1024) = 46
+Speedup = 0.739130434782609
+Efficiency = 0.369565217391304
+Utility = 0.358695652173913
+Quality = 0.358695652173913
+Overhead = 48.4848484848485% (reduction: 18.1818181818182)
+Avg load = 1.77777777777778
+Peak load = 2
+mlist = 2 2 2 2 2 1 0 2 2 1
+
+0,0 MOV 1 0 control20
+0,0 MOV 2 0 target0
+0,1 29: T control20
+0,2 27: H target0
+1,0 MOV 0 2 target0
+1,0 MOV 2 0 control10
+1,2 28: Tdag control10
+2,0 MOV 1 2 control10
+2,0 MOV 2 0 target0
+2,1 31: CNOT control20 control10
+2,2 30: T target0
+3,0 MOV 0 1 control20
+3,0 MOV 1 2 target0
+3,1 32: CNOT control10 target0
+4,0 MOV 2 0 control20
+4,0 MOV 2 1 target0
+4,1 33: Tdag control10
+4,2 34: CNOT target0 control20
+5,0 MOV 1 2 control20
+5,1 35: CNOT control10 control20
+5,2 37: T target0
+6,1 36: Tdag control10
+6,1 38: Tdag control20
+7,0 MOV 0 1 control20
+7,0 MOV 1 2 target0
+7,1 39: CNOT control10 target0
+8,0 MOV 1 0 control20
+8,0 MOV 2 1 control10
+8,1 41: CNOT target0 control20
+8,2 40: S control10
+9,0 MOV 2 1 control20
+9,1 42: H target0
+9,2 43: CNOT control20 control10
+
