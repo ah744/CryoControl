@@ -1,0 +1,3 @@
+g++ -std=c++11 CacheSim.cpp -o cachesim
+g++ -std=c++11 Linker.cpp -o linker 
+g++ -std=c++11 ModuleExtraction.cpp -o moduleextraction 
