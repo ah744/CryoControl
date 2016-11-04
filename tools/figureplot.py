@@ -2,7 +2,7 @@
 import numpy
 import matplotlib.pyplot as plt
 
-def figplot(benchTitle,numModules,data,cpu_usage_data,moduleRanges,flag):
+def figplot(benchTitle,data,cpu_usage_data,moduleRanges,flag):
 	N = len(data)
 	width = 0.8 
 	ind = numpy.arange(N)*(len(cpu_usage_data)+1)

@@ -9,7 +9,9 @@ import resource
 import psutil
 import operator
 import matplotlib.pyplot as plt
-import figureplot as fp 
+import FigurePlot as fp 
+import FigPlot as fplot 
+import HistogramPlot as hp 
 import FullSuite as fs
 
 if(len(sys.argv)<2):
@@ -58,18 +60,18 @@ if(not os.path.exists(benchName)):
 os.chdir(benchName)
 newPathInput = "../" + newPathInput
 
-if not os.path.isfile("moduleextractioncomplete"):
-    subprocess.call([scriptsDir + 'moduleextraction', newPathInput])
-    moduleFilePath = scriptsDir + algsDirectory + "/" + benchName + "modules"
-    subprocess.call(['mv', moduleFilePath, "."]) 
-    subprocess.call(['touch', "moduleextractioncomplete"])
+#if not os.path.isfile("moduleextractioncomplete"):
+subprocess.call([scriptsDir + 'moduleextraction', newPathInput])
+moduleFilePath = scriptsDir + algsDirectory + "/" + benchName + "modules"
+subprocess.call(['mv', moduleFilePath, "."]) 
+subprocess.call(['touch', "moduleextractioncomplete"])
 
 print "[ccs][0]: Module Extraction Complete"
 print "[ccs][1]: Linking Leaf Modules"
 
-if not os.path.isfile("linkercomplete"):
-    subprocess.call([scriptsDir + 'linker'])
-    subprocess.call(['touch', "linkercomplete"])
+#if not os.path.isfile("linkercomplete"):
+subprocess.call([scriptsDir + 'linker'])
+subprocess.call(['touch', "linkercomplete"])
 
 print "[ccs][1]: Linking Complete"
 print "[ccs][2]: Compressing Modules"
@@ -186,6 +188,8 @@ memoryUsageMax.append(numpy.amax(memoryUsageStatisticsTAR.values()))
 memoryUsageMax.append(numpy.amax(memoryUsageStatisticsGZIP.values()))
 
 print "[ccs][2]: Module Compression Complete"
+
+
 print "[ccs][3]: Preparing Simulator Input Files"
 
 #----------- Create Module Sizes File -----------#
@@ -224,7 +228,7 @@ subprocess.call(['mv', 'main.calls.txt', callStackFileName])
 
 with open(str(benchName + 'decomp.sizes.txt'), 'w') as decompSizesFile:
 	for item in memoryUsageStatisticsGZIP:
-		decompSizesFile.write(item + " " + str(memoryUsageStatisticsGZIP[item]) + "\n")	
+			decompSizesFile.write(item[:-4] + " " + str(memoryUsageStatisticsGZIP[item]) + "\n")	
 decompSizesFile.close()
 
 print "[ccs][3]: Simulator Inputs Prepared"
@@ -236,6 +240,13 @@ ordered_filesizes_decompressed = []
 for pair in reversed(sorted_filesizes_decompressed):
     ordered_filesizes_decompressed.append(pair)
 largestModuleSize = ordered_filesizes_decompressed[0][1]
+secondLargestModuleSize = ordered_filesizes_decompressed[1][1]
+smallestModuleSize = sorted_filesizes_decompressed[0][1]
+
+print "Ordered Filesizes:"
+print ordered_filesizes_decompressed
+
+hp.figplot(benchName, ordered_filesizes_decompressed)
 
 ranges = []
 newValue = sumDecompressedModules
@@ -251,15 +262,20 @@ for modulecount in moduleRanges:
 
 print "Current Ranges:"
 print ranges
+print "Module Names and Sizes:"
+print ordered_filesizes_decompressed
 print "Current Module Ranges:"
 print moduleRanges
 
 for x in [8,4,2,1]:
-    newValue = largestModuleSize
+    newValue = secondLargestModuleSize
     print "Trying: " + str(x)
     if x < numModules and x > moduleRanges[-1]:
-        print "Fitting into current list"
+        print "Adding to current list"
         for item in moduleRanges:
+            if item == x:
+                print "Value already exists"
+                break
             if item < x:
                 print "Found correct location"
                 moduleRanges.insert(moduleRanges.index(item),x)
@@ -271,7 +287,7 @@ for x in [8,4,2,1]:
         ranges.insert(moduleRanges.index(x),newValue)
         print "Finished adding capacity: " + str(newValue) + " at module count: " + str(x)
     elif x < numModules and x < moduleRanges[-1]:
-        print "Adding: " + str(x)
+        print "Extending current list: " + str(x)
         if x > 1:
             for i in range(x):
                 newValue += sorted_filesizes_decompressed[x][1]
@@ -282,7 +298,7 @@ for x in [8,4,2,1]:
             print "Finished adding capacity: " + str(newValue) + " at module count: " + str(x)
 
 for x in ranges:
-    if x < largestModuleSize:
+    if x < smallestModuleSize:
         ranges.remove(x)
 
 print "Final Module Ranges:"
@@ -298,6 +314,23 @@ print moduleRanges
 
 
 print "[ccs][4]: Data Ranges Prepared"
+
+print "[ccs][5.0]: Gathering Caching Strategy Information"
+callFrequency = {}
+with open (benchName+"calls.txt", 'r') as f:
+    for line in f:
+        if line[:-1] in callFrequency:
+            callFrequency[line[:-1]] += 1    
+        else:
+            callFrequency[line[:-1]] = 1
+    f.close()
+print callFrequency
+
+with open ("call_frequency.txt", 'w') as f:
+    for key, value in callFrequency.iteritems():
+        f.write(key + " " + str(value) + "\n")
+    f.close()
+
 print "[ccs][5]: Performing Simulation"
 
 compData = {}
@@ -325,7 +358,7 @@ total_mem_usage_gzip = 0
 
 for capacity in ranges:
 	print "\tSimulating Capacity: " + str(capacity)
-	output =  subprocess.check_output([scriptsDir + 'cachesim', str(capacity), 'full', 'FIFO', benchName, '1'])
+	output =  subprocess.check_output([scriptsDir + 'cachesim', str(capacity), 'full', 'FIFO', benchName, '1', '1'])
 	outputSplit = output.split("\n")
 	compData[capacity] = outputSplit[0] 
 	outputSplit = outputSplit[1:-1]
@@ -382,6 +415,7 @@ for capacity in ranges:
 print "[ccs][5]: Simulation Complete"
 print "[ccs][6]: Beginning Data Analysis"
 
+
 compData = sorted(compData.items(),key=operator.itemgetter(0))
 cpuData = []
 cpuData.append(cpuDataBZIP2)
@@ -397,10 +431,76 @@ memData.append(memDataZIP)
 memData.append(memDataTAR)
 memData.append(memDataGZIP)
 
+print "[ccs][6.1]: Applying Hardware Power Conversion"
+print "[ccs][6.2]: Applying Temperature Level Power Overhead"
 
-fp.figplot(benchName,numModules,compData,cpuData,moduleRanges,"cputs")
-fp.figplot(benchName,numModules,compData,cpuData,moduleRanges,"cpu")
-fp.figplot(benchName,numModules,memoryUsageMax,cpuData,moduleRanges,"max")
+# Conversion Factors
+RSFQ_factor = 1*10**(-19)
+cryoCMOS_factor = 1*10**(-15)
+
+# T Level Parameters
+Penalty_4K = 200
+Penalty_20mK = 50000
+
+# Architectural Parameters
+CMOS_ops_per_tick = 21.5*10**6
+RSFQ_ops_per_tick = 21.5*10**6
+
+powerData = []
+powerData1 = []
+powerData2 = []
+powerData3 = []
+powerData4 = []
+rsfq_4k = []
+rsfq_20mk = []
+cmos_4k = []
+cmos_20mk = []
+for item in cpuDataGZIP:
+	cpu_ts_val = (int(float(item)*(2.8*10**9)))
+
+	num_ops_cmos = cpu_ts_val * CMOS_ops_per_tick
+	num_ops_rsfq = cpu_ts_val * RSFQ_ops_per_tick
+
+	power_cmos = num_ops_cmos * cryoCMOS_factor
+	power_rsfq = num_ops_rsfq * RSFQ_factor 
+
+	power_cmos_4k = power_cmos * Penalty_4K
+	power_cmos_20mK = power_cmos * Penalty_20mK
+	
+	power_rsfq_4k = power_rsfq * Penalty_4K
+	power_rsfq_20mK = power_rsfq * Penalty_20mK
+
+	rsfq_4k.append(power_rsfq_4k)
+	rsfq_20mk.append(power_rsfq_20mK)
+	cmos_4k.append(power_cmos_4k)
+	cmos_20mk.append(power_cmos_20mK)
+	
+powerData1.append(rsfq_4k)
+powerData2.append(rsfq_20mk)
+powerData3.append(cmos_4k)
+powerData4.append(cmos_20mk)
+
+powerData.append(rsfq_4k)
+powerData.append(rsfq_20mk)
+powerData.append(cmos_4k)
+powerData.append(cmos_20mk)
+
+
+print "CPU Usage Data"
+print cpuDataGZIP
+print "Power Data:"
+print powerData
+
+fplot.figplot(benchName,compData,powerData1,moduleRanges,"RSFQ-4K")
+fplot.figplot(benchName,compData,powerData2,moduleRanges,"RSFQ-20mK")
+fplot.figplot(benchName,compData,powerData3,moduleRanges,"CryoCMOS-4K")
+fplot.figplot(benchName,compData,powerData4,moduleRanges,"CryoCMOS-20mK")
+
+fplot.figplot(benchName,compData,powerData,moduleRanges,"Full Suite")
+
+fp.figplot(benchName,compData,cpuData,moduleRanges,"cputs")
+fp.figplot(benchName,compData,cpuData,moduleRanges,"cpu")
+fp.figplot(benchName,memoryUsageMax,cpuData,moduleRanges,"max")
 
 with open (str(benchName + "cputs"), 'w') as f:
 	for item in cpuData:
@@ -408,6 +508,40 @@ with open (str(benchName + "cputs"), 'w') as f:
 			f.write(str(int(numpy.ceil(val*(2.8*10**9)))) + " ")
 		f.write("\n")
 f.close()
+
+with open (str(benchName + "power_data"), 'w') as f:
+    for key,value in compData:
+        f.write(str(key))
+        f.write("\n")
+    f.write("rsfq_4k \n")
+    for item in powerData1:
+        f.write(str(item) + " ")
+        f.write("\n")
+    f.write("rsfq_20mk \n")
+    for item in powerData2:
+        f.write(str(item) + " ")
+        f.write("\n")
+    f.write("cmos_4k \n")
+    for item in powerData3:
+        f.write(str(item) + " ")
+        f.write("\n")
+    f.write("cmos_20mk \n")
+    for item in powerData4:
+        f.write(str(item) + " ")
+        f.write("\n")
+
+f.close()
+
+print "Memory Usage Statistics:"
+
+#print memoryUsageStatisticsBZIP2
+#print memoryUsageStatisticsSCZ
+#print memoryUsageStatisticsZIP
+#print memoryUsageStatisticsTAR
+#print memoryUsageStatisticsGZIP
+
+
+
 
 print "[ccs][6] Data Analysis Complete" 
 print "[ccs][7] Full Suite Analysis" 

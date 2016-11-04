@@ -9,7 +9,7 @@
 
 using namespace std;
 
-bool debugCacheSim = false;
+bool debugCacheSim = true;
 
 struct CryoCache {
     int capacity;
@@ -90,14 +90,12 @@ void readBenchmark(CryoCache& cache, const char* benchName, int cache_flag){
             }
             cache.nextUse[callInstruction].push_back(cache.vectCalls.size());
         }
-        if (debugCacheSim){
-            for(map<string,deque<int> >::iterator it = cache.nextUse.begin(); it != cache.nextUse.end(); ++it){
-                cout << it->first << " ";
-                for(deque<int>:: iterator sit = it->second.begin(); sit != it->second.end(); ++sit){
-                    cout << (*sit) << " ";
-                }
-                cout << endl;
+        for(map<string,deque<int> >::iterator it = cache.nextUse.begin(); it != cache.nextUse.end(); ++it){
+            cout << it->first << " ";
+            for(deque<int>:: iterator sit = it->second.begin(); sit != it->second.end(); ++sit){
+                cout << (*sit) << " ";
             }
+            cout << endl;
         }
     }
     CallStackFile.close();
@@ -135,7 +133,7 @@ void evict(CryoCache& cache){
 		if (cache.used_memory < 0) cache.used_memory = 0;
 	    cache.numRecompressions++;
 	    if (debugCacheSim){
-	        cout << "Eviction: " << victimInstruction << endl;
+	        cout << "Eviction" <<endl;
 	        cout << "Free Memory: " << cache.capacity - cache.used_memory;
 	    }
 	}
@@ -154,55 +152,30 @@ void evict(CryoCache& cache){
 }
 
 void evict_NextUse(CryoCache& cache, int currentIndex){
-    if (debugCacheSim) {
-        cout << "Current Index: " << currentIndex << endl;
-        cout << "Cache size: " << cache.cacheContents.size() << endl;
-		cout << "---- Cache Contents -----\n";
-		for(deque<string>::iterator it = cache.cacheContents.begin(); it != cache.cacheContents.end(); it++)
-			cout << "\t" << (*it) << endl;
-    }
     int max = 0;
-    string victim = cache.cacheContents.back();
+    string victim = cache.cacheContents.front();
     bool performedEviction = false;
-    if (cache.cacheContents.size() < 2) {
-        cache.cacheContents.clear();
-        performedEviction = true;
+    for(deque<string>::iterator in = cache.cacheContents.begin(); in != cache.cacheContents.end(); ++in){
+        if (debugCacheSim) cout << "Checking cache content: " << (*in) << endl;
+        map<string,deque<int> >::iterator it = cache.nextUse.find(*in);
+        int newValue;
+        if (it->second.empty()) newValue = INT_MAX;
+        else newValue = it->second.front();
+        if (it != cache.nextUse.end() && newValue > max){
+            max = it->second.front();
+            victim = it->first;
+        }
     }
-    else {
-        for(deque<string>::reverse_iterator rin = cache.cacheContents.rbegin(); rin != cache.cacheContents.rend(); rin++){
-            if (debugCacheSim) cout << "Checking cache content: " << (*rin) << ":" << cache.nextUse[(*rin)].front() << endl;
-            map<string,deque<int> >::iterator it = cache.nextUse.find(*rin);
-            int newValue;
-            if ((it != cache.nextUse.end()) && it->second.empty()) newValue = INT_MAX;
-            else newValue = it->second.front();
-            if (newValue == 0){
-                victim = it->first;
-                break;
-            }
-            if (it != cache.nextUse.end() && newValue > max){
-                max = newValue;
-                victim = it->first;
-            }
+    if (debugCacheSim){
+        cout << "Found victim: " << victim << endl;
+        
+    }
+    for(deque<string>::iterator it = cache.cacheContents.begin(); it != cache.cacheContents.end();){
+        if ((*it) == victim){
+            cache.cacheContents.erase(it);
+            performedEviction = true;
         }
-        if (debugCacheSim){
-            cout << "Found victim: " << victim << endl;
-        }
-        if (!cache.cacheContents.empty()) {
-			int victimSize = cache.modSizes.find(victim)->second;
-			cache.cacheContents.erase(remove(cache.cacheContents.begin(),cache.cacheContents.end(),victim),cache.cacheContents.end());
-			cache.used_memory -= victimSize;
-			if (debugCacheSim) {
-				cout << "Evicted: " << victim << endl;
-			}
-		}
-//        for(deque<string>::iterator it = cache.cacheContents.begin(); it != cache.cacheContents.end();it++){
-//            cout << "Looking for " << (*it) << endl;
-//            if ((*it) == victim){
-//                cout << "found it!\n";
-//                cache.cacheContents.erase(it);
-//                performedEviction = true;
-//            }
-//        }
+        else ++it;
     }
     if (performedEviction){
         if(debugCacheSim) cout << "Evicted: " << victim << endl;
@@ -210,12 +183,13 @@ void evict_NextUse(CryoCache& cache, int currentIndex){
         if (cache.used_memory < 0) cache.used_memory = 0;
         cache.numRecompressions++;
     }
-	if (debugCacheSim){
-		cout << "---Cache Contents---\n";
-		for(deque<string>::iterator it = cache.cacheContents.begin(); it != cache.cacheContents.end(); it++)
-			cout << "\t" << (*it) << endl;
-	}
-
+    if (debugCacheSim){
+        if (cache.cacheContents.size() > 0){
+           cout << "CACHE CONTENTS:" << endl;
+           for(deque<string>::iterator it = cache.cacheContents.begin(); it != cache.cacheContents.end(); ++it){
+               cout << (*it) << " " << endl;
+           }
+    }
 }
 
 void evict_Optimal(CryoCache& cache){
@@ -231,7 +205,7 @@ void evict_Optimal(CryoCache& cache){
             else ++it;
         }
         for(vector<string>::iterator it = cache.victimList.begin(); it != cache.victimList.end();){
-            if ((*it) == victimInstruction && performedEviction){
+            if ((*it) == victimInstruction){
                 cache.victimList.erase(it);
             }
             else ++it;
@@ -271,9 +245,9 @@ bool fillCache(CryoCache& cache, int instSize, int decompressionSize, string cur
         if(debugCacheSim){
             cout << "Success" << endl;
             cout << "New Free Memory: " << cache.capacity - cache.used_memory;
-//            cout << "New Cache: " << endl;
-//            for(deque<string>::iterator it = cache.cacheContents.begin(); it!= cache.cacheContents.end();++it)
-//                cout << (*it) << endl;
+            cout << "New Cache: " << endl;
+            for(deque<string>::iterator it = cache.cacheContents.begin(); it!= cache.cacheContents.end();++it)
+                cout << (*it) << endl;
         }
         return true;
     }
@@ -362,19 +336,14 @@ void runCache_Optimal(CryoCache& cache){
             // Cache Miss
             while( !fillCache(cache, instructionSize, decompressionSize, currentInstruction) ) evict_NextUse(cache, (i + 1));
             cache.numMisses++;
-            if(cache.nextUse[currentInstruction].size() > 2)
-                cache.nextUse[currentInstruction].pop_front();
-            else cache.nextUse[currentInstruction].clear();
+            if ((i + 1) != cache.nextUse[currentInstruction][0]) cout << "Module call does not match preprocessing\n";
+            cache.nextUse[currentInstruction].pop_front();
             
         }
         else {
             // Cache Hit
             cache.numHits++;
             cache.callFrequency[currentInstruction] -= 1;
-            if(cache.nextUse[currentInstruction].size() > 2)
-                cache.nextUse[currentInstruction].pop_front();
-            else cache.nextUse[currentInstruction].clear();
-
             if (cache.callFrequency[currentInstruction] <= 0){
                 if(debugCacheSim) cout << "Adding to victims1: " << currentInstruction << endl;
                 cache.victimList.push_back(currentInstruction);

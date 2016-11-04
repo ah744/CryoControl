@@ -1,7 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <sstream>
-#include <algorithm>
+#include <cctype>
 #include <map>
 #include <string>
 #include <bitset>
@@ -13,11 +13,14 @@ using namespace std;
 bool debugLinker = false;
 
 vector<string> callStack;
-vector<string> leafModules;
 
 inline bool file_exists (const string& name){
     struct stat buffer;
     return (stat (name.c_str(), &buffer) == 0);
+}
+
+bool is_number(const std::string& s){
+    return !s.empty() && s.find_first_not_of("0123456789") == std::string::npos;
 }
 
 bitset<8> incrementBitset8(bitset<8> code){
@@ -55,9 +58,6 @@ void addOp(map<string,bitset<8> >& instOpcodes, string newInstruction, bitset<8>
         newOp = incrementBitset8(newOp);
         instOpcodes.insert(make_pair(newInstruction,newOp));
     }
-	else{
-		newOp = instOpcodes.find(newInstruction)->second;
-	}
 }
 
 void addQreg(map<string,bitset<16> >& qRegs, string qreg, bitset<16>& newReg){
@@ -66,8 +66,6 @@ void addQreg(map<string,bitset<16> >& qRegs, string qreg, bitset<16>& newReg){
         newReg = incrementBitset16(newReg);
         qRegs.insert(make_pair(qreg,newReg));
     }
-	else newReg = qRegs.find(qreg)->second;
-	if(debugLinker) cout << "Added qreg: " << qreg << " with code: " << newReg << endl;
 }
     
 void printOpcodes(map<string,bitset<8> > instOpcodes){
@@ -83,22 +81,20 @@ void printQregs(map<string,bitset<16> > qRegs){
 }
 
 void linkLeaf(string& moduleName, map<string,bitset<8> >& instOpcodes, map<string,bitset<16> >& qRegs){ 
-    string callStack(moduleName);
-    string binaryOutput(callStack + ".bin");
+    string call_stack(moduleName);
+    string binaryOutput(call_stack +".leaf.bin");
     if (debugLinker) {
-        cout << "Debug Info: " << endl << "module/input file name " << callStack << endl;
+        cout << "Debug Info: " << endl << "module/input file name " << call_stack << endl;
     }
     string line;
    
-    ifstream CallStackFile (callStack.c_str());
+    ifstream CallStackFile (call_stack.c_str());
     ofstream BinaryOutput (binaryOutput.c_str(), ios::out | ios::binary);
     if(CallStackFile.is_open() && BinaryOutput.is_open()){
         if(debugLinker){
             while(getline(CallStackFile,line)){
                 cout << line << endl;
             }
-			CallStackFile.clear();
-			CallStackFile.seekg(0, ios::beg);
         }
         int timeStep;
         char delim;
@@ -127,13 +123,8 @@ void linkLeaf(string& moduleName, map<string,bitset<8> >& instOpcodes, map<strin
         if(debugLinker) {
             cout << "Begin Module Processing" << endl;
         }
-        string line;
-        while(getline(CallStackFile, line)){
-            istringstream ss(line);
-            ss >> timeStep >> delim >> simdRegion >> instruction_or_schedts;
-            
-//        while(CallStackFile >> timeStep >> delim >> simdRegion >> instruction_or_schedts ){
-//            cout << timeStep << " " << delim << " " << simdRegion << " " << instruction_or_schedts << endl;
+
+        while(CallStackFile >> timeStep >> delim >> simdRegion >> instruction_or_schedts ){
             if(debugLinker) cout << "Processing Next Line: " << endl;
             movInst = false;
             cnotInst = false;
@@ -144,21 +135,21 @@ void linkLeaf(string& moduleName, map<string,bitset<8> >& instOpcodes, map<strin
                 || instruction_or_schedts == "TMOV"){
                 movInst = true;
                 instruction = instruction_or_schedts;
-                ss >> dest >> src ;
+                CallStackFile >> dest >> src ;
                 if(debugLinker) cout << "Found MOV Instruction" << endl;
 
             }
-            else instruction = instruction_or_schedts;
+            else CallStackFile >> instruction;
 
             if(instruction == "CNOT") {
-                ss >> qreg1 >> qreg2; 
+                CallStackFile >> qreg1 >> qreg2; 
                 cnotInst = true;
                 qregs.push_back(qreg1);
                 qregs.push_back(qreg2);
                 if(debugLinker) cout << "Found CNOT Instruction" << endl;
             }
             else if(instruction == "Toffoli") {
-                ss >> qreg1 >> qreg2 >> qreg3;
+                CallStackFile >> qreg1 >> qreg2 >> qreg3;
                 toffInst = true;
                 qregs.push_back(qreg1);
                 qregs.push_back(qreg2);
@@ -166,7 +157,7 @@ void linkLeaf(string& moduleName, map<string,bitset<8> >& instOpcodes, map<strin
                 if(debugLinker) cout << "Found Toffoli Instruction" << endl;
             }
             else {
-                ss >> qreg1;
+                CallStackFile >> qreg1;
                 qregs.push_back(qreg1);
             }
 
@@ -203,7 +194,6 @@ void linkLeaf(string& moduleName, map<string,bitset<8> >& instOpcodes, map<strin
                 unsigned short qregister = qRegs.find(*vit)->second.to_ulong();
                 BinaryOutput.write((char*) &qregister, sizeof(qregister));
             }
-			if(debugLinker) cout << "Instruction Written To File" << endl;
         }
     }
     CallStackFile.close();
@@ -246,75 +236,50 @@ void readMain(map<string,bitset<32> >& moduleOpcodes, map<string,bitset<8> >& in
 }
 
 void readModule(string& currModule, bitset<32>& newModuleCode, map<string,bitset<32> >& moduleCodes, map<string,bitset<8> >& instOpcodes, map<string,bitset<16> >& qRegs) {
-    if(debugLinker) cout << "Reading module: " << currModule << " ...\n";
     ifstream moduleFile (currModule.c_str());
+	cout << "Reading module: " << currModule << endl;
     string outputFile = currModule + ".bin";
-    if(!(file_exists(outputFile))){
-        ofstream moduleOutputFile (outputFile.c_str(), ios::out | ios::binary);
-        if(moduleFile.is_open() && moduleOutputFile.is_open()){
-            string line;
-            while(getline(moduleFile,line)){
-                istringstream ss(line);
-                int timeStep;
-                string module;
-                if(ss >> timeStep) {
-					leafModules.push_back(currModule);
-                    linkLeaf(currModule,instOpcodes,qRegs); 
-                    break;
-                }
-                else {
-                    istringstream s(line);
-                    s >> module;
-                    if(module.find("llvm") == std::string::npos){
-                        std::size_t found = module.find(".");
-                        if(found != std::string::npos){
-                            module = module.substr(0,found);
-                        }
+    ofstream moduleOutputFile (outputFile.c_str(), ios::out | ios::binary);
+    if(moduleFile.is_open() && moduleOutputFile.is_open()){
+        string line;
+        while(getline(moduleFile,line)){
+            istringstream ss(line);
+            int timeStep;
+			char delim = ',';
+			char delimCheck;
+            string module;
+            if(ss >> timeStep) {
+				ss >> delimCheck;
+				if (delimCheck == delim){
+					cout << "This is actually a leaf" << endl;
+					callStack.push_back(currModule);
+	                linkLeaf(currModule,instOpcodes,qRegs); 
+	                break;
+				}
+            }
+            else {
+                istringstream s(line);
+                s >> module;
+                if(is_number(module)) s >> module;
+                if(module.find("llvm") == std::string::npos){
+                    std::size_t found = module.find(".");
+                    if(found != std::string::npos){
+                        module = module.substr(0,found);
+                    }
+                    if (file_exists(module)){
                         addModule(moduleCodes, module, newModuleCode);
                         moduleOutputFile.write((char*) &newModuleCode, sizeof(newModuleCode));
                         string filename = module + ".bin";
-//                       callStack.push_back(module);
+//                        callStack.push_back(module);
                         if(!(file_exists(filename))){
+							cout << "Next non-leaf: " << module << endl;
                             readModule(module,newModuleCode,moduleCodes,instOpcodes,qRegs);    
                         }
                     }
-                    else {} 
                 }
             }
         }
     }
-}
-
-void createCallStack(string& currModule){
-	if(debugLinker) cout << "Call Graph Traversal::" << currModule << endl;
-	if(find(leafModules.begin(), leafModules.end(), currModule) != leafModules.end()){
-		ofstream callStackFile ("main.calls.txt", ios::out | ios::app);
-//		callStack.push_back(currModule);
-		callStackFile << currModule << endl;
-		callStackFile.close();
-	}
-	else{
-
-    	ifstream mainFile (currModule.c_str());
-		string line;
-		while (getline(mainFile,line)){
-			ofstream callStackFile ("main.calls.txt", ios::out | ios::app);
-			istringstream ss(line);
-			string module;
-			ss >> module;
-			std::size_t found = module.find(".");
-			if(found != std::string::npos)
-				module = module.substr(0,found);
-			if (file_exists(module)){
-//				callStack.push_back(currModule);
-				callStackFile << currModule << endl;
-				createCallStack(module);
-//				callStackFile << currModule << endl;
-				callStackFile.close();
-			}	
-		}
-
-	}
 }
 
 
@@ -327,23 +292,17 @@ int main( int argc, char* argv[] ){
     vector<string> moduleCalls;
 
     bitset<32> newModuleCode = (4294967295ul);
-
-	if(debugLinker) cout << "Reading main ...\n";
     readMain(moduleCodes, instOpcodes, qRegs, moduleCalls, newModuleCode);
     
     for(vector<string>::iterator it = moduleCalls.begin(); it != moduleCalls.end(); ++it){
-		if(debugLinker) cout << "Reading module --  " << (*it) << " ...\n";
         readModule((*it), newModuleCode, moduleCodes, instOpcodes, qRegs);
     }
-    if(debugLinker) cout << "Creating Call Stack..." << endl; 
-	string main = "main"; 
-	createCallStack(main);	
-
-//    ofstream callStackFile ("main.calls.txt");
-//    for(vector<string>::iterator it = callStack.begin(); it != callStack.end(); ++it){
-//        callStackFile << *it << endl;
-//    }
-//    callStackFile.close();
+    
+    ofstream callStackFile ("main.calls.txt");
+    for(vector<string>::iterator it = callStack.begin(); it != callStack.end(); ++it){
+        callStackFile << *it << endl;
+    }
+    callStackFile.close();
 
     if(debugLinker){
         printOpcodes(instOpcodes);
