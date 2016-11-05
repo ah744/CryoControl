@@ -11,16 +11,6 @@ ts = 7
 SIMDs = 1
 tgates = 0
 T(1) = 6
-T(inf) = 3
-T(2,1024) = 7
-Speedup = 0.857142857142857
-Efficiency = 0.428571428571429
-Utility = 0.357142857142857
-Quality = 0.357142857142857
-Overhead = 40% (reduction: 26.6666666666667)
-Avg load = 2
-Peak load = 2
-mlist = 2 0 0
 
 0,0 MOV 1 0 ancilla_one_g0
 0,0 MOV 1 0 target0
@@ -40,16 +30,6 @@ ts = 7
 SIMDs = 1
 tgates = 0
 T(1) = 6
-T(inf) = 3
-T(2,1024) = 7
-Speedup = 0.857142857142857
-Efficiency = 0.428571428571429
-Utility = 0.357142857142857
-Quality = 0.357142857142857
-Overhead = 40% (reduction: 26.6666666666667)
-Avg load = 2
-Peak load = 2
-mlist = 2 0 0
 
 0,0 MOV 1 0 ancilla_zero_g0
 0,0 MOV 1 0 target0
@@ -69,16 +49,6 @@ ts = 11
 SIMDs = 1
 tgates = 0
 T(1) = 6
-T(inf) = 3
-T(2,1024) = 11
-Speedup = 0.545454545454545
-Efficiency = 0.272727272727273
-Utility = 0.318181818181818
-Quality = 0.318181818181818
-Overhead = 57.1428571428571% (reduction: 9.52380952380953)
-Avg load = 2
-Peak load = 2
-mlist = 2 0 2
 
 0,0 MOV 1 0 ancilla_zg0
 0,0 MOV 1 0 target0
@@ -100,16 +70,6 @@ ts = 46
 SIMDs = 2
 tgates = 6
 T(1) = 34
-T(inf) = 9
-T(2,1024) = 46
-Speedup = 0.739130434782609
-Efficiency = 0.369565217391304
-Utility = 0.358695652173913
-Quality = 0.358695652173913
-Overhead = 48.4848484848485% (reduction: 18.1818181818182)
-Avg load = 1.77777777777778
-Peak load = 2
-mlist = 2 2 2 2 2 1 0 2 2 1
 
 0,0 MOV 1 0 control20
 0,0 MOV 2 0 target0
@@ -157,16 +117,6 @@ ts = 46
 SIMDs = 2
 tgates = 6
 T(1) = 34
-T(inf) = 9
-T(2,1024) = 46
-Speedup = 0.739130434782609
-Efficiency = 0.369565217391304
-Utility = 0.358695652173913
-Quality = 0.358695652173913
-Overhead = 48.4848484848485% (reduction: 18.1818181818182)
-Avg load = 1.77777777777778
-Peak load = 2
-mlist = 2 2 2 2 2 1 0 2 2 1
 
 0,0 MOV 1 0 control20
 0,0 MOV 2 0 target0
