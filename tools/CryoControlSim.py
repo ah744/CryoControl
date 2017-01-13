@@ -356,6 +356,8 @@ total_mem_usage_zip = 0
 total_mem_usage_tar = 0
 total_mem_usage_gzip = 0
 
+ranges = sorted(ranges, key=float, reverse=True)
+
 for capacity in ranges:
 	print "\tSimulating Capacity: " + str(capacity)
 	output =  subprocess.check_output([scriptsDir + 'cachesim', str(capacity), 'full', 'FIFO', benchName, '1', '1'])

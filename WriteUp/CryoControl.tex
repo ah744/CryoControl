@@ -1,0 +1,84 @@
+%\documentclass[pageno]{jpaper}
+\documentclass[12pt]{report}
+
+\usepackage[normalem]{ulem}
+\usepackage{graphicx}
+\usepackage{caption}
+%\usepackage{subcaption}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{listings}
+\usepackage{booktabs}
+\usepackage{geometry}
+\usepackage{fixltx2e}
+\graphicspath{ {figures/} }
+\geometry{margin=0.75in}
+%\lstset{basicstyle=\footnotesize,frame=single}
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+\lstset{frame=none,
+  language=bash,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  numbers=none,
+  numberstyle=\tiny\color{gray},
+  keywordstyle=\color{blue},
+  commentstyle=\color{dkgreen},
+  stringstyle=\color{mauve},
+  breaklines=true,
+  breakatwhitespace=true,
+  tabsize=3
+}
+
+
+
+\newenvironment{blockquote}{%
+	\par%
+	\medskip
+	\leftskip=2em\rightskip=2em%
+	\ignorespaces}{%
+	\par\medskip}
+ 
+\begin{document}
+
+\title{
+    {Cryogenic Control Analysis and Optimization for Quantum Computation}\\
+    {\small An infrastructure for analysis of classical control unit architectures for quantum computation}\\
+}
+
+
+\author{Adam Holmes}
+
+\date{September 2016}
+
+
+
+\maketitle
+
+\chapter*{Framework Overview}
+\input{chapters/detailed_overview}
+
+\chapter*{Roadmap}
+\input{chapters/roadmap}
+
+\chapter*{Stage One: Cache Implementation and Initial Results}
+\input{chapters/stage_one}
+
+%\chapter*{Stage Two: Energy Budget Implementation and Results}
+%\input{chapters/stage_two}
+%
+%\chapter*{Stage Three: Compiler Configuration and Code Decompression Technique Exploration and Results}
+%\input{chapters/stage_three}
+
+
+\bibliography{references}
+\bibliographystyle{IEEEtranS}
+
+\end{document}

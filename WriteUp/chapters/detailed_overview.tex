@@ -1,0 +1,57 @@
+%\section*{Framework Overview}~\par
+To perform quantum computation, classical control units will be located at one (or more) temperature level(s) of dilution refrigerator-based superconducting quantum computers. The question considered in this work is: what are the tradeoffs between targeting lower computation or lower memory usage within classical control units with differing hardware constraints located at different temperature levels? To this end, the parameters under consideration are:
+\begin{itemize}
+	\item Dilution Refrigerator Constraints, 
+	\item Hardware Characteristics, and
+	\item Benchmark Code Generation and Manipulation. 
+\end{itemize}
+\subsection*{Dilution Refrigerator Constraints}
+
+The architecture of a dilution refrigerator being considered is a multi-stage cooling apparatus, using liquid nitrogen and liquid helium. Of interest right now are two characteristics: cooling capacity of temperature stages and latency of microwave links crossing these thermal boundaries. Using information from the specifications of a typical refrigerator (specifically the Oxford-Instruments TritonXL), these temperature levels and cooling capacities are shown in Table \ref{t2}.
+
+\begin{table}[h!]
+	\centering
+    \begin{tabular}{|c|c|}
+    \hline
+    Temperature Stage (Kelvin) & Cooling Capacity (Watts) \\ \hline
+    $20$ mK & $25$ $\mu$W \\ \hline
+    $100$ mk & $1$ mW \\ \hline
+    $4$K & $1.35$-$2$W \\
+    \hline
+    \end{tabular}
+    \caption{Temperature Levels and Cooling Capacities}\label{t1}
+\end{table}
+
+These figures are approximate, and relate specifically to one realization of a dilution refrigerator, so are definitely subject to change. They differ somewhat from the estimates brought up in discussions, where we saw that the 20 mK level cooling capacity is approximately two orders of magnitude less than the cooling power available at the 4K temperature level. Further clarification will be sought to establish correct figures. 
+
+Additionally, there is a range of latencies introduced in passing microwave links through temperature interfaces. These seem to vary between 1-10ns approximately, growing longer as the gap widens between the target temperatures of the stages being crossed.
+
+\subsection*{Hardware Characteristics}
+
+There are three primary types of hardware under consideration:
+\begin{itemize}
+	\item RSFQ: Rapid Single Flux Quantum
+	\item RQL: Reciprocal Quantum Logic
+	\item CryoCMOS: Cryogenic CMOS
+\end{itemize}
+Each of these is characterized by a different energy usage/logic gate relationship. these values are typically characterized similarly to Table \ref{t2}.
+\begin{table}[h!]
+	\centering
+	\begin{tabular}{|c|c|}
+	\hline
+	Hardware Type & Energy Required Per Gate (Joules) \\ \hline
+	RSFQ & $10^{-19}$ \\ \hline
+	RQL & $10^{-19}$ \\ \hline
+	CryoCMOS & $10^{-15}$ \\
+	\hline
+	\end{tabular}
+	\caption{Hardware Types and Energy Consumed Per Gate}\label{t2}
+\end{table}
+
+These can be used directly to convert between computation and energy, and will be inserted into the model.
+
+It is also important to consider power consumption of memory systems under these types of conditions. Here, we will analyze power usage of cryogenic CMOS memory devices, and consider implementations of cryogenic persistent memory systems. Persistent memory could potentially be useful in applications that rely upon a precomputed library of rotation decompositions, as memory may only need to be read only for long periods of computation. The qualification is that different applications often require different levels of precision in rotation decompositions, so these databases would potentially need to be changed between apps.
+
+\subsection*{Program Code Generation and Manipulation}
+
+The last set of variables being considered are those relating to the generation of instruction code for these quantum benchmarks. These techniques fall into several categories, specifically the relationship between the compilation flattening threshold and code caching behavior, and methods of compressing and decompressing modules. 

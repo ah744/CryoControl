@@ -1,0 +1,57 @@
+This is BibTeX, Version 0.99d (TeX Live 2015)
+Capacity: max_strings=35307, hash_size=35307, hash_prime=30011
+The top-level auxiliary file: CryoControl.aux
+The style file: IEEEtranS.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Database file #1: references.bib
+-- IEEEtranS.bst version 1.13 (2008/09/30) by Michael Shell.
+-- http://www.michaelshell.org/tex/ieeetran/bibtex/
+-- See the "IEEEtran_bst_HOWTO.pdf" manual for usage information.
+** Sorting version - not for normal IEEE work.
+
+Done.
+You've used 1 entry,
+            4498 wiz_defined-function locations,
+            899 strings with 8307 characters,
+and the built_in function-call counts, 1490 in all, are:
+= -- 114
+> -- 53
+< -- 10
++ -- 26
+- -- 14
+* -- 99
+:= -- 224
+add.period$ -- 3
+call.type$ -- 1
+change.case$ -- 10
+chr.to.int$ -- 27
+cite$ -- 1
+duplicate$ -- 80
+empty$ -- 101
+format.name$ -- 15
+if$ -- 316
+int.to.chr$ -- 0
+int.to.str$ -- 1
+missing$ -- 16
+newline$ -- 28
+num.names$ -- 2
+pop$ -- 49
+preamble$ -- 1
+purify$ -- 9
+quote$ -- 2
+skip$ -- 91
+stack$ -- 0
+substring$ -- 68
+swap$ -- 68
+text.length$ -- 1
+text.prefix$ -- 0
+top$ -- 6
+type$ -- 11
+warning$ -- 0
+while$ -- 6
+width$ -- 2
+write$ -- 35

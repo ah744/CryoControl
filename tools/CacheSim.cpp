@@ -8,7 +8,6 @@
 #include <math.h>
 
 using namespace std;
-
 bool debugCacheSim = false;
 
 struct CryoCache {

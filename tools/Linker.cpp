@@ -10,6 +10,7 @@
 #include <unistd.h>
 
 using namespace std;
+
 bool debugLinker = false;
 
 vector<string> callStack;
@@ -211,40 +212,6 @@ void linkLeaf(string& moduleName, map<string,bitset<8> >& instOpcodes, map<strin
 }
 
 
-void readMain(map<string,bitset<32> >& moduleOpcodes, map<string,bitset<8> >& instOpcodes, map<string,bitset<16> >& qRegs, vector<string>& moduleCalls, bitset<32>& newModuleCode){ 
-    string main = "main";
-    string main_bin = "main.bin";
-    ifstream mainFile (main.c_str());
-    ofstream mainOutput (main_bin.c_str(), ios::out | ios::binary);
-    if(mainFile.is_open() && mainOutput.is_open()){
-        string line;
-        if(debugLinker){
-            cout << "test: " << newModuleCode << endl;
-            for(int i = 0; i < 64; i++) {
-                newModuleCode = decrementBitset32(newModuleCode);
-                cout << "test2: " << newModuleCode << endl;
-            }
-        }
-        while(getline(mainFile,line)){
-            if(line.find("llvm") == std::string::npos){
-                istringstream ss(line);
-                string module;
-                ss >> module;
-                std::size_t found = module.find(".");
-                if(found != std::string::npos){
-                    cout << module;
-                    module = module.substr(0,found);
-                    cout << module << endl;
-                }
-                moduleCalls.push_back(module);
-//                callStack.push_back(module);
-                addModule(moduleOpcodes, module, newModuleCode);
-                mainOutput.write((char*) &newModuleCode, sizeof(newModuleCode));
-            }
-        }
-    }
-}
-
 void readModule(string& currModule, bitset<32>& newModuleCode, map<string,bitset<32> >& moduleCodes, map<string,bitset<8> >& instOpcodes, map<string,bitset<16> >& qRegs) {
     if(debugLinker) cout << "Reading module: " << currModule << " ...\n";
     ifstream moduleFile (currModule.c_str());
@@ -284,6 +251,52 @@ void readModule(string& currModule, bitset<32>& newModuleCode, map<string,bitset
         }
     }
 }
+
+
+void readMain(map<string,bitset<32> >& moduleOpcodes, map<string,bitset<8> >& instOpcodes, map<string,bitset<16> >& qRegs, vector<string>& moduleCalls, bitset<32>& newModuleCode){ 
+    string main = "main";
+    string main_bin = "main.bin";
+    ifstream mainFile (main.c_str());
+    ofstream mainOutput (main_bin.c_str(), ios::out | ios::binary);
+    if(mainFile.is_open() && mainOutput.is_open()){
+        string line;
+        if(debugLinker){
+            cout << "test: " << newModuleCode << endl;
+            for(int i = 0; i < 64; i++) {
+                newModuleCode = decrementBitset32(newModuleCode);
+                cout << "test2: " << newModuleCode << endl;
+            }
+        }
+        while(getline(mainFile,line)){
+			int timestep;
+			char delim;
+			int simd;
+			istringstream ss(line);
+			if(ss >> timestep >> delim >> simd){
+				leafModules.push_back(main);
+				linkLeaf(main, instOpcodes, qRegs);
+				break;
+			}
+            if(line.find("llvm") == std::string::npos){
+                istringstream ss(line);
+                string module;
+                ss >> module;
+                std::size_t found = module.find(".");
+                if(found != std::string::npos){
+                    cout << module;
+                    module = module.substr(0,found);
+                    cout << module << endl;
+                }
+                moduleCalls.push_back(module);
+//                callStack.push_back(module);
+                addModule(moduleOpcodes, module, newModuleCode);
+                mainOutput.write((char*) &newModuleCode, sizeof(newModuleCode));
+            }
+        }
+    }
+}
+
+
 
 void createCallStack(string& currModule){
 	if(debugLinker) cout << "Call Graph Traversal::" << currModule << endl;
