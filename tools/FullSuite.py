@@ -102,7 +102,7 @@ def full_suite():
 			if not file.startswith("shors"):
 				if os.path.isdir("../"+"Algorithms/"+ appShort):
 					os.chdir("../" + "Algorithms/" + appShort)
-			    	with open ((file + "cg"), 'r') as f:
+			    	with open ((file + "lpfs"), 'r') as f:
 						print "\t Finding Runtime"
 						for line in f:
 							if line.startswith("#Num of SIMD time steps for function main : "):
