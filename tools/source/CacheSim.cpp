@@ -1,11 +1,18 @@
 #include <iostream>
 #include <fstream>
+#include <sstream>
 #include <algorithm>
 #include <string>
 #include <map>
 #include <vector>
 #include <deque>
+#include <string>
+#include <bitset>
 #include <math.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+#include "Linker.h"
 
 using namespace std;
 bool debugCacheSim = false;
@@ -34,11 +41,10 @@ void initializeCache(CryoCache& cache, int input_cap, char* input_associativity,
     cache.capacity = input_cap;
     cache.associativity = input_associativity;
     cache.eviction = input_eviction;
-
 }
 
 void readBenchmark(CryoCache& cache, const char* benchName, int cache_flag){
-    string bName(benchName);
+	string bName(benchName);
     string moduleSizes = bName + "sizes.txt";
     string callStack = bName + "calls.txt";
     string callFrequencyFile = "call_frequency.txt";
@@ -67,18 +73,15 @@ void readBenchmark(CryoCache& cache, const char* benchName, int cache_flag){
     	    cache.decompressionRequirementsMap.insert(make_pair(name,size));
     	}
     }
-    decompSizes.close();
-
-   ifstream callFreqFile (callFrequencyFile);
-   if (callFreqFile.is_open()){
-       string name;
-       int frequency;
-       while(callFreqFile >> name >> frequency){
-           cache.callFrequency.insert(make_pair(name,frequency));
-       }
-   }
-    
-
+	decompSizes.close();
+   	ifstream callFreqFile (callFrequencyFile);
+    if (callFreqFile.is_open()){
+    	string name;
+        int frequency;
+        while(callFreqFile >> name >> frequency){
+            cache.callFrequency.insert(make_pair(name,frequency));
+        }
+    }
     ifstream CallStackFile (callStack);
     if(CallStackFile.is_open()){
         string callInstruction;
@@ -100,7 +103,6 @@ void readBenchmark(CryoCache& cache, const char* benchName, int cache_flag){
         }
     }
     CallStackFile.close();
-
     if(debugCacheSim){
         cout << "Module Sizes:" << endl;
         for(map<string,int>::iterator it = cache.modSizes.begin(); it != cache.modSizes.end(); ++it)
@@ -115,7 +117,6 @@ void readBenchmark(CryoCache& cache, const char* benchName, int cache_flag){
             cout << it->first << ":" << it->second << endl;
     }
 }
-
 
 void printCacheContents(CryoCache cache){
     cout << "#### Current Cache Contents: " << endl;
@@ -214,7 +215,6 @@ void evict_NextUse(CryoCache& cache, int currentIndex){
 		for(deque<string>::iterator it = cache.cacheContents.begin(); it != cache.cacheContents.end(); it++)
 			cout << "\t" << (*it) << endl;
 	}
-
 }
 
 void evict_Optimal(CryoCache& cache){
@@ -412,6 +412,7 @@ void printStatistics(CryoCache cache, const char* benchName, int workflowIntegra
 		for(map<string,int>::iterator it = cache.decompressionMap.begin(); it!=cache.decompressionMap.end();++it){
     		cout << it->first << ":" << it->second << endl;
 		}
+		cout << cache.vectCalls.size() << endl;
 
     }
 }
