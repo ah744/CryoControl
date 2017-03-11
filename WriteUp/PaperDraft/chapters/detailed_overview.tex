@@ -1,0 +1,64 @@
+%\section*{Framework Overview}~\par
+Of the various hardware implementations proposed to facilitate quantum computation, superconducting qubits have been gaining traction and popularity, as these systems benefit from solid state material implementations, and can leverage pre-existing research and tools surrounding planar electronic fabrication techniques.
+
+To perform quantum computation with superconducting quantum circuitry, the entire system must be cooled to far below typical critical temperature for superconducting metals, so as to reduce external environment interference with the quantum device as much as possible. Dilution refrigerators are the current technology of choice required to perform this cooling, which presents a novel set of design constraints concerning electronic control system integration in such a system.
+
+Typical dilution refrigerators cool materials in stages, proceeding from room temperature, to several intermediate stages, ultimately resulting in a small zone that arrives at the desired temperature. The temperature regions typically accessed along the cooling path are described in \hyperref[fig:fridge]{Figure 1} and ultimately utilize regions cooled to approximately 100K, 4K, along with a final region at the target 20mK temperature. 
+
+\begin{figure}[h]
+  \centering
+	\includegraphics[width=\linewidth]{Figures/model_BF_LD_1.png}
+	\caption{Dilution Refrigerator Schematic}
+	\label{fig:fridge}
+\end{figure}
+
+In such a system, wiring control signals to the supercooled quantum processor presents a series of design constraints. Namely, wiring the quantum processor to room temperature control electronics subjects the system to large thermal loads, difficult isolation from interference, large latency penalties, and lack of scalable compactness . To address these issues, classical control units can be located at one (or more) temperature level(s) of dilution refrigerator-based superconducting quantum computers. In moving to a system architecture involving internal classical control hardware, a series of tradeoffs is presented involving thermal computation costs and hardware constraints governing memory construction. 
+
+\subsection{Dilution Refrigerator Constraints}
+
+The architecture of a dilution refrigerator being considered is a multi-stage cooling apparatus, using liquid nitrogen and liquid helium. Of interest right now are two characteristics: cooling capacity of temperature stages and latency of microwave links crossing these thermal boundaries. Using information from the specifications of a typical refrigerator (BlueFors XLD), these temperature levels and cooling capacities are shown in Table \ref{t1}.
+
+\begin{table}[h]
+	\centering
+    \begin{tabular}{|c|c|c|}
+    \hline
+    Temperature Zone& Capacity & Power Overhead \\\hline
+	45K & 40W & 10X\\
+	4K & 1.5W & 200X\\
+	120mK & 600$\mu$W&\\
+	100mK & 400$\mu$W&\\
+	20mK & 14 $\mu$W & 50,000X\\
+    \hline
+    \end{tabular}
+    \caption{Temperature Levels and Cooling Capacities}\label{t1}
+\end{table}
+
+Additionally, there is a range of latencies introduced in passing microwave links through temperature interfaces. These seem to vary between 1-10ns approximately, growing longer as the gap widens between the target temperatures of the stages being crossed.
+
+\subsection{Hardware Characteristics}
+
+There are three primary types of hardware under consideration:
+\begin{itemize}
+	\item RSFQ: Rapid Single Flux Quantum
+	\item RQL: Reciprocal Quantum Logic
+	\item CryoCMOS: Cryogenic CMOS
+\end{itemize}
+Each of these is characterized by a different energy usage to logic gate relationship. These values are typically characterized similarly to Table \ref{t2}.
+\begin{table}[h]
+	\centering
+	\begin{tabular}{|c|c|}
+	\hline
+	Hardware Type & Energy Required Per Gate (Joules) \\ \hline
+	RSFQ & $10^{-19}$ \\ \hline
+	RQL & $10^{-19}$ \\ \hline
+	CryoCMOS & $10^{-15}$ \\
+	\hline
+	\end{tabular}
+	\caption{Hardware Types and Energy Consumed Per Gate}\label{t2}
+\end{table}
+
+It is also important to consider power consumption of memory systems under these types of conditions. Here, we will analyze power usage of cryogenic CMOS memory devices, and consider implementations of cryogenic persistent memory systems. Persistent memory could potentially be useful in applications that rely upon a precomputed library of rotation decompositions, as memory may only need to be read only for long periods of computation. The qualification is that different applications often require different levels of precision in rotation decompositions, so these databases would potentially need to be changed between apps.
+
+\subsection{Classical Control Unit}
+
+An accurate model of a classical control system for a superconducting quantum processor contained within a dilution refrigerator is that of an instruction cache that requests code modules contained within an external memory. Code modules are compressed, transmitted to the microcontroller, decompressed and executed.  

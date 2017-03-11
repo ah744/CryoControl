@@ -26,6 +26,7 @@ struct CryoCache {
     int numRecompressions;
     int numHits;
     int numMisses;
+	int numEvictions;
     vector<string> vectCalls;
     vector<string> victimList;
     deque<string> cacheContents;
@@ -34,7 +35,7 @@ struct CryoCache {
     map<string,int> modSizes;
 	map<string,int> decompressionMap;
 	map<string,int> decompressionRequirementsMap;
-    CryoCache():capacity(1024),associativity("full"),eviction("FIFO"),used_memory(0),numHits(0),numMisses(0),numDecompressions(0),numRecompressions(0) { }
+    CryoCache():capacity(1024),associativity("full"),eviction("FIFO"),used_memory(0),numHits(0),numMisses(0),numEvictions(0),numDecompressions(0),numRecompressions(0) { }
 };
 
 void initializeCache(CryoCache& cache, int input_cap, char* input_associativity, char* input_eviction){
@@ -191,8 +192,10 @@ void evict_NextUse(CryoCache& cache, int currentIndex){
 			int victimSize = cache.modSizes.find(victim)->second;
 			cache.cacheContents.erase(remove(cache.cacheContents.begin(),cache.cacheContents.end(),victim),cache.cacheContents.end());
 			cache.used_memory -= victimSize;
+			cache.numEvictions++;
 			if (debugCacheSim) {
 				cout << "Evicted: " << victim << endl;
+				cout << "Num Evictions: " << cache.numEvictions << endl;
 			}
 		}
 //        for(deque<string>::iterator it = cache.cacheContents.begin(); it != cache.cacheContents.end();it++){
@@ -383,7 +386,7 @@ void runCache_Optimal(CryoCache& cache){
     }
     if (debugCacheSim){
         for(map<string,int>::iterator it = cache.callFrequency.begin(); it != cache.callFrequency.end(); ++it){
-            cout << it-> first << ":" << it->second << endl;
+//            cout << it-> first << ":" << it->second << endl;
         }
     }
 }
@@ -400,6 +403,7 @@ void printStatistics(CryoCache cache, const char* benchName, int workflowIntegra
         cout << "Number of module recompressions: " << cache.numRecompressions << endl;
         cout << "Number of cache hits: " << cache.numHits << endl;
         cout << "Number of cache misses: " << cache.numMisses << endl;
+        cout << "Number of evictions: " << cache.numEvictions << endl;
 
 		if(debugCacheSim) {
             for(map<string,int>::iterator it = cache.decompressionMap.begin(); it!=cache.decompressionMap.end();++it){
@@ -409,11 +413,11 @@ void printStatistics(CryoCache cache, const char* benchName, int workflowIntegra
     }
     else if(workflowIntegrate == 1){ 
         cout << cache.numDecompressions << endl;
+		cout << cache.numEvictions << endl;
 		for(map<string,int>::iterator it = cache.decompressionMap.begin(); it!=cache.decompressionMap.end();++it){
     		cout << it->first << ":" << it->second << endl;
 		}
 		cout << cache.vectCalls.size() << endl;
-
     }
 }
 

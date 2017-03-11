@@ -10,8 +10,9 @@
 #include <unistd.h>
 #include "Linker.h"
 
-#define LINE_SIZE 40 //bits
-#define BLOCK_SIZE 120 //bits 
+#define LINE_SIZE 64 //bits
+#define BLOCK_SIZE 1024 //bits 
+#define ROTATION_FLAG true 
 
 using namespace std;
 
@@ -34,9 +35,28 @@ bool isIntrinsic(const string& name){
 		name == "MeasX"		||
 		name == "MeasZ"		||
 		name == "Fredkin"	||
+		name == "BEGIN_ROT"	||
+		name == "END_ROT"	||
+		name == "rot.T" 	||
+		name == "rot.Tdag" 	||
+		name == "rot.S" 	||
+		name == "rot.Sdag" 	||
+		name == "rot.H" 	||
+		name == "rot.X" 	||
+		name == "rot.Y" 	||
+		name == "rot.Z" 	||
 		name == "Rz"		)
 		return true;
 	return false;	
+}
+
+bool isBeginRotSequence(const string& name){
+	if(name == "BEGIN_ROT") return true;
+	return false;
+}
+bool isEndRotSequence(const string& name){
+	if(name == "END_ROT") return true;
+	return false;
 }
 
 inline bool file_exists (const string& name){
@@ -78,12 +98,12 @@ bool addModule(map<string,bitset<32> >* moduleOpcodes, string newModule, bitset<
 	return false;
 }
 
-void addOp(map<string,bitset<8> >* instOpcodes, string newInstruction, bitset<8>* newOp){
+void addOp(map<string,bitset<32> >* instOpcodes, string newInstruction, bitset<32>* newOp){
     if(instOpcodes->size() == 0){
 	   	instOpcodes->insert(make_pair(newInstruction, (*newOp)));
 	}
     else if(instOpcodes->find(newInstruction) == instOpcodes->end()){
-        (*newOp) = incrementBitset8(*newOp);
+        (*newOp) = decrementBitset32(*newOp);
         instOpcodes->insert(make_pair(newInstruction,(*newOp)));
     }
 	else{
@@ -100,8 +120,8 @@ void addQreg(map<string,bitset<16> >* qRegs, string qreg, bitset<16>* newReg){
 	else (*newReg) = qRegs->find(qreg)->second;
 }
     
-void printOpcodes(map<string,bitset<8> >* instOpcodes){
-    for(map<string,bitset<8> >::iterator it = instOpcodes->begin(); it != instOpcodes->end(); ++it){
+void printOpcodes(map<string,bitset<32> >* instOpcodes){
+    for(map<string,bitset<32> >::iterator it = instOpcodes->begin(); it != instOpcodes->end(); ++it){
         cout << it->first << " \t :: \t " << it->second.to_ulong() << endl;
     }
 }
@@ -112,7 +132,7 @@ void printQregs(map<string,bitset<16> >* qRegs){
     }
 }
 
-void linkInstruction(string& instructionLine, map<string,bitset<8> >* instOpcodes, map<string,bitset<16> >* qRegs, ofstream& BinaryOutput){ 
+void linkInstruction(string& instructionLine, map<string,bitset<32> >* instOpcodes, map<string,bitset<16> >* qRegs, ofstream& BinaryOutput){ 
 	if(BinaryOutput.is_open()){
 	    int timeStep;
 	    char delim;
@@ -124,7 +144,7 @@ void linkInstruction(string& instructionLine, map<string,bitset<8> >* instOpcode
 	    string qreg3;
 	    bool cnotInst = false;
 	    bool toffInst = false;
-	    bitset<8> newOp(0ul);
+	    bitset<32> newOp(0ul);
 	    bitset<16> newqreg1(0ul);
 		vector<bitset<16> > newqregs;
 	    int dest;
@@ -155,46 +175,96 @@ void linkInstruction(string& instructionLine, map<string,bitset<8> >* instOpcode
 	}
 }
 
-void linkModule(string& moduleName, map<string,bitset<32> >* moduleOpcodes, map<string,bitset<8> >* instOpcodes, map<string,bitset<16> >* qRegs, vector<string>& moduleCalls, bitset<32>* newModuleCode, ofstream& callStack){ 
+void linkRotationInstruction(string& instruction, map<string,bitset<32> >* instOpcodes, ofstream& moduleOutputFile){
+	if(moduleOutputFile.is_open()){
+		int timeStep;
+		char delim;
+		int simdRegion;
+		string instruction;
+	    bitset<32> newOp(0ul);
+		istringstream ss(instruction);
+		ss >> timeStep >> delim >> simdRegion >> instruction;
+	    addOp(instOpcodes, instruction, &newOp);
+	    unsigned long op = instOpcodes->find(instruction)->second.to_ulong();
+	    unsigned char opcode = static_cast<unsigned char>(op);
+	    moduleOutputFile.write((char*) &opcode, sizeof(opcode));
+	}
+	else exit(1);
+}
+
+void linkModule(string& moduleName, map<string,bitset<32> >* moduleOpcodes, map<string,bitset<32> >* instOpcodes, map<string,bitset<16> >* qRegs, vector<string>& moduleCalls, bitset<32>* newModuleCode, ofstream& callStack, bool newModule, bool rotationFlag){ 
 	ifstream moduleFile(moduleName.c_str());
-	string moduleOutputFilename = moduleName + ".bin";
-	//TODO add module naming here, spliced by block size
-	ofstream moduleOutputFile(moduleOutputFilename.c_str(), ios::out | ios::app);
-	int pc = 1;
-	if(moduleFile.is_open() && moduleOutputFile.is_open()){
+	int numLines = BLOCK_SIZE/LINE_SIZE;
+	int moduleBlockNumber = 0;
+	int terminate = 0;
+	bool newMod = false;
+	int lineNumber = 0;
+	if(moduleFile.is_open()){
 		int ts,simd;
 		char delim;
+		int index; 
 		string instruction;
 		string line;
+		callStack << moduleBlockNumber << "-" << moduleName<< "\n";
 		while(getline(moduleFile,line)){
-	    	istringstream ss(line);
-	    	ss >> ts >> delim >> simd >> instruction;
-			if(!(isIntrinsic(instruction))){
-				callStack << pc++ << "-" << moduleName<< "\n";
-	    		if(addModule(moduleOpcodes, instruction, newModuleCode)){
-					linkModule(instruction, moduleOpcodes, instOpcodes, qRegs, moduleCalls, newModuleCode, callStack);
+			string moduleOutputFilename = to_string(moduleBlockNumber) + "-" + moduleName + ".bin";
+			ofstream moduleOutputFile(moduleOutputFilename.c_str(), ios::out | ios::binary | ios::app);
+			if(moduleOutputFile.is_open()){
+	    		istringstream ss(line);
+	    		ss >> ts >> delim >> simd >> instruction;
+				if(!(isIntrinsic(instruction))){
+	    			newMod = addModule(moduleOpcodes, instruction, newModuleCode);
+					linkModule(instruction, moduleOpcodes, instOpcodes, qRegs, moduleCalls, newModuleCode, callStack, newMod, rotationFlag);
+					if(newModule) moduleOutputFile.write((char*) newModuleCode, sizeof(*newModuleCode));
+					callStack << moduleBlockNumber << "-" << moduleName<< "\n";
+		   		}
+				else if(rotationFlag && instruction.find("rot.") != std::string::npos){
+					callStack << "Found rot inst \n";
+					linkRotationInstruction(line, instOpcodes, moduleOutputFile);
+				}	
+/*				else if(isBeginRotSequence(instruction) && rotationFlag){
+					linkInstruction(line, instOpcodes, qRegs, moduleOutputFile);
+					terminate++;
+					while(terminate != 0){
+						if(getline(moduleFile,line)){
+	    					istringstream ss(line);
+	    					ss >> ts >> delim >> simd >> instruction;
+							if(instruction == "END_ROT"){
+								terminate--;
+								linkInstruction(line, instOpcodes, qRegs, moduleOutputFile);
+							}
+							else{
+								linkRotationInstruction(line, instOpcodes, moduleOutputFile); 
+							}
+						}
+					}
+				}*/
+				else if(newModule){
+					linkInstruction(line, instOpcodes, qRegs, moduleOutputFile);
 				}
-				moduleOutputFile.write((char*) newModuleCode, sizeof(*newModuleCode));
-
-		   	}
-			else{
-				linkInstruction(line, instOpcodes, qRegs, moduleOutputFile);
+			}
+			moduleOutputFile.close();
+			lineNumber++;
+			int lastBlock = moduleBlockNumber;
+			moduleBlockNumber = lineNumber/numLines;
+			if(lastBlock != moduleBlockNumber){
+				callStack << moduleBlockNumber << "-" << moduleName << "\n";
 			}
 		}
-		callStack << pc << "-" << moduleName<< "\n";
 	}
 	moduleFile.close();
 }
 
 int main( int argc, char* argv[] ){
     map<string, bitset<32> >* moduleCodes = new map<string, bitset<32> >;
-    map<string, bitset<8> >* instOpcodes = new map<string, bitset<8> >;
+    map<string, bitset<32> >* instOpcodes = new map<string, bitset<32> >;
     map<string, bitset<16> >* qRegs = new map<string,bitset<16> >;
     vector<string> moduleCalls;
     bitset<32> newModuleCode = (4294967295ul);
 	string main = "main";
 	ofstream callStackFile ("main.calls.txt", ios::out | ios::app);
-	linkModule(main, moduleCodes, instOpcodes, qRegs, moduleCalls, &newModuleCode, callStackFile);
+	linkModule(main, moduleCodes, instOpcodes, qRegs, moduleCalls, &newModuleCode, callStackFile, true, ROTATION_FLAG);
+	callStackFile.close();
     if(debugLinker){
         printOpcodes(instOpcodes);
         printQregs(qRegs);

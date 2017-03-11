@@ -24,6 +24,9 @@ absScriptsDir = os.path.abspath(os.getcwd())
 baseDir = "/Users/Adam/Research/CryoControl/"
 
 fullPathInput = str(sys.argv[1])
+fullPathInputSplit = fullPathInput.split('/')
+algInputFile = baseDir + '/'.join(fullPathInputSplit[1:]) + 'lpfs'
+inliningInfoFile = baseDir + '/'.join(fullPathInputSplit[1:-1]) + '/inlined.out'
 cacheCap = 0
 if len(sys.argv) == 3:
     cacheCap = int(sys.argv[2])
@@ -49,7 +52,7 @@ if benchName == "full_suite":
     exit(1)
 
 print "------------Cryogenic Control Module Cache Simulator---------------"
-compressionAlgorithm = "scz"
+compressionAlgorithm = "gzip"
 
 print "Running: " + benchName
 print "[ccs][0]: Performing Module Extraction"
@@ -168,37 +171,36 @@ def compress_decompress(compressionAlgorithm,switch):
 				memoryUsageStatistics[filename] = mem_used
 				compressionStatistics[filename] = cpu_time			
 	return [compressionStatistics,memoryUsageStatistics]
-
-print "Compressing..."
-compress_decompress("bzip2","compress")
-compress_decompress("scz","compress")
-compress_decompress("zip","compress")
-compress_decompress("tar","compress")
-compress_decompress("gzip","compress")
-print "Decompressing..."
-compressionStatisticsBZIP2 = compress_decompress("bzip2","decompress")[0]
-compressionStatisticsSCZ = compress_decompress("scz","decompress")[0]
-compressionStatisticsZIP = compress_decompress("zip","decompress")[0]
-compressionStatisticsTAR = compress_decompress("tar","decompress")[0]
-compressionStatisticsGZIP = compress_decompress("gzip","decompress")[0]
-
-print "Collecting Statistics..."
-memoryUsageStatisticsBZIP2 = compress_decompress("bzip2","decompress")[1]
-memoryUsageStatisticsSCZ = compress_decompress("scz","decompress")[1]
-memoryUsageStatisticsZIP = compress_decompress("zip","decompress")[1]
-memoryUsageStatisticsTAR = compress_decompress("tar","decompress")[1]
-memoryUsageStatisticsGZIP = compress_decompress("gzip","decompress")[1]
-
-memoryUsageMax = []
-memoryUsageMax.append(numpy.amax(memoryUsageStatisticsBZIP2.values()))
-memoryUsageMax.append(numpy.amax(memoryUsageStatisticsSCZ.values()))
-memoryUsageMax.append(numpy.amax(memoryUsageStatisticsZIP.values()))
-memoryUsageMax.append(numpy.amax(memoryUsageStatisticsTAR.values()))
-memoryUsageMax.append(numpy.amax(memoryUsageStatisticsGZIP.values()))
-
-subprocess.call(['touch', "linkercomplete"])
-
-
+#
+if not os.path.isfile("compressioncomplete"):
+	print "Compressing..."
+	#compress_decompress("bzip2","compress")
+	#compress_decompress("scz","compress")
+	#compress_decompress("zip","compress")
+	#compress_decompress("tar","compress")
+	#compress_decompress("gzip","compress")
+	print "Decompressing..."
+	#compressionStatisticsBZIP2 = compress_decompress("bzip2","decompress")[0]
+	#compressionStatisticsSCZ = compress_decompress("scz","decompress")[0]
+	#compressionStatisticsZIP = compress_decompress("zip","decompress")[0]
+	#compressionStatisticsTAR = compress_decompress("tar","decompress")[0]
+	#compressionStatisticsGZIP = compress_decompress("gzip","decompress")[0]
+	#
+	print "Collecting Statistics..."
+	#memoryUsageStatisticsBZIP2 = compress_decompress("bzip2","decompress")[1]
+	#memoryUsageStatisticsSCZ = compress_decompress("scz","decompress")[1]
+	#memoryUsageStatisticsZIP = compress_decompress("zip","decompress")[1]
+	#memoryUsageStatisticsTAR = compress_decompress("tar","decompress")[1]
+	#memoryUsageStatisticsGZIP = compress_decompress("gzip","decompress")[1]
+	#
+	#memoryUsageMax = []
+	#memoryUsageMax.append(numpy.amax(memoryUsageStatisticsBZIP2.values()))
+	#memoryUsageMax.append(numpy.amax(memoryUsageStatisticsSCZ.values()))
+	#memoryUsageMax.append(numpy.amax(memoryUsageStatisticsZIP.values()))
+	#memoryUsageMax.append(numpy.amax(memoryUsageStatisticsTAR.values()))
+	#memoryUsageMax.append(numpy.amax(memoryUsageStatisticsGZIP.values()))
+	#
+	subprocess.call(['touch', "compressioncomplete"])
 print "[ccs][2]: Module Compression Complete"
 
 
@@ -216,13 +218,13 @@ sumCompressedModules = 0
 sumCompressedLeaves = 0
 
 for file in os.listdir(os.getcwd()):
-	if file.endswith(".bin"):
+	if file[0].isdigit() and file.endswith(".bin"):
 		sumDecompressedModules += os.path.getsize(file)
 		trueFileName = file[0:-4]
 		filesizes_decompressed[file] = os.path.getsize(file)
 		outputFile.write(trueFileName + " " + str(os.path.getsize(file)) + "\n")
 for file in os.listdir(os.getcwd()):
-	if file.endswith(compressionAlgorithm):
+	if file[0].isdigit() and file.endswith(compressionAlgorithm):
 		sumCompressedModules += os.path.getsize(file)
 		sumCompressedLeaves += os.path.getsize(file)
 		filesizes_compressed[file] = os.path.getsize(file)
@@ -238,10 +240,10 @@ sizesFile.close()
 callStackFileName = benchName + "calls.txt"
 subprocess.call(['mv', 'main.calls.txt', callStackFileName])
 
-with open(str(benchName + 'decomp.sizes.txt'), 'w') as decompSizesFile:
-	for item in memoryUsageStatisticsGZIP:
-			decompSizesFile.write(item[:-4] + " " + str(memoryUsageStatisticsGZIP[item]) + "\n")	
-decompSizesFile.close()
+#with open(str(benchName + 'decomp.sizes.txt'), 'w') as decompSizesFile:
+#	for item in memoryUsageStatisticsGZIP:
+#			decompSizesFile.write(item[:-4] + " " + str(memoryUsageStatisticsGZIP[item]) + "\n")	
+#decompSizesFile.close()
 
 print "[ccs][3]: Simulator Inputs Prepared"
 print "[ccs][4]: Preparing Data Ranges"
@@ -251,19 +253,24 @@ sorted_filesizes_decompressed = sorted(filesizes_decompressed.items(), key=opera
 ordered_filesizes_decompressed = []
 for pair in reversed(sorted_filesizes_decompressed):
     ordered_filesizes_decompressed.append(pair)
-largestModuleSize = ordered_filesizes_decompressed[0][1]
-secondLargestModuleSize = largestModuleSize 
-smallestModuleSize = largestModuleSize
-if len(ordered_filesizes_decompressed) > 1:
-    secondLargestModuleSize = ordered_filesizes_decompressed[1][1]
-    smallestModuleSize = sorted_filesizes_decompressed[0][1]
+#largestModuleSize = ordered_filesizes_decompressed[0][1]
+#secondLargestModuleSize = largestModuleSize 
+#smallestModuleSize = largestModuleSize
+#if len(ordered_filesizes_decompressed) > 1:
+#    secondLargestModuleSize = ordered_filesizes_decompressed[1][1]
+#    smallestModuleSize = sorted_filesizes_decompressed[0][1]
 
-hp.figplot(benchName, ordered_filesizes_decompressed)
+#hp.figplot(benchName, ordered_filesizes_decompressed)
 
 ranges = []
-for x in range(1,7,1):
-	print x
-	ranges.append(1024*2**x)
+#ranges.append(64)
+#ranges.append(128)
+#ranges.append(256)
+#ranges.append(512)
+ranges.append(1024)
+ranges.append(2048)
+#ranges.append(3000000)
+#ranges.append(sumDecompressedModules)
 #ranges.append(largestModuleSize)
 #if cacheCap == 0 and len(ordered_filesizes_decompressed) > 1:
 #	ranges.append(smallestModuleSize)
@@ -303,6 +310,7 @@ print "[ccs][4]: Data Ranges Prepared"
 print "[ccs][5]: Performing Simulation"
 
 compData = {}
+evictData = {}
 cpuDataBZIP2 = [] 
 cpuDataSCZ = [] 
 cpuDataZIP = [] 
@@ -333,104 +341,125 @@ print ranges
 numDistinctModules = len(ordered_filesizes_decompressed)
 totalModules = 0
 
-for capacity in ranges:
-	print "\tSimulating Capacity: " + str(capacity)
-	output =  subprocess.check_output([scriptsDir + binDir + 'cachesim', str(capacity), 'full', 'FIFO', benchName, '1', '1'])
-	outputSplit = output.split("\n")
-	compData[capacity] = outputSplit[0] 
-        totalModules = outputSplit[-2]
-	outputSplit = outputSplit[1:-2]
-	for item in outputSplit:
-		itemSplit = item.split(":")
-		moduleName = itemSplit[0] + ".bin"
-		numberOfDecompressions = int(itemSplit[1])
+#for capacity in ranges:
+#	print "\tSimulating Capacity: " + str(capacity)
+#	output =  subprocess.check_output([scriptsDir + binDir + 'cachesim', str(capacity), 'full', 'FIFO', benchName, '1', '1'])
+#	outputSplit = output.split("\n")
+#	compData[capacity] = outputSplit[0] 
+#	evictData[capacity] = outputSplit[1]
+#	totalModules = outputSplit[-2]
+#	print outputSplit[0]
+#	print totalModules
+#	outputSplit = outputSplit[2:-2]
+#	for item in outputSplit[:-1]:
+#		itemSplit = item.split(":")
+#		moduleName = itemSplit[0] + ".bin"
+#		numberOfDecompressions = int(itemSplit[1])
 
-		compressionUsageBZIP2 = compressionStatisticsBZIP2[moduleName]
-		compressionUsageSCZ = compressionStatisticsSCZ[moduleName]
-		compressionUsageZIP = compressionStatisticsZIP[moduleName]
-		compressionUsageTAR = compressionStatisticsTAR[moduleName]
-		compressionUsageGZIP = compressionStatisticsGZIP[moduleName]
+		#compressionUsageBZIP2 = compressionStatisticsBZIP2[moduleName]
+		#compressionUsageSCZ = compressionStatisticsSCZ[moduleName]
+		#compressionUsageZIP = compressionStatisticsZIP[moduleName]
+		#compressionUsageTAR = compressionStatisticsTAR[moduleName]
+		#compressionUsageGZIP = compressionStatisticsGZIP[moduleName]
 
-		total_cpu_usage_bzip2 += (numberOfDecompressions * compressionUsageBZIP2)
-		total_cpu_usage_scz += (numberOfDecompressions * compressionUsageSCZ)
-		total_cpu_usage_zip += (numberOfDecompressions * compressionUsageZIP)
-		total_cpu_usage_tar += (numberOfDecompressions * compressionUsageTAR)
-		total_cpu_usage_gzip += (numberOfDecompressions * compressionUsageGZIP)
+		#total_cpu_usage_bzip2 += (numberOfDecompressions * compressionUsageBZIP2)
+		#total_cpu_usage_scz += (numberOfDecompressions * compressionUsageSCZ)
+		#total_cpu_usage_zip += (numberOfDecompressions * compressionUsageZIP)
+		#total_cpu_usage_tar += (numberOfDecompressions * compressionUsageTAR)
+		#total_cpu_usage_gzip += (numberOfDecompressions * compressionUsageGZIP)
 
-		memoryUsageBZIP2 = memoryUsageStatisticsBZIP2[moduleName]
-		memoryUsageSCZ = memoryUsageStatisticsSCZ[moduleName]
-		memoryUsageZIP = memoryUsageStatisticsZIP[moduleName]
-		memoryUsageTAR = memoryUsageStatisticsTAR[moduleName]
-		memoryUsageGZIP = memoryUsageStatisticsGZIP[moduleName]
+		#memoryUsageBZIP2 = memoryUsageStatisticsBZIP2[moduleName]
+		#memoryUsageSCZ = memoryUsageStatisticsSCZ[moduleName]
+		#memoryUsageZIP = memoryUsageStatisticsZIP[moduleName]
+		#memoryUsageTAR = memoryUsageStatisticsTAR[moduleName]
+		#memoryUsageGZIP = memoryUsageStatisticsGZIP[moduleName]
 
-		total_mem_usage_bzip2 += (numberOfDecompressions * memoryUsageBZIP2)
-		total_mem_usage_scz += (numberOfDecompressions * memoryUsageSCZ)
-		total_mem_usage_zip += (numberOfDecompressions * memoryUsageZIP)
-		total_mem_usage_tar += (numberOfDecompressions * memoryUsageTAR)
-		total_mem_usage_gzip += (numberOfDecompressions * memoryUsageGZIP)
+		#total_mem_usage_bzip2 += (numberOfDecompressions * memoryUsageBZIP2)
+		#total_mem_usage_scz += (numberOfDecompressions * memoryUsageSCZ)
+		#total_mem_usage_zip += (numberOfDecompressions * memoryUsageZIP)
+		#total_mem_usage_tar += (numberOfDecompressions * memoryUsageTAR)
+		#total_mem_usage_gzip += (numberOfDecompressions * memoryUsageGZIP)
 
-	cpuDataBZIP2.append(total_cpu_usage_bzip2)
-	cpuDataSCZ.append(total_cpu_usage_scz)
-	cpuDataZIP.append(total_cpu_usage_zip)
-	cpuDataTAR.append(total_cpu_usage_tar)
-	cpuDataGZIP.append(total_cpu_usage_gzip)
+	#cpuDataBZIP2.append(total_cpu_usage_bzip2)
+	#cpuDataSCZ.append(total_cpu_usage_scz)
+	#cpuDataZIP.append(total_cpu_usage_zip)
+	#cpuDataTAR.append(total_cpu_usage_tar)
+	#cpuDataGZIP.append(total_cpu_usage_gzip)
 
-	total_cpu_usage_bzip2 = 0
-	total_cpu_usage_scz = 0
-	total_cpu_usage_zip = 0
-	total_cpu_usage_tar = 0
-	total_cpu_usage_gzip = 0
+	#total_cpu_usage_bzip2 = 0
+	#total_cpu_usage_scz = 0
+	#total_cpu_usage_zip = 0
+	#total_cpu_usage_tar = 0
+	#total_cpu_usage_gzip = 0
 
-	memDataBZIP2.append(total_mem_usage_bzip2)
-	memDataSCZ.append(total_mem_usage_scz)
-	memDataZIP.append(total_mem_usage_zip)
-	memDataTAR.append(total_mem_usage_tar)
-	memDataGZIP.append(total_mem_usage_gzip)
+	#memDataBZIP2.append(total_mem_usage_bzip2)
+	#memDataSCZ.append(total_mem_usage_scz)
+	#memDataZIP.append(total_mem_usage_zip)
+	#memDataTAR.append(total_mem_usage_tar)
+	#memDataGZIP.append(total_mem_usage_gzip)
 
-	total_mem_usage_bzip2 = 0
-	total_mem_usage_scz = 0
-	total_mem_usage_zip = 0
-	total_mem_usage_tar = 0
-	total_mem_usage_gzip = 0
+	#total_mem_usage_bzip2 = 0
+	#total_mem_usage_scz = 0
+	#total_mem_usage_zip = 0
+	#total_mem_usage_tar = 0
+	#total_mem_usage_gzip = 0
 
 print "[ccs][5]: Simulation Complete"
 print "[ccs][6]: Beginning Data Analysis"
 
+# This is for cache  simulation here
+#compData = sorted(compData.items(),key=operator.itemgetter(0))
+#evictData = sorted(evictData.items(),key=operator.itemgetter(0))
+#cpuData = []
 
-compData = sorted(compData.items(),key=operator.itemgetter(0))
-cpuData = []
-cpuData.append(cpuDataBZIP2)
-cpuData.append(cpuDataSCZ)
-cpuData.append(cpuDataZIP)
-cpuData.append(cpuDataTAR)
-cpuData.append(cpuDataGZIP)
+#cpuData.append(cpuDataBZIP2)
+#cpuData.append(cpuDataSCZ)
+#cpuData.append(cpuDataZIP)
+#cpuData.append(cpuDataTAR)
+#cpuData.append(cpuDataGZIP)
 #print compData
 
 memData = []
-memData.append(memDataBZIP2)
-memData.append(memDataSCZ)
-memData.append(memDataZIP)
-memData.append(memDataTAR)
-memData.append(memDataGZIP)
+#memData.append(memDataBZIP2)
+#memData.append(memDataSCZ)
+#memData.append(memDataZIP)
+#memData.append(memDataTAR)
+#memData.append(memDataGZIP)
 
 runtime = 0
+inlinedLines = 0
 
-with open((benchName + "results"), "w") as out, open((baseDir + "Algorithms/SHA1/HotSpot/" + benchName + "lpfs"), "r") as f:
+with open((benchName + "results"), "w") as out, open((algInputFile), "r") as f:#, open(inliningInfoFile, "r") as inlineInfo:
     for line in f:
         if line.startswith("#Num of SIMD time steps for function main : "):
             lineSplit = line.split(" ")
             runtime = int(lineSplit[-1][:-1])
-
+#	for line in inlineInfo:
+#		if line.startswith("Inlined"):
+#			lineSplit = line.split(" ")
+#			inlinedLines = int(lineSplit[-1])
+print "Runtime: " + str(runtime)
+#print "Inlined Lines: " + str(inlinedLines)
+print "Code Size: " + str(sumDecompressedModules)
+print 'Modules Run ' + str(totalModules)
+print 'Distinct Modules ' + str(numDistinctModules)
 print "[ccs][7]: Writing to csv"
 
-with open("../sha1_n1024.csv", "ab") as output:
+with open("../algs_results.csv", "ab") as output:
 	out = csv.writer(output, dialect='excel')
-	out.writerow((benchName,''))  
-	for pair in compData:
-		out.writerow((str(pair[0]),pair[1])) 
+	out.writerow((benchName , '')) 
+	#out.writerow(('Decompressions:',''))
+	#for pair in compData:
+	#	out.writerow((str(pair[0]),pair[1])) 
+	#out.writerow(('Evictions',''))
+	#for pair in evictData:
+	#	out.writerow((str(pair[0]),pair[1])) 
 	out.writerow(('Runtime', str(runtime)))
+	out.writerow(('Code Size', str(sumDecompressedModules)))
+	out.writerow(('Inlined Lines', str(inlinedLines)))
 	out.writerow(('Modules Run', str(totalModules)))
 	out.writerow(('Distinct Modules', str(numDistinctModules)))
+
 
 #print "[ccs][7]: Writing to workbook"
 #
