@@ -273,12 +273,12 @@ ranges = []
 #ranges.append(256)
 #ranges.append(512)
 # ranges specified in bytes
-ranges.append(128) # 1 block
-ranges.append(256) # 2 blocks
-ranges.append(1024) # 8 blocks
-ranges.append(2048) # 16 blocks
+#ranges.append(128) # 1 block
+#ranges.append(256) # 2 blocks
+#ranges.append(1024) # 8 blocks
+#ranges.append(2048) # 16 blocks
 ranges.append(64000) # 500 blocks <-- Largest built and tested CRYO CMOS MEM
-ranges.append(sumDecompressedModules) # full program
+#ranges.append(sumDecompressedModules) # full program
 #ranges.append(largestModuleSize)
 #if cacheCap == 0 and len(ordered_filesizes_decompressed) > 1:
 #	ranges.append(smallestModuleSize)

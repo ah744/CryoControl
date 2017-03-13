@@ -92,13 +92,20 @@ bitset<32> decrementBitset32(bitset<32> code){
     return newOp;
 }
 
-bool addModule(map<string,bitset<32> >* moduleOpcodes, string newModule, bitset<32>* newModuleCode){
+bitset<64> decrementBitset64(bitset<64> code){
+    unsigned long num = code.to_ulong();
+    num--;
+    bitset<64> newOp(num);
+    return newOp;
+}
+
+bool addModule(map<string,bitset<64> >* moduleOpcodes, string newModule, bitset<64>* newModuleCode){
     if(moduleOpcodes->size() == 0) {
 		moduleOpcodes->insert(make_pair(newModule, (*newModuleCode)));
 		return true;
 	}
     else if(moduleOpcodes->find(newModule) == moduleOpcodes->end()){
-        (*newModuleCode) = decrementBitset32(*newModuleCode);
+        (*newModuleCode) = decrementBitset64(*newModuleCode);
         moduleOpcodes->insert(make_pair(newModule,(*newModuleCode)));
 		return true;
     }
@@ -172,7 +179,7 @@ void linkInstruction(string& instructionLine, map<string,bitset<32> >* instOpcod
 	    addOp(instOpcodes, instruction, &newOp);
 	
 	    unsigned long op = instOpcodes->find(instruction)->second.to_ulong();
-	    unsigned char opcode = static_cast<unsigned char>(op);
+	    unsigned int opcode = static_cast<unsigned int>(op);
 	    BinaryOutput.write((char*) &opcode, sizeof(opcode));
 		if(qregs.size() < 2) qregs.push_back((*qregs.begin())); // Pad each line to 5 bytes for indexing
 	    for(vector<string>::iterator vit = qregs.begin(); vit != qregs.end(); vit++){
@@ -214,7 +221,7 @@ void linkRotationInstructionStats(string& line){
 	RotationInstCount++;
 }
 
-void linkModuleStats(string& moduleName, map<string,bitset<32> >* moduleOpcodes, bitset<32>* newModuleCode, ofstream& callStack, bool rotationFlag){ 
+void linkModuleStats(string& moduleName, map<string,bitset<64> >* moduleOpcodes, bitset<64>* newModuleCode, ofstream& callStack, bool rotationFlag){ 
 	ifstream moduleFile(moduleName.c_str());
 	if(moduleFile.is_open()){
 		int ts,simd;
@@ -259,7 +266,7 @@ void linkModuleStats(string& moduleName, map<string,bitset<32> >* moduleOpcodes,
 	moduleFile.close();
 }
 
-void linkModule(string& moduleName, map<string,bitset<32> >* moduleOpcodes, map<string,bitset<32> >* instOpcodes, map<string,bitset<16> >* qRegs, vector<string>& moduleCalls, bitset<32>* newModuleCode, ofstream& callStack, bool newModule, bool rotationFlag){ 
+void linkModule(string& moduleName, map<string,bitset<64> >* moduleOpcodes, map<string,bitset<32> >* instOpcodes, map<string,bitset<16> >* qRegs, vector<string>& moduleCalls, bitset<64>* newModuleCode, ofstream& callStack, bool newModule, bool rotationFlag){ 
 	ifstream moduleFile(moduleName.c_str());
 	int numLines = BLOCK_SIZE/LINE_SIZE;
 	int moduleBlockNumber = 0;
@@ -323,13 +330,13 @@ void linkModule(string& moduleName, map<string,bitset<32> >* moduleOpcodes, map<
 }
 
 int main( int argc, char* argv[] ){
-    map<string, bitset<32> >* moduleCodes = new map<string, bitset<32> >;
-    map<string, bitset<32> >* moduleCodes2 = new map<string, bitset<32> >;
+    map<string, bitset<64> >* moduleCodes = new map<string, bitset<64> >;
+    map<string, bitset<64> >* moduleCodes2 = new map<string, bitset<64> >;
     map<string, bitset<32> >* instOpcodes = new map<string, bitset<32> >;
     map<string, bitset<16> >* qRegs = new map<string,bitset<16> >;
     vector<string> moduleCalls;
-    bitset<32> newModuleCode = (4294967295ul);
-    bitset<32> newModuleCode2 = (4294967295ul);
+    bitset<64> newModuleCode = (4294967295ul);
+    bitset<64> newModuleCode2 = (4294967295ul);
 	string main = "main";
 	CodeSize = 0;
 	InstructionCount = 0;
