@@ -8,7 +8,7 @@ import resource
 import psutil
 import operator
 import csv
-import xlsxwriter as xl
+#import xlsxwriter as xl
 import matplotlib.pyplot as plt
 import FigurePlot as fp 
 import FigPlot as fplot 
@@ -21,7 +21,8 @@ if(len(sys.argv)<2):
     exit(1)
 
 absScriptsDir = os.path.abspath(os.getcwd()) 
-baseDir = "/Users/Adam/Research/CryoControl/"
+baseDir = "/home/aholmes/CryoControl/"
+#baseDir = "/home/aholmes/CryoControl/"
 
 fullPathInput = str(sys.argv[1])
 fullPathInputSplit = fullPathInput.split('/')
@@ -60,19 +61,23 @@ print "[ccs][0]: Performing Module Extraction"
 if(not os.path.exists("Algs")):
 	os.makedirs("Algs")
 os.chdir("Algs")
-newPathInput = "../" + fullPathInput
-scriptsDir = "../../"
-binDir = "bin/"
+binDir = "/home/aholmes/CryoControl/tools/bin/"
+AlgsDir = "/home/aholmes/CryoControl/Algorithms/March10/"
+algInputFile = AlgsDir + benchName + 'lpfs'
 
 if(not os.path.exists(benchName)):
     os.makedirs(benchName)
 
 os.chdir(benchName)
-newPathInput = "../" + newPathInput
 
 if not os.path.isfile("moduleextractioncomplete"):
-    subprocess.call([scriptsDir + binDir + 'moduleextraction', newPathInput])
-    moduleFilePath = scriptsDir + algsDirectory + "/" + benchName + "modules"
+    Alg = AlgsDir + benchName
+    print Alg
+    modexe = binDir + 'moduleextraction'
+    print modexe
+    subprocess.call([modexe, Alg])
+    #moduleFilePath = scriptsDir + algsDirectory + "/" + benchName + "modules"
+    moduleFilePath = AlgsDir + benchName + "modules"
     subprocess.call(['mv', moduleFilePath, "."]) 
     subprocess.call(['touch', "moduleextractioncomplete"])
 
@@ -81,7 +86,7 @@ print "[ccs][1]: Linking Leaf Modules"
 
 if not os.path.isfile("linkercomplete"):
     f = open("errs.out", "wb")
-    subprocess.call([scriptsDir + binDir + 'linker'], stdout=f)
+    subprocess.call([binDir + 'linker'], stdout=f)
     f.close()
     subprocess.call(['touch', "linkercomplete"])
 
@@ -171,7 +176,7 @@ def compress_decompress(compressionAlgorithm,switch):
 				memoryUsageStatistics[filename] = mem_used
 				compressionStatistics[filename] = cpu_time			
 	return [compressionStatistics,memoryUsageStatistics]
-#
+
 if not os.path.isfile("compressioncomplete"):
 	print "Compressing..."
 	#compress_decompress("bzip2","compress")
@@ -267,10 +272,13 @@ ranges = []
 #ranges.append(128)
 #ranges.append(256)
 #ranges.append(512)
-ranges.append(1024)
-ranges.append(2048)
-#ranges.append(3000000)
-#ranges.append(sumDecompressedModules)
+# ranges specified in bytes
+ranges.append(128) # 1 block
+ranges.append(256) # 2 blocks
+ranges.append(1024) # 8 blocks
+ranges.append(2048) # 16 blocks
+ranges.append(64000) # 500 blocks <-- Largest built and tested CRYO CMOS MEM
+ranges.append(sumDecompressedModules) # full program
 #ranges.append(largestModuleSize)
 #if cacheCap == 0 and len(ordered_filesizes_decompressed) > 1:
 #	ranges.append(smallestModuleSize)
@@ -341,20 +349,18 @@ print ranges
 numDistinctModules = len(ordered_filesizes_decompressed)
 totalModules = 0
 
-#for capacity in ranges:
-#	print "\tSimulating Capacity: " + str(capacity)
-#	output =  subprocess.check_output([scriptsDir + binDir + 'cachesim', str(capacity), 'full', 'FIFO', benchName, '1', '1'])
-#	outputSplit = output.split("\n")
-#	compData[capacity] = outputSplit[0] 
-#	evictData[capacity] = outputSplit[1]
-#	totalModules = outputSplit[-2]
-#	print outputSplit[0]
-#	print totalModules
-#	outputSplit = outputSplit[2:-2]
-#	for item in outputSplit[:-1]:
-#		itemSplit = item.split(":")
-#		moduleName = itemSplit[0] + ".bin"
-#		numberOfDecompressions = int(itemSplit[1])
+for capacity in ranges:
+	print "\tSimulating Capacity: " + str(capacity)
+	output =  subprocess.check_output([binDir + 'cachesim', str(capacity), 'full', 'FIFO', benchName, '1', '1'])
+	outputSplit = output.split("\n")
+	compData[capacity] = outputSplit[0] 
+	evictData[capacity] = outputSplit[1]
+	totalModules = outputSplit[-2]
+	outputSplit = outputSplit[2:-2]
+	for item in outputSplit[:-1]:
+		itemSplit = item.split(":")
+		moduleName = itemSplit[0] + ".bin"
+		numberOfDecompressions = int(itemSplit[1])
 
 		#compressionUsageBZIP2 = compressionStatisticsBZIP2[moduleName]
 		#compressionUsageSCZ = compressionStatisticsSCZ[moduleName]
@@ -408,8 +414,8 @@ print "[ccs][5]: Simulation Complete"
 print "[ccs][6]: Beginning Data Analysis"
 
 # This is for cache  simulation here
-#compData = sorted(compData.items(),key=operator.itemgetter(0))
-#evictData = sorted(evictData.items(),key=operator.itemgetter(0))
+compData = sorted(compData.items(),key=operator.itemgetter(0))
+evictData = sorted(evictData.items(),key=operator.itemgetter(0))
 #cpuData = []
 
 #cpuData.append(cpuDataBZIP2)
@@ -428,37 +434,45 @@ memData = []
 
 runtime = 0
 inlinedLines = 0
+codesize = 0
 
-with open((benchName + "results"), "w") as out, open((algInputFile), "r") as f:#, open(inliningInfoFile, "r") as inlineInfo:
+with open((algInputFile), "r") as f:#, open(inliningInfoFile, "r") as inlineInfo:
     for line in f:
         if line.startswith("#Num of SIMD time steps for function main : "):
             lineSplit = line.split(" ")
             runtime = int(lineSplit[-1][:-1])
+with open("codesize.txt", "r") as f:
+    for line in f:
+        lineSplit = line.split(" ")
+        if(lineSplit[1] == "bits"):
+            codesize = lineSplit[0] 
 #	for line in inlineInfo:
 #		if line.startswith("Inlined"):
 #			lineSplit = line.split(" ")
 #			inlinedLines = int(lineSplit[-1])
 print "Runtime: " + str(runtime)
 #print "Inlined Lines: " + str(inlinedLines)
-print "Code Size: " + str(sumDecompressedModules)
-print 'Modules Run ' + str(totalModules)
-print 'Distinct Modules ' + str(numDistinctModules)
+#print "Code Size: " + str(sumDecompressedModules)
+print "Code Size By Tracking: " + str(codesize) 
+print "Code Size From Simulation: " + str(sumDecompressedModules) 
 print "[ccs][7]: Writing to csv"
+print compData
 
 with open("../algs_results.csv", "ab") as output:
 	out = csv.writer(output, dialect='excel')
 	out.writerow((benchName , '')) 
-	#out.writerow(('Decompressions:',''))
-	#for pair in compData:
-	#	out.writerow((str(pair[0]),pair[1])) 
-	#out.writerow(('Evictions',''))
-	#for pair in evictData:
-	#	out.writerow((str(pair[0]),pair[1])) 
 	out.writerow(('Runtime', str(runtime)))
 	out.writerow(('Code Size', str(sumDecompressedModules)))
-	out.writerow(('Inlined Lines', str(inlinedLines)))
 	out.writerow(('Modules Run', str(totalModules)))
 	out.writerow(('Distinct Modules', str(numDistinctModules)))
+	out.writerow(('Decompressions:',''))
+	for pair in compData:
+		out.writerow((str(pair[0]),str(pair[1]))) 
+	out.writerow(('Evictions',''))
+	for pair in evictData:
+		out.writerow((str(pair[0]),str(pair[1]))) 
+#	out.writerow(('Code Size', str(sumDecompressedModules)))
+#	out.writerow(('Inlined Lines', str(inlinedLines)))
 
 
 #print "[ccs][7]: Writing to workbook"

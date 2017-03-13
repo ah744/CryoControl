@@ -7,10 +7,12 @@
 #include <bitset>
 #include <vector>
 #include <sys/stat.h>
+#include <math.h>
 #include <unistd.h>
 #include "Linker.h"
 
 #define LINE_SIZE 64 //bits
+#define LINE_SIZE_BYTES 8 //bits
 #define BLOCK_SIZE 1024 //bits 
 #define ROTATION_FLAG true 
 
@@ -20,6 +22,11 @@ bool debugLinker = false;
 
 vector<string> callStack;
 vector<string> leafModules;
+vector<string> rotationQubits;
+unsigned long long CodeSize;
+unsigned long long InstructionCount;
+unsigned long long RotationInstCount;
+
 
 bool isIntrinsic(const string& name){
 	if(name == "CNOT" 		||
@@ -192,6 +199,66 @@ void linkRotationInstruction(string& instruction, map<string,bitset<32> >* instO
 	else exit(1);
 }
 
+void linkRotationInstructionStats(string& line){
+	int timeStep;
+	char delim;
+	int simdRegion;
+	string qubit;
+	string instruction;
+	bitset<32> newOp(0ul);
+	istringstream ss(line);
+	ss >> timeStep >> delim >> simdRegion >> instruction >> qubit;
+	if(std::find(rotationQubits.begin(), rotationQubits.end(), qubit) != rotationQubits.end()){
+		rotationQubits.push_back(qubit);
+	}
+	RotationInstCount++;
+}
+
+void linkModuleStats(string& moduleName, map<string,bitset<32> >* moduleOpcodes, bitset<32>* newModuleCode, ofstream& callStack, bool rotationFlag){ 
+	ifstream moduleFile(moduleName.c_str());
+	if(moduleFile.is_open()){
+		int ts,simd;
+		char delim;
+		int index; 
+		bool newMod = false;
+		string instruction;
+		string line;
+		callStack << moduleName<< "\n";
+		while(getline(moduleFile,line)){
+	    	istringstream ss(line);
+	    	ss >> ts >> delim >> simd >> instruction;
+			if(!(isIntrinsic(instruction))) {
+				CodeSize += LINE_SIZE_BYTES;
+				InstructionCount++;
+				newMod = addModule(moduleOpcodes, instruction, newModuleCode);
+				if(newMod) linkModuleStats(instruction, moduleOpcodes, newModuleCode, callStack, rotationFlag);
+				else callStack << instruction << "\n";
+				callStack << moduleName << "\n";
+			}
+			else if(rotationFlag && instruction.find("BEGIN_ROT") != std::string::npos){
+				CodeSize += LINE_SIZE_BYTES;
+				InstructionCount++;
+				while(getline(moduleFile, line) && line.find("END_ROT") == std::string::npos){
+					linkRotationInstructionStats(line);
+				}
+				if(instruction.find("END_ROT") == std::string::npos){
+					CodeSize += LINE_SIZE_BYTES;
+					InstructionCount++;
+					int numQubits = rotationQubits.size();
+					double numBits = ceil(log2(numQubits));
+					CodeSize += (32 + numBits) * RotationInstCount;
+					return;
+				}
+			}
+			else {
+				CodeSize += LINE_SIZE_BYTES;
+				InstructionCount++;	
+			}
+		}
+	}
+	moduleFile.close();
+}
+
 void linkModule(string& moduleName, map<string,bitset<32> >* moduleOpcodes, map<string,bitset<32> >* instOpcodes, map<string,bitset<16> >* qRegs, vector<string>& moduleCalls, bitset<32>* newModuleCode, ofstream& callStack, bool newModule, bool rotationFlag){ 
 	ifstream moduleFile(moduleName.c_str());
 	int numLines = BLOCK_SIZE/LINE_SIZE;
@@ -257,13 +324,23 @@ void linkModule(string& moduleName, map<string,bitset<32> >* moduleOpcodes, map<
 
 int main( int argc, char* argv[] ){
     map<string, bitset<32> >* moduleCodes = new map<string, bitset<32> >;
+    map<string, bitset<32> >* moduleCodes2 = new map<string, bitset<32> >;
     map<string, bitset<32> >* instOpcodes = new map<string, bitset<32> >;
     map<string, bitset<16> >* qRegs = new map<string,bitset<16> >;
     vector<string> moduleCalls;
     bitset<32> newModuleCode = (4294967295ul);
+    bitset<32> newModuleCode2 = (4294967295ul);
 	string main = "main";
+	CodeSize = 0;
+	InstructionCount = 0;
 	ofstream callStackFile ("main.calls.txt", ios::out | ios::app);
+	ofstream callStackFile2 ("main.stats.txt", ios::out | ios::app);
+	ofstream codeSize ("codesize.txt", ios::out | ios::app);
 	linkModule(main, moduleCodes, instOpcodes, qRegs, moduleCalls, &newModuleCode, callStackFile, true, ROTATION_FLAG);
+	linkModuleStats(main, moduleCodes2, &newModuleCode2, callStackFile2, ROTATION_FLAG);
+	codeSize << CodeSize << " bytes \n";
+	codeSize << InstructionCount << " instructions\n";
+	codeSize.close();
 	callStackFile.close();
     if(debugLinker){
         printOpcodes(instOpcodes);

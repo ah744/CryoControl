@@ -8,6 +8,7 @@
 #include <deque>
 #include <string>
 #include <bitset>
+#include <limits.h>
 #include <math.h>
 #include <sys/stat.h>
 #include <unistd.h>
