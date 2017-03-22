@@ -61,8 +61,11 @@ print "[ccs][0]: Performing Module Extraction"
 if(not os.path.exists("Algs")):
 	os.makedirs("Algs")
 os.chdir("Algs")
-binDir = "/home/aholmes/CryoControl/tools/bin/"
-AlgsDir = "/home/aholmes/CryoControl/Algorithms/March10/"
+#binDir = "/home/aholmes/CryoControl/tools/bin/"
+#AlgsDir = "/home/aholmes/CryoControl/Algorithms/RebuildStructure/"
+binDir = "/Users/Adam/Research/CryoControl/tools/bin/"
+AlgsDir = "/Users/Adam/Research/CryoControl/Algorithms/RebuildStructure/"
+
 algInputFile = AlgsDir + benchName + 'lpfs'
 
 if(not os.path.exists(benchName)):

@@ -22,16 +22,27 @@ void readModuleFile(ifstream& inputs, vector<string>& modules, bool isCG){
                 string func;
                 istringstream s(line);
                 s >> func >> ModuleName;
+				cout << "Found module: " << ModuleName.c_str() << "\n";
                 addToModules(modules,ModuleName);
-                ofstream outputModule (ModuleName.c_str());
+                ofstream outputModule;
+				outputModule.open(ModuleName.c_str());
                 if(outputModule.is_open()){
+					cout << "Opened new module file\n";
                     string newLine = " ";
 					getline(inputs,newLine);
                         while(getline(inputs,newLine) && !(newLine.empty())){
-                            if(newLine.find("LPFS") == std::string::npos) outputModule << newLine << endl;
+                            if((newLine.find("LPFS") == std::string::npos) && 
+							  (newLine.find("Num") == std::string::npos)){
+								outputModule << newLine << endl;
+								cout << "\tWriting to module file\n";
+							}
                         }
+                	outputModule.close();
+					cout << "Closed module file\n";
                 }
-                outputModule.close();
+				else{
+					cout << "Error: Could not open module output file\n";
+				}
             }
         }
     }
@@ -49,11 +60,11 @@ int main(int argc, char* argv[]){
     ifstream inputs_cg (benchLPFSName.c_str()); 
     vector<string> moduleList;
     readModuleFile(inputs_cg,moduleList,true);
+//    inputs_cg.close();
+//    ifstream inputs_lpfs (benchLPFSName.c_str());
+//    readModuleFile(inputs_lpfs,moduleList,false);
     inputs_cg.close();
-    ifstream inputs_lpfs (benchLPFSName.c_str());
-    readModuleFile(inputs_lpfs,moduleList,false);
-    inputs_cg.close();
-    inputs_lpfs.close();
+//    inputs_lpfs.close();
     string benchOutputName = benchName + "modules";
     ofstream output (benchOutputName.c_str());
     if(output.is_open()){

@@ -345,6 +345,7 @@ int main( int argc, char* argv[] ){
 	ofstream codeSize ("codesize.txt", ios::out | ios::app);
 	linkModule(main, moduleCodes, instOpcodes, qRegs, moduleCalls, &newModuleCode, callStackFile, true, ROTATION_FLAG);
 	linkModuleStats(main, moduleCodes2, &newModuleCode2, callStackFile2, ROTATION_FLAG);
+	cout << "Writing to codeSize: " << CodeSize << " bytes\n";
 	codeSize << CodeSize << " bytes \n";
 	codeSize << InstructionCount << " instructions\n";
 	codeSize.close();
