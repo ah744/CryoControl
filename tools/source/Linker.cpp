@@ -20,7 +20,6 @@ using namespace std;
 
 bool debugLinker = false;
 
-vector<string> callStack;
 vector<string> leafModules;
 vector<string> rotationQubits;
 unsigned long long CodeSize;
@@ -52,6 +51,9 @@ bool isIntrinsic(const string& name){
 		name == "rot.X" 	||
 		name == "rot.Y" 	||
 		name == "rot.Z" 	||
+		name == "rot.Z" 	||
+		(name.find("llvmv")!=string::npos) || 
+		(name.find("llvm.")!=string::npos) || 
 		name == "Rz"		)
 		return true;
 	return false;	
@@ -170,6 +172,7 @@ void linkInstruction(string& instructionLine, map<string,bitset<32> >* instOpcod
 	    ss >> timeStep >> delim >> simdRegion >> instruction;
 		if(instruction == "CNOT") numArgs = 2;
 		else if(instruction == "Toffoli") numArgs = 3;
+		else if(instruction.find("llvmv")!=string::npos) numArgs = 0;
 		for(int i = 0; i < numArgs; i++){
 			ss >> qreg1;
 			qregs.push_back(qreg1);
@@ -179,13 +182,14 @@ void linkInstruction(string& instructionLine, map<string,bitset<32> >* instOpcod
 	    addOp(instOpcodes, instruction, &newOp);
 	
 	    unsigned long op = instOpcodes->find(instruction)->second.to_ulong();
-	    unsigned int opcode = static_cast<unsigned int>(op);
+//	    unsigned int opcode = static_cast<unsigned int>(op);
+	    long long opcode = static_cast<long long>(op);
 	    BinaryOutput.write((char*) &opcode, sizeof(opcode));
-		if(qregs.size() < 2) qregs.push_back((*qregs.begin())); // Pad each line to 5 bytes for indexing
-	    for(vector<string>::iterator vit = qregs.begin(); vit != qregs.end(); vit++){
-	        unsigned short qregister = qRegs->find(*vit)->second.to_ulong();
-	        BinaryOutput.write((char*) &qregister, sizeof(qregister));
-	    }
+//		if(qregs.size() < 2) qregs.push_back((*qregs.begin())); // Pad each line to 5 bytes for indexing
+//	    for(vector<string>::iterator vit = qregs.begin(); vit != qregs.end(); vit++){
+//	        unsigned short qregister = qRegs->find(*vit)->second.to_ulong();
+//	        BinaryOutput.write((char*) &qregister, sizeof(qregister));
+//	    }
 	}
 }
 
@@ -282,11 +286,14 @@ void linkModule(string& moduleName, map<string,bitset<64> >* moduleOpcodes, map<
 		callStack << moduleBlockNumber << "-" << moduleName<< "\n";
 		while(getline(moduleFile,line)){
 			string moduleOutputFilename = to_string(moduleBlockNumber) + "-" + moduleName + ".bin";
+			cout << "Working Module: " << moduleOutputFilename << "\n";
 			ofstream moduleOutputFile(moduleOutputFilename.c_str(), ios::out | ios::binary | ios::app);
 			if(moduleOutputFile.is_open()){
 	    		istringstream ss(line);
 	    		ss >> ts >> delim >> simd >> instruction;
+				cout << "Processing: " << instruction << "\n";
 				if(!(isIntrinsic(instruction))){
+					cout << "\tNot instrinsic\n";
 	    			newMod = addModule(moduleOpcodes, instruction, newModuleCode);
 					linkModule(instruction, moduleOpcodes, instOpcodes, qRegs, moduleCalls, newModuleCode, callStack, newMod, rotationFlag);
 					if(newModule) moduleOutputFile.write((char*) newModuleCode, sizeof(*newModuleCode));
@@ -314,6 +321,7 @@ void linkModule(string& moduleName, map<string,bitset<64> >* moduleOpcodes, map<
 					}
 				}*/
 				else if(newModule){
+					cout << "\tNew Module, linking instruction\n";
 					linkInstruction(line, instOpcodes, qRegs, moduleOutputFile);
 				}
 			}
@@ -322,6 +330,7 @@ void linkModule(string& moduleName, map<string,bitset<64> >* moduleOpcodes, map<
 			int lastBlock = moduleBlockNumber;
 			moduleBlockNumber = lineNumber/numLines;
 			if(lastBlock != moduleBlockNumber){
+				cout << "last block conditional: " << lastBlock << " | " << moduleBlockNumber << "\n";
 				callStack << moduleBlockNumber << "-" << moduleName << "\n";
 			}
 		}

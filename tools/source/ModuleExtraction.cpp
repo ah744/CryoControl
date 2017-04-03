@@ -22,23 +22,19 @@ void readModuleFile(ifstream& inputs, vector<string>& modules, bool isCG){
                 string func;
                 istringstream s(line);
                 s >> func >> ModuleName;
-				cout << "Found module: " << ModuleName.c_str() << "\n";
                 addToModules(modules,ModuleName);
                 ofstream outputModule;
 				outputModule.open(ModuleName.c_str());
                 if(outputModule.is_open()){
-					cout << "Opened new module file\n";
                     string newLine = " ";
 					getline(inputs,newLine);
                         while(getline(inputs,newLine) && !(newLine.empty())){
                             if((newLine.find("LPFS") == std::string::npos) && 
 							  (newLine.find("Num") == std::string::npos)){
 								outputModule << newLine << endl;
-								cout << "\tWriting to module file\n";
 							}
                         }
                 	outputModule.close();
-					cout << "Closed module file\n";
                 }
 				else{
 					cout << "Error: Could not open module output file\n";
