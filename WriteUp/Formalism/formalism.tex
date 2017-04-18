@@ -1,0 +1,81 @@
+\documentclass[12pt,twoside]{article}
+%\usepackage[latin9]{inputenc}
+\usepackage[letterpaper]{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{mathtools}
+\usepackage{xpatch}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{styles}
+
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage[normalem]{ulem}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{relsize}
+\usepackage{listing}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{tikz}
+\usetikzlibrary {positioning}
+\usepackage{mathrsfs}
+\usepackage{color}
+\usepackage{listings}
+\lstset{basicstyle=\footnotesize,frame=single}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+
+
+\makeatother
+\xpretocmd{\section}{\setcounter{theorem}{0}}{}{}
+\begin{document}
+
+\title{Compiler Optimization Formalism}
+
+%\author{Adam Holmes \\
+% April 20 2017}
+
+\maketitle
+
+\section{Notation and Problem Statement}
+Given a quantum program, we wish to compile selectively to target parallelism and code size. Specifically, we wish to extract as much parallelism as possible while retaining the smallest possible code size.  
+
+\begin{definition} A $\emph{Primitive Gate Operation}$ is an element of the set $\mathcal{G} = \{H, X, Z, CNOT, ...\}$. These are elementary quantum operations chosen from any particular set of universal operations. Shown here is one particular choice.
+\end{definition}
+
+\begin{definition} A $\emph{Function}$ is an ordered list of operations ($p_1, p_2, ... p_n)$. Each $p_i$ is an $\emph{Operation}$, which is a member of one of two sets: $\mathcal{F} = \{\alpha, \beta, \gamma ... \}$ a list of functions, or $\mathcal{G} = \{H, X, CNOT, T, ... \}$ the set of primitive gate operations. The set of all $\emph{Operations}\ \  \mathcal{O} = \mathcal{F} \cup \mathcal{G}$. 
+\end{definition}
+
+\begin{definition} An input program $P$ is itself a $\emph{Function}$, with a corresponding $P_{\mathcal{F}}$, a list of functions used within the program. Each element $p_i \in P$ is a member of either $\mathcal{G}$ or $P_{\mathcal{F}}$. Each element of the set $P_{\mathcal{F}}$ is a function, comprised itself of elements of either $\mathcal{G}$ or $P_{\mathcal{F}}$. 
+\end{definition}
+
+\begin{definition} Given an input program $P$, $\emph{Code Size} \ (CS)$ of $P$ is defined as:
+	\begin{equation}
+		CS_P = |P| + \sum_{\alpha \in P_{\mathcal{F}}} |\alpha| 
+	\end{equation}
+	This definition captures code size in the unit of instructions: each element of $P$ is considered to be a single instruction, and every element of $P_{\mathcal{F}}$ is considered as a list of instructions. The total code size is the number of instructions in the main input program $P$ plus the total size of all of the functions called within the program.
+\end{definition}
+
+\begin{definition} Associated with each $p_i \in P$ is a corresponding list $\emph{DEP}_{p_i}$, defined as a list of operations upon which $p_i$ is $\emph{dependent}$. The list $DEP_{p_i}$ is a list of operations $p_j \in P$, where $j < i$. Indices are considered as operation steps in the original, sequential program $P$.
+\end{definition}
+
+\begin{definition} Also associated with each $p_i \in P$ is an integer $v_{p_i}$. This denotes the $\emph{Parallelism}$ of $p_i$, defined with the following procedure:
+	\begin{align*}
+		&f \leftarrow \max_{j} p_j \in \emph{DEP}_{p_i}\\
+		&v_{p_i} \leftarrow 0\\ 
+		&\ \ \text{ For each $p_k \in P$ such that $k \in [i,f]$}:\\
+		&\quad\quad \text{If Type($p_k) = $ Type($p_i$), then increment $v_{p_i}$}
+	\end{align*}
+\end{definition}
+
+\section{Objective Function}
+
+
+\section{Linear Program Formalism and Transformation}
+
+
+\end{document}
