@@ -114,9 +114,9 @@ The end result is a $m$-partite graph $G = (U \bigcup\limits_{i=1}^{m} V_i, \big
 \subsection{Linear Program}
 We now introduce variables $X_e \in \{0,1\}$, and place one such variable on every edge of $G$. We wish to maximize an objective function that incorporates parallelism weighted by code size. A viable objective function is:
 	\begin{equation}
-		\max \sum_{u \in U}\left(\sum_{e \in \delta (u)} X_e\right) \cdot i_u - i_u
+		\max_{X_E \in \{0,1\}^{|E|}} \sum_{j \in [1,f_{\alpha}]}  \sum_{u \in U}\bigg(\Big(\sum_{e \in E(V_j,U)} X_e\Big) \cdot i_u - i_u\bigg) 
 	\end{equation}
-	where $\delta(u)$ denotes the set of incident edges to vertex $u$, and $i_u$ denotes the index corresponding to vertex $u \in U$.
+	where $E(V_i,U)$ denotes the set of edges between $V_i$ and $U$, and $i_u$ denotes the index corresponding to vertex $u \in U$.
 
 	This objective function is subject to the following constraints:
 	\begin{align}
@@ -139,6 +139,29 @@ With this graph transformation and encoding as a linear program (LP), the LP is 
 The construction of the graph is somewhat compute intensive. For each $\alpha_i$, and for each starting location $x \in \alpha$, a parallelism factor is calculated. For function instances that are completely parallelizable, this costs $m + (m-1) + ... + 1 = \frac{m(m+1)}{2}$ iterations with constant work per iteration to determine compatibility of instructions. This is performed $f_{\alpha}$ times, resulting in complexity of $\mathcal{O}(f_{\alpha}\frac{m(m+1)}{2})$. 
 
 These combine for overall complexity of $\mathcal{O}(f_{\alpha}m^2)$.
+
+\subsection{Analysis: Correctness}
+Consider a solution $S = \{e = (\alpha_j^i,u_k) \in E\ |\ X_e = 1,\ \forall i \in [1,m], j \in [1,f_{\alpha}\}$. For each edge $e \in S$, we can construct the corresponding inlined block $X = \{p_l \in \alpha\ |\ l \in [i,k]\}$ and the corresponding cloned function call(s) $\alpha_j' = \{p_l \in \alpha\ |\ l \in [1,i]\}, \alpha_j'' = \{p_l \in \alpha\ |\ l \in (k,m]\}$.
+
+Restricting attention to a single $\alpha_j$, we see that:
+	\begin{align}
+		e = (\alpha_j^i, u_k) \in S& \implies e' = (\alpha_j^i, u_{k'}) \notin S,\ \forall k' \neq k \label{eq:1}\\ 
+		& \implies e' = (\alpha_j^{i'}, u_{k'}) \notin S, \forall i' < i + k',k'\in [1,m]\  \label{eq:2}
+	\end{align}
+	Where (\ref{eq:1}) arises from constraint (1), and (\ref{eq:2}) is from constraint (2). (\ref{eq:1}) asserts that when a particular contiguously parallelizable block $X$ is chosen from $\alpha_j$ beginning at starting location $i$ (i.e. $X$ chosen from $\alpha_j^i$), then no other block is chosen for $\alpha_j^i$. This effectively asserts that given a particular function instance, the choice of $X$ from $\alpha_j^i$ is unique and singular, therefore a single line from $\alpha_j$ can never be inlined more than one time.   
+	
+	(\ref{eq:2}) asserts that when a block $X$ is chosen from $\alpha_j^i$, the next block that can possibly be chosen must begin with $i' > i + |X|$. This again prevents overlapping inlining assignments, and ensures that a single line from $\alpha_j$ can only be inlined a single time at most. However, more importantly this also allows for multiple contiguous blocks from $\alpha_j$ to be selected as long as they do not overlap, which will allow for an optimal solution. 
+
+	As both of these conditions hold for all $\alpha_j$, we can be sure that this procedure produces a correct set of blocks to inline, and blocks to clone and insert as new function calls. 
+
+\subsection{Analysis: Optimality}
+First we analyze the choice of objective function, again:
+	\begin{equation}
+		\max_{X_E \in \{0,1\}^{|E|}} \sum_{j \in [1,f_{\alpha}]}  \sum_{u \in U}\bigg(\Big(\sum_{e \in E(V_j,U)} X_e\Big) \cdot i_u - i_u\bigg) 
+	\end{equation}
+	We saw above that a solution $S$, an assignment of $X_e = \{0,1\}\ \forall e\in E$, will produce a correct solution. This objective function attempts to enforce that choosing the same contiguous block of operations $X$ from two different $\alpha_j^i$ and $\alpha_{j'}^i$ is more beneficial than choosing separate blocks. This is because when the same $X$ is chosen from two different function instances, the new cloned procedures can be reused across function calls, namely: $\alpha_j^{'i} = \alpha_{j'}^{'i}$. Therefore, $P_{\mathcal{F}}$ only grows in size for one of the two newly created cloned functions, and code size is saved. This is incorporated into the objective function by introducing the code size penalty $(-i_u)$ once per selection of block size, given by $i_u$. 
+
+	More clearly, consider a solution assignment $S = \{X_e = \{0,1\}\ \forall e \in E\}$. For a subset $S_j^i = \{X_e\ |\ e = (\cdot, u_j)\}$ for some $i \in [1,f_{\alpha}],j \in [1,m]$, this is a set of edges $e = (\alpha_k^i, u_{k'})$ for some $k,k'$. The cost associated with this set is given by $|S_j^i| \cdot i_{u_j} - i_{u_j} = |S_j^i| \cdot j - j$. Clearly, if $|S_j^i| = 1$, then the cost function evaluates to zero, indicating that there is no gain from inlining this section of code. 
 
 
 \end{document}
