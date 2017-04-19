@@ -34,23 +34,26 @@
 \xpretocmd{\section}{\setcounter{theorem}{0}}{}{}
 \begin{document}
 
-\title{Compiler Optimization Formalism}
+\title{Cryogenic Control Compiler Optimization Formalism}
 
 %\author{Adam Holmes \\
 % April 20 2017}
 
 \maketitle
 
-\section{Notation and Problem Statement}
+\section{Notation and Definitions}
 Given a quantum program, we wish to compile selectively to target parallelism and code size. Specifically, we wish to extract as much parallelism as possible while retaining the smallest possible code size.  
 
 \begin{definition} A $\emph{Primitive Gate Operation}$ is an element of the set $\mathcal{G} = \{H, X, Z, CNOT, ...\}$. These are elementary quantum operations chosen from any particular set of universal operations. Shown here is one particular choice.
 \end{definition}
 
-\begin{definition} A $\emph{Function}$ is an ordered list of operations ($p_1, p_2, ... p_n)$. Each $p_i$ is an $\emph{Operation}$, which is a member of one of two sets: $\mathcal{F} = \{\alpha, \beta, \gamma ... \}$ a list of functions, or $\mathcal{G} = \{H, X, CNOT, T, ... \}$ the set of primitive gate operations. The set of all $\emph{Operations}\ \  \mathcal{O} = \mathcal{F} \cup \mathcal{G}$. 
+\begin{definition} A $\emph{Function}$ is an ordered list of operations ($p_1, p_2, ... p_n)$. Each $p_i$ is an $\emph{Operation}$, which is a member of one of two sets: $\mathcal{F} = \{\alpha, \beta, \gamma ... \}$ a list of functions, or $\mathcal{G} = \{H, X, CNOT, T, ... \}$ the set of primitive gate operations. The set of all $\emph{Operations}\ \  \mathcal{O} = \mathcal{F} \cup \mathcal{G}$.
 \end{definition}
 
 \begin{definition} An input program $P$ is itself a $\emph{Function}$, with a corresponding $P_{\mathcal{F}}$, a list of functions used within the program. Each element $p_i \in P$ is a member of either $\mathcal{G}$ or $P_{\mathcal{F}}$. Each element of the set $P_{\mathcal{F}}$ is a function, comprised itself of elements of either $\mathcal{G}$ or $P_{\mathcal{F}}$. 
+\end{definition}
+
+\begin{definition} When a function $\alpha$ is called several times in $P$, we can label each $\alpha$ with an index corresponding to the order of a particular function call within the list of function calls. More precisely, for any given function $\alpha$, there may exist $\alpha_1, \alpha_2, ... , \alpha_k \in P$, where indices denote the position of each function call within this list. There may be other operations between function calls in $P$. These $\alpha_i$ are denoted \emph{Function Instances}. 
 \end{definition}
 
 \begin{definition} Given an input program $P$, $\emph{Code Size} \ (CS)$ of $P$ is defined as:
@@ -60,22 +63,82 @@ Given a quantum program, we wish to compile selectively to target parallelism an
 	This definition captures code size in the unit of instructions: each element of $P$ is considered to be a single instruction, and every element of $P_{\mathcal{F}}$ is considered as a list of instructions. The total code size is the number of instructions in the main input program $P$ plus the total size of all of the functions called within the program.
 \end{definition}
 
-\begin{definition} Associated with each $p_i \in P$ is a corresponding list $\emph{DEP}_{p_i}$, defined as a list of operations upon which $p_i$ is $\emph{dependent}$. The list $DEP_{p_i}$ is a list of operations $p_j \in P$, where $j < i$. Indices are considered as operation steps in the original, sequential program $P$.
+\begin{definition} Associated with each $p_i \in P$ is a corresponding list \emph{DEP}$_{p_i}$, defined as a list of operations upon which $p_i$ is $\emph{dependent}$. The list \emph{DEP}$_{p_i}$ is a list of operations $p_j \in P$, where $j < i$. Indices are considered as operation steps in the original, sequential program $P$.
 \end{definition}
 
-\begin{definition} Also associated with each $p_i \in P$ is an integer $v_{p_i}$. This denotes the $\emph{Parallelism}$ of $p_i$, defined with the following procedure:
-	\begin{align*}
-		&f \leftarrow \max_{j} p_j \in \emph{DEP}_{p_i}\\
-		&v_{p_i} \leftarrow 0\\ 
-		&\ \ \text{ For each $p_k \in P$ such that $k \in [i,f]$}:\\
-		&\quad\quad \text{If Type($p_k) = $ Type($p_i$), then increment $v_{p_i}$}
-	\end{align*}
-\end{definition}
+\section{Problem Statement}
+Given an input program $P$, we wish to schedule the program so as to maximize parallelism and minimize code size. Maximizing parallelism requires examining each instruction in as much scope as possible, so that a suitably parallel instruction may be found with which this instruction may be packed. Minimizing code size requires preserving as much modularity as is present in an original sequential version of a program. 
 
-\section{Objective Function}
+Consider the subproblem restricted to a single function call $\alpha \in P$. Denote $|\alpha| = m$, $|P| = n$. Within $P$ there may be several calls to function $\alpha$, and for convenience we will label these with subscripts according to their call order: $\{\alpha_1, \alpha_2, ... , \alpha_{f_{\alpha}}\}$, where $f_{\alpha}$ is the $\emph{frequency}$ of $\alpha$. Each $\alpha_i$ is a \emph{Function Instance} of the original $\alpha$, with potentially varied arguments. In order to optimize the trade off, a choice must be made about what to do with $\alpha$.
 
+\subsection{Inlining Techniques}
+There are several inlining techniques that can be used, differing in their flexibility and sensitivity to various parameters. 
+
+For each function $\alpha$, and for each instance of this function $\alpha_i$, calculate a \emph{parallelism factor}, a number indicating how many lines of this particular function instance could be parallelized, if it was to be inlined. For ease of notation, let \emph{parallelism factor} be denoted as $\mathcal{P}$. Logistically, this can be calculated by, for each operation $p_j \in \alpha_i$, iterating through the instructions between the latest indexed operation in \emph{DEP}$_{p_i}$ to this particular instruction $p_i$. If a compatible instruction is discovered in this iteration, the $\mathcal{P}$ for $\alpha_i$ is incremented. If global function parallelism is desired, then: 	\begin{equation}
+	\mathcal{P}_{\alpha} = \sum_{i=1}^k \mathcal{P}_{\alpha_i} 
+	\end{equation}
+\begin{enumerate}
+	\item \textbf{All or Nothing Inlining}:\\
+		If $\mathcal{P}_{\alpha}$ exceeds a threshold, inline all instances of $\alpha$. The threshold can be shown to be:
+		\begin{equation}
+			\mathcal{P}_{\alpha} \cdot V \geq f_{\alpha} \cdot |\alpha| - |\alpha| - f_{\alpha}
+		\end{equation}
+		where $V$ is the overhead associated with parallelizing instructions in a VLIW fashion. If a VLIW instruction costs $c$ single operation instructions, $V = \frac{1}{c}$.
+	\item \textbf{Complete Partial Inlining}:\\
+		If a given contiguous subsequence of instructions $X \subset \alpha$ has a parallelism factor $\mathcal{P}_{X}$ exceeding a threshold, then inline that subsequence $X$ for all function instances $\alpha_i$, and clone the remaining instructions into a new function call $\alpha'$. All function instances $\alpha_i$ will be replaced by the sequence $X$ inlined, followed by the call(s) to $\alpha_i'$.
+		The threshold becomes:
+		\begin{equation}
+			\mathcal{P}_X \cdot V \geq f_{\alpha} \cdot |X| + |X|
+		\end{equation}
+		If the subsequence is contained in the center of a function, then two clones must be made $\alpha_i'$ and $\alpha_i''$, corresponding to the preceding and successor blocks of operations in $\alpha$. The threshold then becomes:
+		\begin{equation}
+			\mathcal{P}_X \cdot V \geq f_{\alpha} \cdot (|X|+1) + |X|
+		\end{equation}
+
+	\item \textbf{Selective Partial Inlining}:\\
+		For each function instance $\alpha_i$, identify the contiguous subsequence of operations $X$ with the largest $\mathcal{P}_X$. Based upon global information about each $X_{\alpha_i}$, decide upon an inlining method that may vary between $\alpha_i$. Each decision to inline one particular $X_{\alpha_i}$ introduces $|\alpha| - |X_{\alpha_i}| - \mathcal{P}_{X_{\alpha_i}} \cdot V - 1$ lines to code size, as the corresponding $\alpha_i' = \alpha\backslash \{X_{\alpha_i}\}$ is added to $P_{\mathcal{F}}$, the list of functions used in program $P$. 
+\end{enumerate}
+
+Clearly (1) and (2) are special cases of (3). Now, we devise a procedure by which we can decide optimally which subsequences to inline, in which function instances throughout $P$.  
 
 \section{Linear Program Formalism and Transformation}
+\subsection{Graph Transformation}
+For each function $\alpha$, let $|\alpha| = m$. We will construct one $m$-partite graph $G$. First construct a set of vertices $U = \{u_1, u_2, ... , u_{m}\}$. Now let $x_1, x_2, ... , x_{m}$ denote the first, second, ... , and last operations of $\alpha$ respectively. Additionally, for each $x_i$, construct a set of vertices $V_i = \{\alpha_1^i, \alpha_2^i, ... , \alpha_{f_{\alpha}}^i\}$. These vertices represent each function instance. 
+
+For each $x_i$, and for each $\alpha_j^i$, calculate $\mathcal{P}_{x_i}^{\alpha_j}$ by iterating from instruction $x_i$ until an instruction is reached that is not parallelizable. Next, we will add edges from $V_i$ to $U$ when a particular $\alpha_j$ contains a contiguously parallelizable subsequence $X$ of size $|X| = \mathcal{P}_X$. Edges are added from $\alpha_j$ to the corresponding vertices in $U$, where the indices of $u$ represent the size of the discovered sequence. So, edges ($\alpha_j, u_{|X|}), (\alpha_j, u_{|X| - 1}), ... , (\alpha_j, u_1)$ will be added.  
+
+More precisely, add edges ($\alpha_j^i,u_{\mathcal{P}_{x_i}^{\alpha_j}}$), ($\alpha_j^i,u_{\mathcal{P}_{x_i}^{\alpha_j}-1}$), ... , ($\alpha_j^i,u_1$).
+
+The end result is a $m$-partite graph $G = (U \bigcup\limits_{i=1}^{m} V_i, \bigcup_{i=1}^{m} E_i)$, where each $V_i = \{\alpha_1^i, \alpha_2^i, ... , \alpha_{f_{\alpha}}^i\}$, and each $E_i = \{(\alpha_j^i, u_k)\}$ is a set of edges from $V_i$ to $U$.
+
+\subsection{Linear Program}
+We now introduce variables $X_e \in \{0,1\}$, and place one such variable on every edge of $G$. We wish to maximize an objective function that incorporates parallelism weighted by code size. A viable objective function is:
+	\begin{equation}
+		\max \sum_{u \in U}\left(\sum_{e \in \delta (u)} X_e\right) \cdot i_u - i_u
+	\end{equation}
+	where $\delta(u)$ denotes the set of incident edges to vertex $u$, and $i_u$ denotes the index corresponding to vertex $u \in U$.
+
+	This objective function is subject to the following constraints:
+	\begin{align}
+		&\sum_{e \in \delta(\alpha_j^i)} X_e \leq 1 \quad \forall j \in [1, f_{\alpha}],\ i \in [1, m] \tag{1} \\
+		&\sum_{e \in \delta(\alpha_j^i)} X_e = 0 \quad \text{ if } i < k + l_{max} \quad \forall i \in [1,m],\ j \in [1,f_{\alpha}],\ k<i \tag{2}
+	\end{align}
+	where \begin{equation}
+		l_{max} = \max_l \{X_e = 1, e = ( \alpha_j^k, u_l), e \in E_k\}
+	\end{equation}
+
+	Constraint (1) enforces that each $\alpha_j^i$ only has a single subsequence selected with given starting location $i$. Constraint (2) enforces that subsequences chosen for a given $\alpha_i$ do not overlap with other choices.   
+
+\subsection{Analysis: Complexity}
+With this graph transformation and encoding as a linear program (LP), the LP is formed over the total number of edges in the graph $G$:
+	\begin{equation}
+		|E| = |\bigcup_{i=1}^m E_i| \leq f_{\alpha}m^2 
+	\end{equation}
+	As an LP, solving is linear in the number of input variables: $\mathcal{O}(f_{\alpha}m^2)$. 
+
+The construction of the graph is somewhat compute intensive. For each $\alpha_i$, and for each starting location $x \in \alpha$, a parallelism factor is calculated. For function instances that are completely parallelizable, this costs $m + (m-1) + ... + 1 = \frac{m(m+1)}{2}$ iterations with constant work per iteration to determine compatibility of instructions. This is performed $f_{\alpha}$ times, resulting in complexity of $\mathcal{O}(f_{\alpha}\frac{m(m+1)}{2})$. 
+
+These combine for overall complexity of $\mathcal{O}(f_{\alpha}m^2)$.
 
 
 \end{document}

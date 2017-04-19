@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  18 APR 2017 16:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.16 (TeX Live 2015) (preloaded format=pdflatex 2015.5.24)  19 APR 2017 11:16
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1070,32 +1070,41 @@ the set $\OMS/cmsy/m/n/12 G \OT1/cmr/m/n/12 = \OMS/cmsy/m/n/12 f\OML/cmm/m/it/1
 [1
 
 {/usr/local/texlive/2015/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
-[2] (./formalism.aux) ) 
+[2]
+Overfull \hbox (13.07678pt too wide) in paragraph at lines 112--113
+[]\OT1/cmr/m/n/12 The end re-sult is a $\OML/cmm/m/it/12 m$\OT1/cmr/m/n/12 -par
+tite graph $\OML/cmm/m/it/12 G \OT1/cmr/m/n/12 = (\OML/cmm/m/it/12 U [] V[]; []
+[] E[]\OT1/cmr/m/n/12 )$, where each $\OML/cmm/m/it/12 V[] \OT1/cmr/m/n/12 = \O
+MS/cmsy/m/n/12 f\OML/cmm/m/it/12 []; []; :::; []\OMS/cmsy/m/n/12 g$\OT1/cmr/
+m/n/12 ,
+ []
+
+[3] [4] (./formalism.aux) ) 
 Here is how much of TeX's memory you used:
- 22882 strings out of 493089
- 437340 string characters out of 6134842
+ 22877 strings out of 493089
+ 437299 string characters out of 6134842
  460656 words of memory out of 5000000
- 26002 multiletter control sequences out of 15000+600000
- 15049 words of font info for 61 fonts, out of 8000000 for 9000
+ 25999 multiletter control sequences out of 15000+600000
+ 14547 words of font info for 58 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 55i,13n,54p,10401b,241s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2015/texmf-dist/fonts/type1/public/a
-msfonts/cm/cmbx12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/am
-sfonts/cm/cmex10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/ams
-fonts/cm/cmmi12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmmi6.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfon
-ts/cm/cmmi8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts
-/cm/cmr12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/c
-m/cmr17.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/
-cmr8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cms
-y10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy
-6.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.
-pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti12.p
-fb>
-Output written on formalism.pdf (2 pages, 121906 bytes).
+ 55i,10n,54p,10401b,223s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2015/texmf-dist/fonts/type1/publ
+ic/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/publi
+c/amsfonts/cm/cmex10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public
+/amsfonts/cm/cmmi12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmmi6.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/am
+sfonts/cm/cmmi8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsf
+onts/cm/cmr12.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfon
+ts/cm/cmr17.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts
+/cm/cmr8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm
+/cmsy10.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/
+cmsy6.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+sy8.pfb></usr/local/texlive/2015/texmf-dist/fonts/type1/public/amsfonts/cm/cmti
+12.pfb>
+Output written on formalism.pdf (4 pages, 146690 bytes).
 PDF statistics:
- 62 PDF objects out of 1000 (max. 8388607)
- 45 compressed objects within 1 object stream
+ 68 PDF objects out of 1000 (max. 8388607)
+ 49 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  13 words of extra memory for PDF output out of 10000 (max. 10000000)
 
