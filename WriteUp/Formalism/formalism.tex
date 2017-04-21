@@ -157,7 +157,7 @@ Restricting attention to a single $\alpha_j$, we see that:
 \subsection{Analysis: Optimality}
 First we analyze the choice of objective function, again:
 	\begin{equation}
-		\max_{X_E \in \{0,1\}^{|E|}} \sum_{j \in [1,f_{\alpha}]}  \sum_{u \in U}\bigg(\Big(\sum_{e \in E(V_j,U)} X_e\Big) \cdot i_u - i_u\bigg) 
+		\max_{X_E \in \{0,1\}^{|E|}} \sum_{j \in [1,f_{\alpha}]}  \sum_{u \in U}\bigg(\alpha_p\Big(\sum_{e \in E(V_j,U)} X_e\Big) \cdot i_u - \alpha_ci_u\bigg) 
 	\end{equation}
 	We saw above that a solution $S$, an assignment of $X_e = \{0,1\}\ \forall e\in E$, will produce a correct solution. This objective function attempts to enforce that choosing the same contiguous block of operations $X$ from two different $\alpha_j^i$ and $\alpha_{j'}^i$ is more beneficial than choosing separate blocks. This is because when the same $X$ is chosen from two different function instances, the new cloned procedures can be reused across function calls, namely: $\alpha_j^{'i} = \alpha_{j'}^{'i}$. Therefore, $P_{\mathcal{F}}$ only grows in size for one of the two newly created cloned functions, and code size is saved. This is incorporated into the objective function by introducing the code size penalty $(-i_u)$ once per selection of block size, given by $i_u$. 
 
