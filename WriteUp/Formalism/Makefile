@@ -7,7 +7,7 @@ FIGS = $(wildcard figures/*.pdf figures/*.png graphs/*.pdf graphs/*.png)
 
 $(PAPER).pdf: $(TEX) $(BIB) $(FIGS) 
 	@pdflatex $(PAPER) 
-#	bibtex $(PAPER)
+	@bibtex $(PAPER)
 #	pdflatex $(PAPER)
 #	pdflatex $(PAPER)
 

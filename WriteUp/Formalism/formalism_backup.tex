@@ -1,0 +1,172 @@
+\documentclass[12pt,twoside]{article}
+%\usepackage[latin9]{inputenc}
+\usepackage[letterpaper]{geometry}
+\geometry{verbose,tmargin=2cm,bmargin=2cm,lmargin=2cm,rmargin=2cm}
+\usepackage{mathtools}
+\usepackage{xpatch}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{styles}
+
+\makeatletter
+\@ifundefined{date}{}{\date{}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% User specified LaTeX commands.
+\usepackage[normalem]{ulem}
+\usepackage{caption}
+\usepackage{graphicx}
+\usepackage{relsize}
+\usepackage{listing}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{mathrsfs}
+\usepackage{color}
+\usepackage{listings}
+\lstset{basicstyle=\footnotesize,frame=single}
+
+\newcommand\numberthis{\addtocounter{equation}{1}\tag{\theequation}}
+\DeclareMathOperator*{\argmin}{argmin}
+\DeclareMathOperator*{\argmax}{argmax}
+
+
+\makeatother
+\xpretocmd{\section}{\setcounter{theorem}{0}}{}{}
+\begin{document}
+
+\title{Cryogenic Control Compiler Optimization Formalism}
+
+%\author{Adam Holmes \\
+% April 20 2017}
+
+\maketitle
+
+\section{Notation and Definitions}
+\begin{definition} A $\emph{Primitive Gate Operation}$ is an element of the set $\mathcal{G} = \{H, X, Z, CNOT, ...\}$. These are elementary quantum operations chosen from any particular set of universal operations. Shown here is one particular choice.
+\end{definition}
+
+\begin{definition} A $\emph{Function}$ is a partially ordered list of operations ($p_1, p_2, ... p_n)$. Each $p_i$ is an $\emph{operation}$, which is a member of one of two sets: $\mathcal{F} = \{\alpha, \beta, \gamma ... \}$ a list of functions, or $\mathcal{G} = \{H, X, CNOT, T, ... \}$ the set of primitive gate operations. If $p_i \in \mathcal{F}$, then $p_i$ is a function call, otherwise $p_i \in \mathcal{G}$ so $p_i$ is a primitive gate operation. The set of all $\emph{operations}\ \  \mathcal{O} = \mathcal{F} \cup \mathcal{G}$.
+\end{definition}
+\begin{definition} For each function $f \in \mathcal{F}$, define $P_{\mathcal{F}}$, a list of function calls in $f$:
+	\begin{equation}
+		P_{\mathcal{F}} = \{p \in f\ |\ p \in \mathcal{F}\}
+	\end{equation}
+\end{definition}
+
+
+\begin{definition} An input program $P$ is itself a $\emph{Function}$, with a corresponding $P_{\mathcal{F}}$, a list of functions used within the program. Each element $p_i \in P$ is a member of either $\mathcal{G}$ or $P_{\mathcal{F}}$. 
+\end{definition}
+
+\begin{definition} When a function $\alpha$ is called several times in a function $\beta$, we can label each $\alpha$ with an index corresponding to the tree depth of the function call within the dependency DAG of the function $\beta$. More precisely, for any given function $\alpha$, there may exist $\alpha_1, \alpha_2, ... , \alpha_k \in \beta$, where indices denote the tree depth corresponding to each $\alpha_i$-node in the dependency DAG. There may be other operations between function calls in $\beta$. These $\alpha_i$ are denoted \emph{Function Instances}. 
+\end{definition}
+
+\begin{definition} Given an input program $P$, $\emph{Code Size} \ (CS)$ of $P$ is defined as:
+	\begin{equation}
+		CS_P = |P| + \sum_{\alpha \in P_{\mathcal{F}}} |\alpha|
+	\end{equation}
+	Each element of $P$ is considered to be a single operation, and every element of $P_{\mathcal{F}}$ is considered as a list of instructions. 
+\end{definition}
+
+\begin{definition} $p_j\ \delta\ p_i \iff $ operation $p_i$ \emph{depends} on operation $p_j$.
+\end{definition}
+
+\begin{definition} Pred($p_i) = \{p \in P\ |\ p\ \delta\ p_i\}$, and Succ($p_i) = \{p \in P\ |\ p_i\ \delta\ p\}$. Predecessor and Successor sets, respesctively, contain the \emph{immediate} predecessor or successor operation in the dependency DAG.
+\end{definition}
+
+\section{Problem Statement}
+Given an input program $P$, we wish to schedule the program so as to maximize parallelism and minimize code size. Maximizing parallelism requires examining each instruction in as much scope as possible, so that a suitably parallel instruction may be found with which this instruction may be packed. Minimizing code size requires preserving as much modularity as is present in an original sequential version of a program. 
+
+Consider the subproblem restricted to a single function call $\alpha \in P$. Denote $|\alpha| = m$, $|P| = n$. Within $P$ there may be several calls to function $\alpha$, and for convenience we will label these with subscripts according to their call order: $\{\alpha_1, \alpha_2, ... , \alpha_{f_{\alpha}}\}$, where $f_{\alpha}$ is the $\emph{frequency}$ of $\alpha$. Each $\alpha_i$ is a \emph{Function Instance} of the original $\alpha$, with potentially varied arguments. In order to optimize the trade off, a choice must be made about what to do with $\alpha$.
+
+\subsection{Inlining Techniques}
+There are several inlining techniques that can be used, differing in their flexibility and sensitivity to various parameters. 
+
+For each function $\alpha$, and for each instance of this function $\alpha_i$, calculate a \emph{parallelism factor}, a number indicating how many lines of this particular function instance could be parallelized, if it was to be inlined. For ease of notation, let \emph{parallelism factor} be denoted as $\mathcal{P}$. Logistically, this can be calculated by, for each operation $p_j \in \alpha_i$, iterating through the instructions between the latest indexed operation in \emph{DEP}$_{p_i}$ to this particular instruction $p_i$. If a compatible instruction is discovered in this iteration, the $\mathcal{P}$ for $\alpha_i$ is incremented. If global function parallelism is desired, then: 	\begin{equation}
+	\mathcal{P}_{\alpha} = \sum_{i=1}^k \mathcal{P}_{\alpha_i} 
+	\end{equation}
+\begin{enumerate}
+	\item \textbf{All or Nothing Inlining}:\\
+		If $\mathcal{P}_{\alpha}$ exceeds a threshold, inline all instances of $\alpha$. The threshold can be shown to be:
+		\begin{equation}
+			\mathcal{P}_{\alpha} \cdot V \geq f_{\alpha} \cdot |\alpha| - |\alpha| - f_{\alpha}
+		\end{equation}
+		where $V$ is the overhead associated with parallelizing instructions in a VLIW fashion. If a VLIW instruction costs $c$ single operation instructions, $V = \frac{1}{c}$.
+	\item \textbf{Complete Partial Inlining}:\\
+		If a given contiguous subsequence of instructions $X \subset \alpha$ has a parallelism factor $\mathcal{P}_{X}$ exceeding a threshold, then inline that subsequence $X$ for all function instances $\alpha_i$, and clone the remaining instructions into a new function call $\alpha'$. All function instances $\alpha_i$ will be replaced by the sequence $X$ inlined, followed by the call(s) to $\alpha_i'$.
+		The threshold becomes:
+		\begin{equation}
+			\mathcal{P}_X \cdot V \geq f_{\alpha} \cdot |X| + |X|
+		\end{equation}
+		If the subsequence is contained in the center of a function, then two clones must be made $\alpha_i'$ and $\alpha_i''$, corresponding to the preceding and successor blocks of operations in $\alpha$. The threshold then becomes:
+		\begin{equation}
+			\mathcal{P}_X \cdot V \geq f_{\alpha} \cdot (|X|+1) + |X|
+		\end{equation}
+
+	\item \textbf{Selective Partial Inlining}:\\
+		For each function instance $\alpha_i$, identify the contiguous subsequence of operations $X$ with the largest $\mathcal{P}_X$. Based upon global information about each $X_{\alpha_i}$, decide upon an inlining method that may vary between $\alpha_i$. Each decision to inline one particular $X_{\alpha_i}$ introduces $|\alpha| - |X_{\alpha_i}| - \mathcal{P}_{X_{\alpha_i}} \cdot V - 1$ lines to code size, as the corresponding $\alpha_i' = \alpha\backslash \{X_{\alpha_i}\}$ is added to $P_{\mathcal{F}}$, the list of functions used in program $P$. 
+\end{enumerate}
+
+Clearly (1) and (2) are special cases of (3). Now, we devise a procedure by which we can decide optimally which subsequences to inline, in which function instances throughout $P$.  
+
+\section{Linear Program Formalism and Transformation}
+\subsection{Graph Transformation}
+For each function $\alpha$, let $|\alpha| = m$. We will construct one $m$-partite graph $G$. First construct a set of vertices $U = \{u_1, u_2, ... , u_{m}\}$. Now let $x_1, x_2, ... , x_{m}$ denote the first, second, ... , and last operations of $\alpha$ respectively. Additionally, for each $x_i$, construct a set of vertices $V_i = \{\alpha_1^i, \alpha_2^i, ... , \alpha_{f_{\alpha}}^i\}$. These vertices represent each function instance. 
+
+For each $x_i$, and for each $\alpha_j^i$, calculate $\mathcal{P}_{x_i}^{\alpha_j}$ by iterating from instruction $x_i$ until an instruction is reached that is not parallelizable. Next, we will add edges from $V_i$ to $U$ when a particular $\alpha_j$ contains a contiguously parallelizable subsequence $X$ of size $|X| = \mathcal{P}_X$. Edges are added from $\alpha_j$ to the corresponding vertices in $U$, where the indices of $u$ represent the size of the discovered sequence. So, edges ($\alpha_j, u_{|X|}), (\alpha_j, u_{|X| - 1}), ... , (\alpha_j, u_1)$ will be added.  
+
+More precisely, add edges ($\alpha_j^i,u_{\mathcal{P}_{x_i}^{\alpha_j}}$), ($\alpha_j^i,u_{\mathcal{P}_{x_i}^{\alpha_j}-1}$), ... , ($\alpha_j^i,u_1$).
+
+The end result is a $m$-partite graph $G = (U \bigcup\limits_{i=1}^{m} V_i, \bigcup_{i=1}^{m} E_i)$, where each $V_i = \{\alpha_1^i, \alpha_2^i, ... , \alpha_{f_{\alpha}}^i\}$, and each $E_i = \{(\alpha_j^i, u_k)\}$ is a set of edges from $V_i$ to $U$.
+
+\subsection{Linear Program}
+We now introduce variables $X_e \in \{0,1\}$, and place one such variable on every edge of $G$. We wish to maximize an objective function that incorporates parallelism weighted by code size. A viable objective function is:
+	\begin{equation}
+		\max_{X_E \in \{0,1\}^{|E|}} \sum_{j \in [1,f_{\alpha}]}  \sum_{u \in U}\bigg(\Big(\sum_{e \in E(V_j,U)} X_e\Big) \cdot i_u - i_u\bigg) 
+	\end{equation}
+	where $E(V_i,U)$ denotes the set of edges between $V_i$ and $U$, and $i_u$ denotes the index corresponding to vertex $u \in U$.
+
+	This objective function is subject to the following constraints:
+	\begin{align}
+		&\sum_{e \in \delta(\alpha_j^i)} X_e \leq 1 \quad \forall j \in [1, f_{\alpha}],\ i \in [1, m] \tag{1} \\
+		&\sum_{e \in \delta(\alpha_j^i)} X_e = 0 \quad \text{ if } i < k + l_{max} \quad \forall i \in [1,m],\ j \in [1,f_{\alpha}],\ k<i \tag{2}
+	\end{align}
+	where \begin{equation}
+		l_{max} = \max_l \{X_e = 1, e = ( \alpha_j^k, u_l), e \in E_k\}
+	\end{equation}
+
+	Constraint (1) enforces that each $\alpha_j^i$ only has a single subsequence selected with given starting location $i$. Constraint (2) enforces that subsequences chosen for a given $\alpha_i$ do not overlap with other choices.   
+
+\subsection{Analysis: Complexity}
+With this graph transformation and encoding as a linear program (LP), the LP is formed over the total number of edges in the graph $G$:
+	\begin{equation}
+		|E| = |\bigcup_{i=1}^m E_i| \leq f_{\alpha}m^2 
+	\end{equation}
+	As an LP, solving is linear in the number of input variables: $\mathcal{O}(f_{\alpha}m^2)$. 
+
+The construction of the graph is somewhat compute intensive. For each $\alpha_i$, and for each starting location $x \in \alpha$, a parallelism factor is calculated. For function instances that are completely parallelizable, this costs $m + (m-1) + ... + 1 = \frac{m(m+1)}{2}$ iterations with constant work per iteration to determine compatibility of instructions. This is performed $f_{\alpha}$ times, resulting in complexity of $\mathcal{O}(f_{\alpha}\frac{m(m+1)}{2})$. 
+
+These combine for overall complexity of $\mathcal{O}(f_{\alpha}m^2)$.
+
+\subsection{Analysis: Correctness}
+Consider a solution $S = \{e = (\alpha_j^i,u_k) \in E\ |\ X_e = 1,\ \forall i \in [1,m], j \in [1,f_{\alpha}\}$. For each edge $e \in S$, we can construct the corresponding inlined block $X = \{p_l \in \alpha\ |\ l \in [i,k]\}$ and the corresponding cloned function call(s) $\alpha_j' = \{p_l \in \alpha\ |\ l \in [1,i]\}, \alpha_j'' = \{p_l \in \alpha\ |\ l \in (k,m]\}$.
+
+Restricting attention to a single $\alpha_j$, we see that:
+	\begin{align}
+		e = (\alpha_j^i, u_k) \in S& \implies e' = (\alpha_j^i, u_{k'}) \notin S,\ \forall k' \neq k \label{eq:1}\\ 
+		& \implies e' = (\alpha_j^{i'}, u_{k'}) \notin S, \forall i' < i + k',k'\in [1,m]\  \label{eq:2}
+	\end{align}
+	Where (\ref{eq:1}) arises from constraint (1), and (\ref{eq:2}) is from constraint (2). (\ref{eq:1}) asserts that when a particular contiguously parallelizable block $X$ is chosen from $\alpha_j$ beginning at starting location $i$ (i.e. $X$ chosen from $\alpha_j^i$), then no other block is chosen for $\alpha_j^i$. This effectively asserts that given a particular function instance, the choice of $X$ from $\alpha_j^i$ is unique and singular, therefore a single line from $\alpha_j$ can never be inlined more than one time.   
+	
+	(\ref{eq:2}) asserts that when a block $X$ is chosen from $\alpha_j^i$, the next block that can possibly be chosen must begin with $i' > i + |X|$. This again prevents overlapping inlining assignments, and ensures that a single line from $\alpha_j$ can only be inlined a single time at most. However, more importantly this also allows for multiple contiguous blocks from $\alpha_j$ to be selected as long as they do not overlap, which will allow for an optimal solution. 
+
+	As both of these conditions hold for all $\alpha_j$, we can be sure that this procedure produces a correct set of blocks to inline, and blocks to clone and insert as new function calls. 
+
+\subsection{Analysis: Optimality}
+First we analyze the choice of objective function, again:
+	\begin{equation}
+		\max_{X_E \in \{0,1\}^{|E|}} \sum_{j \in [1,f_{\alpha}]}  \sum_{u \in U}\bigg(\alpha_p\Big(\sum_{e \in E(V_j,U)} X_e\Big) \cdot i_u - \alpha_ci_u\bigg) 
+	\end{equation}
+	We saw above that a solution $S$, an assignment of $X_e = \{0,1\}\ \forall e\in E$, will produce a correct solution. This objective function attempts to enforce that choosing the same contiguous block of operations $X$ from two different $\alpha_j^i$ and $\alpha_{j'}^i$ is more beneficial than choosing separate blocks. This is because when the same $X$ is chosen from two different function instances, the new cloned procedures can be reused across function calls, namely: $\alpha_j^{'i} = \alpha_{j'}^{'i}$. Therefore, $P_{\mathcal{F}}$ only grows in size for one of the two newly created cloned functions, and code size is saved. This is incorporated into the objective function by introducing the code size penalty $(-i_u)$ once per selection of block size, given by $i_u$. 
+
+	More clearly, consider a solution assignment $S = \{X_e = \{0,1\}\ \forall e \in E\}$. For a subset $S_j^i = \{X_e\ |\ e = (\cdot, u_j)\}$ for some $i \in [1,f_{\alpha}],j \in [1,m]$, this is a set of edges $e = (\alpha_k^i, u_{k'})$ for some $k,k'$. The cost associated with this set is given by $|S_j^i| \cdot i_{u_j} - i_{u_j} = |S_j^i| \cdot j - j$. Clearly, if $|S_j^i| = 1$, then the cost function evaluates to zero, indicating that there is no gain from inlining this section of code. 
+
+
+\end{document}
